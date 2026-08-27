@@ -60,6 +60,13 @@
         .search-suggestion-type { flex:0 0 auto;padding:2px 5px;border-radius:4px;color:#fff;font-size:.65rem;font-weight:800; }
         .search-suggestion-name { overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.82rem; }
         .search-suggestion-meta { margin-left:auto;color:#9ca3af;font-size:.68rem;white-space:nowrap; }
+        .suggestion-modal{position:absolute;inset:0;z-index:1400;display:none;align-items:center;justify-content:center;background:#0008;padding:20px}
+        .suggestion-modal.open{display:flex}
+        .suggestion-form{width:min(430px,100%);background:#111827;border:1px solid #374151;border-radius:8px;padding:20px;box-shadow:0 12px 35px #000b}
+        .suggestion-form h2{font-size:1rem;margin-bottom:6px}.suggestion-form p{color:#9ca3af;font-size:.78rem;margin-bottom:14px}
+        .suggestion-types{display:grid;gap:8px;margin-bottom:14px}.suggestion-type{display:flex;align-items:center;gap:9px;padding:9px;border:1px solid #374151;border-radius:6px;color:#e5e7eb;cursor:pointer}.suggestion-type:has(input:checked){border-color:#ef4444;background:#1f2937}
+        .suggestion-fields{display:grid;gap:6px;margin-bottom:16px}.suggestion-fields label{font-size:.75rem;color:#d1d5db}.suggestion-fields input{width:100%;padding:9px;background:#0f1724;border:1px solid #374151;border-radius:6px;color:#fff;font-size:.85rem}
+        .suggestion-actions{display:flex;justify-content:flex-end;gap:8px}.suggestion-actions button{padding:8px 12px;border:1px solid #374151;border-radius:6px;background:#1f2937;color:#fff;cursor:pointer}.suggestion-actions button[type=submit]{background:#b91c1c;border-color:#ef4444}.suggestion-actions button:hover{filter:brightness(1.15)}
 
         .status-bar { position: absolute; bottom: 15px; left: 15px; z-index: 999; background: rgba(17, 24, 39, 0.9); padding: 6px 15px; border-radius: 6px; font-size: 0.75rem; display: flex; gap: 15px; border: 1px solid #374151; }
         .status-bar span { color: #10b981; font-weight: bold; }
@@ -156,6 +163,19 @@
             <i class="fa-solid fa-magnifying-glass"></i>
             <input type="text" id="searchInput" placeholder="Rechercher une caserne (ex: CSP Paris, CPI, Nantes...)" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="searchSuggestions" aria-expanded="false" onkeypress="handleSearch(event)">
             <div id="searchSuggestions" class="search-suggestions" role="listbox"></div>
+        </div>
+        <div id="suggestionModal" class="suggestion-modal" role="dialog" aria-modal="true" aria-labelledby="suggestionTitle">
+            <form id="suggestionForm" class="suggestion-form">
+                <h2 id="suggestionTitle">Suggérer un emplacement</h2>
+                <p>Quel type de site souhaitez-vous suggérer ?</p>
+                <div class="suggestion-types">
+                    <label class="suggestion-type"><input type="radio" name="suggestionType" value="caserne" required> Caserne</label>
+                    <label class="suggestion-type"><input type="radio" name="suggestionType" value="etat-major"> État-major</label>
+                    <label class="suggestion-type"><input type="radio" name="suggestionType" value="cta-codis"> CTA / CODIS</label>
+                </div>
+                <div id="suggestionFields" class="suggestion-fields"></div>
+                <div class="suggestion-actions"><button type="button" id="cancelSuggestion">Annuler</button><button type="submit">Ouvrir GitHub</button></div>
+            </form>
         </div>
         <div id="map"></div>
         <div class="map-title"><i class="fa-solid fa-map-location-dot"></i> FR-SIS TACTICAL</div>
@@ -763,27 +783,41 @@
         function setMode(mode){map.removeLayer(currentLayer);currentLayer=mode==='sat'?satLayer:lightLayer;document.getElementById('mode-text').innerText=mode==='sat'?'SATELLITE':'CARTE CLAIRE';map.addLayer(currentLayer);}
         function toggleMapMode(){setMode(currentLayer===satLayer?'light':'sat');}
         function locateUser(){map.locate({setView:true,maxZoom:13});}
-        function suggestStationAtLocation(event){
-            if(!confirm('Suggérer une caserne à cet emplacement ?'))return;
-            const name=prompt('Nom de la caserne :'); if(!name?.trim())return;
-            const sdis=prompt('SDIS de la caserne :'); if(!sdis?.trim())return;
-            const lat=event.latlng.lat.toFixed(6); const lng=event.latlng.lng.toFixed(6);
-            const title=`Suggestion caserne : ${name.trim()}`;
-            const body=[
-                'Bonjour,',
-                '',
-                'Je suggère une caserne à vérifier sur la carte.',
-                '',
-                `Nom : ${name.trim()}`,
-                `SDIS : ${sdis.trim()}`,
-                `Latitude : ${lat}`,
-                `Longitude : ${lng}`,
-                `Lien carte : https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=17/${lat}/${lng}`,
-                '',
-                'Merci de vérifier ces informations avant ajout.'
-            ].join('\n');
+        const suggestionModal=document.getElementById('suggestionModal');
+        const suggestionForm=document.getElementById('suggestionForm');
+        const suggestionFields=document.getElementById('suggestionFields');
+        let suggestionLocation=null;
+        function updateSuggestionFields(){
+            const type=suggestionForm.elements.suggestionType.value;
+            const isCaserne=type==='caserne';
+            suggestionFields.innerHTML=`${isCaserne?'<label for="suggestionName">Nom de la caserne</label><input id="suggestionName" name="name" type="text" placeholder="Ex : Nîmes Sainte-Césaire">':''}<label for="suggestionSdis">SDIS${isCaserne?' de la caserne':type==='etat-major'?" de l'état-major":' du CTA / CODIS'}</label><input id="suggestionSdis" name="sdis" type="text" placeholder="Ex : SDIS 30" required>`;
+        }
+        function closeSuggestionModal(){suggestionModal.classList.remove('open');suggestionForm.reset();suggestionFields.innerHTML='';suggestionLocation=null;}
+        function openSuggestionModal(event){
+            suggestionLocation=event.latlng;
+            suggestionModal.classList.add('open');
+            suggestionForm.elements.suggestionType[0].checked=true;
+            updateSuggestionFields();
+            suggestionFields.querySelector('input')?.focus();
+        }
+        suggestionForm.addEventListener('change',updateSuggestionFields);
+        document.getElementById('cancelSuggestion').addEventListener('click',closeSuggestionModal);
+        suggestionModal.addEventListener('click',event=>{if(event.target===suggestionModal)closeSuggestionModal();});
+        suggestionForm.addEventListener('submit',event=>{
+            event.preventDefault();
+            const type=suggestionForm.elements.suggestionType.value;
+            const name=suggestionForm.elements.name?.value.trim()||'';
+            const sdis=suggestionForm.elements.sdis.value.trim();
+            if(!sdis||(type==='caserne'&&!name)||!suggestionLocation)return;
+            const labels={caserne:'Caserne','etat-major':'État-major','cta-codis':'CTA / CODIS'};
+            const lat=suggestionLocation.lat.toFixed(6); const lng=suggestionLocation.lng.toFixed(6);
+            const title=`Suggestion ${labels[type]} : ${name||sdis}`;
+            const body=['Bonjour,','','Je suggère un nouvel emplacement à vérifier sur la carte.','',`Type : ${labels[type]}`,name?`Nom : ${name}`:'',`SDIS : ${sdis}`,`Latitude : ${lat}`,`Longitude : ${lng}`,`Lien carte : https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=17/${lat}/${lng}`,'','Merci de vérifier ces informations avant ajout.'].filter(Boolean).join('\n');
             const issueUrl='https://github.com/m75199413-hash/Cartes-Tactique-SPP-SPV/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);
-            window.open(issueUrl,'_blank','noopener,noreferrer');
+            closeSuggestionModal(); window.open(issueUrl,'_blank','noopener,noreferrer');
+        });
+        function suggestStationAtLocation(event){
+            if(confirm('Suggérer une caserne / un état-major / un CTA-CODIS ?'))openSuggestionModal(event);
         }
         map.on('contextmenu',suggestStationAtLocation);
 
