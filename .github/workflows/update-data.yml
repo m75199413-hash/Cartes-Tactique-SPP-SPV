@@ -40,6 +40,10 @@ jobs:
           curl --fail --location --retry 3 --max-time 120 \
             'https://data.tours-metropole.fr/api/explore/v2.1/catalog/datasets/points-d-eau-tours-metropole-val-de-loire/exports/geojson' \
             -o pei-tours.geojson
+          curl --fail --location --retry 3 --max-time 120 \
+            'https://framacarte.org/map/78971/download/' \
+            -o /tmp/cis-framacarte.json
+          jq '{type:"FeatureCollection",features:[.layers[].features[]]}' /tmp/cis-framacarte.json > cis-framacarte.geojson
 
           mkdir -p /tmp/csp-osm
           boxes=('41,-5.5,44.4,-0.8' '41,-0.8,44.4,3.9' '41,3.9,44.4,8.5' '44.4,-5.5,47.8,-0.8' '44.4,-0.8,47.8,3.9' '44.4,3.9,47.8,8.5' '47.8,-5.5,51.3,-0.8' '47.8,-0.8,51.3,3.9' '47.8,3.9,51.3,8.5')
@@ -54,6 +58,6 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add csp-france.geojson csp-doubs.geojson pei-rennes.geojson pei-tarn.geojson pei-herault-dfci.geojson pei-annecy.csv pei-sdis64.geojson pei-tours.geojson
+          git add cis-framacarte.geojson csp-france.geojson csp-doubs.geojson pei-rennes.geojson pei-tarn.geojson pei-herault-dfci.geojson pei-annecy.csv pei-sdis64.geojson pei-tours.geojson
           git diff --cached --quiet || git commit -m 'Actualiser les donnees CSP et PEI'
           git push

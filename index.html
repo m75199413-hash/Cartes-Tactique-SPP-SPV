@@ -661,6 +661,7 @@
 
         // Donnees locales officielles : elles permettent l'affichage sans Overpass.
         const LOCAL_DATASETS = [
+            {url:'cis-framacarte.geojson', type:'CIS', source:'Framacarte - CIS de France'},
             {url:'csp-france.geojson', type:'CSP', optional:true, source:'OpenStreetMap - donnees locales'},
             {url:'csp-doubs.geojson', type:'CSP', source:'SDIS 25 - donnees locales'},
             {url:'pei-rennes.geojson', type:'PEI', source:'Rennes Metropole - donnees locales'},
@@ -686,7 +687,11 @@
                         if(!Array.isArray(point) || point.length<2) return;
                         const lon=Number(point[0]); const lat=Number(point[1]);
                         if(!Number.isFinite(lat)||!Number.isFinite(lon)) return;
-                        if(dataset.type==='CSP'){
+                        if(dataset.type==='CIS'){
+                            const tags={...properties,name:properties.name||properties.nom||'Centre de secours',description:properties.description||''};
+                            const type=normalizeType(tags);
+                            addItem({id:`framacarte-${feature.id||lat+'-'+lon}`,type,lat,lng:lon,tags,source:dataset.source});
+                        } else if(dataset.type==='CSP'){
                             const tags={...properties,name:properties.nom||properties.name,type:properties.type||'CSP',operator:properties.sdis||properties.operator||'SDIS'};
                             addItem({id:`local-csp-${properties.cs_cod||lat+'-'+lon}`,type:'CSP',lat,lng:lon,tags,source:dataset.source});
                         } else {
