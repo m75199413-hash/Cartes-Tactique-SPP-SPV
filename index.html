@@ -34,6 +34,7 @@
         .dot-csp { background: #ef4444; }
         .dot-cs { background: #f97316; }
         .dot-sdis { background: #a855f7; }
+        .dot-cta { background: #ec4899; }
         .dot-pi { background: #06b6d4; }
         .dot-bi { background: #3b82f6; }
 
@@ -134,6 +135,14 @@
             <div class="toggle-item">
                 <span class="toggle-label"><span class="dot dot-cs"></span> CS / CS-R / CPI / CPNI <span class="layer-count" id="count-CS">0</span></span>
                 <label class="switch"><input type="checkbox" id="chk-cs" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-item">
+                <span class="toggle-label"><span class="dot dot-cta"></span> CTA / CODIS <span class="layer-count" id="count-CTA">0</span></span>
+                <label class="switch"><input type="checkbox" id="chk-cta" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-item">
+                <span class="toggle-label"><span class="dot dot-sdis"></span> État-major <span class="layer-count" id="count-ETAT_MAJOR">0</span></span>
+                <label class="switch"><input type="checkbox" id="chk-etat-major" checked><span class="slider"></span></label>
             </div>
         </div>
 
@@ -248,17 +257,19 @@
         const layers = {
             CSP: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:10,maxClusterRadius:42}),
             CS: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:11,maxClusterRadius:42}),
-            SDIS: L.layerGroup(), PI: L.layerGroup(), BI: L.layerGroup()
+            CTA: L.layerGroup(), ETAT_MAJOR: L.layerGroup(), PI: L.layerGroup(), BI: L.layerGroup()
         };
         const icons = {
             CSP: createCustomIcon('#ef4444','CSP',34),
             CS: createCustomIcon('#f97316','CS',28),
-            SDIS: createCustomIcon('#a855f7','EM',30),
+            CTA: createCustomIcon('#ec4899','CTA',30),
+            ETAT_MAJOR: createCustomIcon('#a855f7','EM',30),
             PI: createCustomIcon('#06b6d4','PI',22),
             BI: createCustomIcon('#3b82f6','BI',22)
         };
         const checkboxes = {
             CSP: document.getElementById('chk-csp'), CS: document.getElementById('chk-cs'),
+            CTA: document.getElementById('chk-cta'), ETAT_MAJOR: document.getElementById('chk-etat-major'),
             PI: document.getElementById('chk-pi'), BI: document.getElementById('chk-bi')
         };
         let loadingRequests = 0;
@@ -336,6 +347,8 @@
 
         function addItem(item) {
             if (!item || item.lat==null || item.lng==null) return;
+            if(item.type==='SDIS') item.layerType=item.subtype==='CTA'||/\bCTA\b|\bCODIS\b/i.test(searchItemName(item))?'CTA':'ETAT_MAJOR';
+            else item.layerType=item.type;
             const id=item.id || `${item.type}-${item.lat}-${item.lng}-${item.source||''}`;
             if(byId.has(id)) return;
             item.id=id; byId.set(id,item); database.push(item);
@@ -344,11 +357,11 @@
                 marker=L.circleMarker([item.lat,item.lng],{radius:5,color:'#fff',weight:1.5,fillColor:item.type==='PI'?'#06b6d4':'#3b82f6',fillOpacity:.95});
                 marker.bindPopup(hydrantPopup(item),{maxWidth:360});
             } else {
-                marker=L.marker([item.lat,item.lng],{icon:icons[item.type]});
+                marker=L.marker([item.lat,item.lng],{icon:icons[item.layerType]});
                 marker.bindPopup(stationPopup(item),{maxWidth:380});
             }
             item.marker=marker;
-            layers[item.type].addLayer(marker);
+            layers[item.layerType].addLayer(marker);
             updateSearchSuggestions();
         }
 
@@ -864,7 +877,7 @@
         }
         function selectSearchItem(item){
             searchInput.value=searchItemName(item); closeSearchSuggestions();
-            map.setView([item.lat,item.lng],15); if(checkboxes[item.type])checkboxes[item.type].checked=true; updateMarkers(); item.marker?.openPopup();
+            map.setView([item.lat,item.lng],15); if(checkboxes[item.layerType||item.type])checkboxes[item.layerType||item.type].checked=true; updateMarkers(); item.marker?.openPopup();
         }
         function handleSearch(e){
             if(e.key==='ArrowDown'||e.key==='ArrowUp'){
@@ -949,7 +962,6 @@
             tags:{name:'CTA / CODIS SDIS 30',operator:'SDIS 30'},
             source:'Suggestion vérifiée par utilisateur'
         });
-        map.addLayer(layers.SDIS);
         updateMarkers();
         document.getElementById('zoom-level').innerText=map.getZoom();
         // Warn if page served via file:// which can cause many fetch failures (CORS/network)
