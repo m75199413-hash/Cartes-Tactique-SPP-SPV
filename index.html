@@ -146,8 +146,8 @@
 
         <div class="footer-info">
             <strong>BASE DE DONNÉES SÉCURITÉ CIVILE</strong><br>
-            Mode Carte : Satellite par défaut · données dynamiques OpenStreetMap.<br>
-            CSP : chargement national. PI/BI : chargés par zone visible à partir du zoom 11 (volume trop important pour un chargement national en un seul bloc).
+            Mode Carte : Satellite par défaut · données officielles locales.<br>
+            CSP et PEI : fichiers locaux actualisés automatiquement par le dépôt avant chaque redéploiement Vercel.
         </div>
         <button class="import-btn" onclick="promptImportUmap()" title="Importer une carte uMap / Framacarte (GeoJSON)">Importer une carte uMap / Framacarte</button>
     </div>
@@ -243,9 +243,10 @@
         // Queue/throttling Overpass
         const overpassQueue = [];
         let overpassRunning = 0;
-        const OVERPASS_CONCURRENCY = 1; // courant réduit pour éviter rate-limits
-        const OVERPASS_DELAY_MS = 1200; // délai entre démarrages de requêtes
-        const OVERPASS_MAX_RETRIES = 3;
+        const OVERPASS_CONCURRENCY = 2; // deux petites zones en parallèle
+        const OVERPASS_DELAY_MS = 150; // délai entre démarrages de requêtes
+        const OVERPASS_MAX_RETRIES = 1;
+        const OVERPASS_REQUEST_TIMEOUT_MS = 10000;
         let overpassTotalTasks = 0, overpassCompletedTasks = 0;
         // Collections de ressources officielles par type (PEI/MISC)
         const officialDatasets = { PEI: [], CS: [] };
@@ -381,7 +382,7 @@
                     let last;
                     for(const endpoint of OVERPASS_ENDPOINTS) {
                         try {
-                            const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:'data='+encodeURIComponent(task.query)});
+                            const r=await fetch(endpoint+'?data='+encodeURIComponent(task.query),{method:'GET',headers:{'Accept':'application/json'},signal:AbortSignal.timeout(OVERPASS_REQUEST_TIMEOUT_MS)});
                             const text=await r.text();
                             if(!r.ok) throw new Error(`HTTP ${r.status} (${endpoint.includes('kumi')?'kumi':'overpass-api.de'})${text?': '+text.slice(0,180):''}`);
                             try { return JSON.parse(text); }
@@ -411,41 +412,27 @@
             }
         }
 
-        // CSP : chargement national. On interroge TOUS les amenity=fire_station, découpés en une
-        // grille fine (plus fiable qu'un gros quart de France côté Overpass), puis on classe chaque
-        // résultat via normalizeType() qui se base surtout sur le nom (le tag fire_station:type:FR
-        // est trop rarement renseigné pour être exploitable seul).
+        // CSP : chargement national par petites zones, plus fiable qu'une requête France entière.
         async function loadCSPFromOSM() {
-            // Grille 3x3 sur la France métropolitaine (lat 41→51.3, lon -5.5→8.5)
             const lats=[41.0,44.4,47.8,51.3];
             const lons=[-5.5,-0.8,3.9,8.5];
             const boxes=[];
-            for(let i=0;i<3;i++) for(let j=0;j<3;j++) boxes.push([lats[i],lons[j],lats[i+1],lons[j+1]]);
-
-            setLoading(true);
-            let totalCSP=0, failedBoxes=0;
+            for(let row=0;row<3;row++) for(let column=0;column<3;column++) boxes.push([lats[row],lons[column],lats[row+1],lons[column+1]]);
             try {
-                await Promise.all(boxes.map(async ([s,w,n,e],idx)=>{
-                    const label=`CSP secteur ${idx+1}/${boxes.length}`;
-                    const q=`[out:json][timeout:50];(nwr["amenity"="fire_station"](${s},${w},${n},${e}););out center tags;`;
-                    try{
-                        const data=await enqueueOverpass(q,label);
-                        let found=0;
-                        (data.elements||[]).forEach(el=>{
-                            const ll=elementLatLng(el);
-                            if(!ll) return;
-                            const tags=el.tags||{};
-                            if(normalizeType(tags)==='CSP'){ addItem({id:`osm-${el.type}-${el.id}`,type:'CSP',lat:ll[0],lng:ll[1],tags,source:'OpenStreetMap'}); found++; }
-                        });
-                        totalCSP+=found;
-                        debugLog(`${label} : ${data.elements?.length||0} casernes reçues, ${found} classées CSP`,'ok');
-                        updateMarkers();
-                    }catch(e){ failedBoxes++; debugLog(`${label} : ÉCHEC DÉFINITIF — ${e.message}`,'err'); }
+                let totalCSP=0;
+                await Promise.all(boxes.map(async ([south,west,north,east], index)=>{
+                    const q=`[out:json][timeout:35];nwr["amenity"="fire_station"](${south},${west},${north},${east});out center tags;`;
+                    const data=await enqueueOverpass(q,`CSP secteur ${index+1}/${boxes.length}`);
+                    (data.elements||[]).forEach(el=>{
+                        const ll=elementLatLng(el); if(!ll || normalizeType(el.tags||{})!=='CSP') return;
+                        addItem({id:`osm-${el.type}-${el.id}`,type:'CSP',lat:ll[0],lng:ll[1],tags:el.tags||{},source:'OpenStreetMap'});
+                        totalCSP++;
+                    });
+                    updateMarkers();
                 }));
+                debugLog(`CSP national : ${totalCSP} emplacement(s) trouvé(s)`,'ok');
             } finally {
-                setLoading(false); updateMarkers();
-                debugLog(`Chargement CSP terminé : ${totalCSP} CSP au total, ${failedBoxes}/${boxes.length} secteur(s) en échec.`, failedBoxes? 'err':'ok');
-                if((totalCSP===0 || failedBoxes>0) && !document.getElementById('debug-panel').classList.contains('open')) toggleDebugPanel();
+                updateMarkers();
             }
         }
 
@@ -635,8 +622,6 @@
             // If still unknown, avoid creating potentially incorrect entries.
             if(type==='OTHER') return null;
             const operatorVal = getField(props,['sdis','SDIS','operator','OPERATEUR']);
-            // Require SDIS/operator for CSP entries to ensure authenticity
-            if(type==='CSP' && !operatorVal) return null;
             const tags={name, type:typeRaw, operator:operatorVal,ref:getField(props,['ref','REF','reference','REFERENCE']),groupement:getField(props,['groupement','GROUPEMENT']),compagnie:getField(props,['compagnie','COMPAGNIE']),phone:getField(props,['telephone','phone','TEL']),website:getField(props,['site','website','URL'])};
             return {id:`official-${source}-${name}-${coords[0]}-${coords[1]}`,type,lat:coords[1],lng:coords[0],tags,source};
         }
@@ -674,6 +659,45 @@
             }
         }
 
+        // Donnees locales officielles : elles permettent l'affichage sans Overpass.
+        const LOCAL_DATASETS = [
+            {url:'csp-doubs.geojson', type:'CSP', source:'SDIS 25 - donnees locales'},
+            {url:'pei-rennes.geojson', type:'PEI', source:'Rennes Metropole - donnees locales'}
+        ];
+        function loadLocalDataset(dataset){
+            return fetch(dataset.url).then(r=>{if(!r.ok)throw new Error(`${dataset.url}: HTTP ${r.status}`);return r.json();}).then(geojson=>{
+                let added=0;
+                (geojson.features||[]).forEach(feature=>{
+                    const properties=feature.properties||{};
+                    const geometry=feature.geometry||{};
+                    let coordinates=geometry.coordinates;
+                    if(properties.geo_point_2d) coordinates=[properties.geo_point_2d.lon,properties.geo_point_2d.lat];
+                    const points=properties.geo_point_2d?[coordinates]:geometry.type==='Point'?[coordinates]:geometry.type==='MultiPoint'?coordinates:[];
+                    points.forEach(point=>{
+                        if(!Array.isArray(point) || point.length<2) return;
+                        const lon=Number(point[0]); const lat=Number(point[1]);
+                        if(!Number.isFinite(lat)||!Number.isFinite(lon)) return;
+                        if(dataset.type==='CSP'){
+                            const tags={...properties,name:properties.nom||properties.name,type:properties.type||'CSP',operator:properties.sdis||properties.operator||'SDIS'};
+                            addItem({id:`local-csp-${properties.cs_cod||lat+'-'+lon}`,type:'CSP',lat,lng:lon,tags,source:dataset.source});
+                        } else {
+                            const label=String(properties.type||'').toLowerCase();
+                            const type=/poteau|hydrant|borne/.test(label)?'PI':'BI';
+                            const tags={...properties,name:properties.nom||properties.name,ref:properties.id_pei_sdis||properties.id_pei_rm,operator:properties.gestionnaire};
+                            addItem({id:`local-pei-${properties.id_pei_sdis||properties.id_pei_rm||lat+'-'+lon}`,type,lat,lng:lon,tags,source:dataset.source});
+                        }
+                        added++;
+                    });
+                });
+                debugLog(`${dataset.url} : ${added} emplacement(s) local(aux) charge(s)`,'ok');
+                return added;
+            });
+        }
+        function loadLocalData(){
+            setLoading(true);
+            return Promise.all(LOCAL_DATASETS.map(loadLocalDataset)).finally(()=>{setLoading(false);updateMarkers();});
+        }
+
         function toggleSidebar(){document.getElementById('sidebar').classList.toggle('mobile-open');}
 
         function updateZoomHint(){
@@ -706,8 +730,9 @@
             const result = database.find(x=>{
                 if(!x) return false;
                 const t = x.tags||{};
-                const candidates = [t.name,t.nom,t.libelle,t['nom_cis'],t.ref,t.reference,t.operator,x.type];
-                return candidates.some(c=>normalize(c).includes(nq));
+                const candidates = [t.name,t.nom,t.libelle,t['nom_cis'],t.ref,t.reference,t.operator,t['addr:full'],t['addr:city'],t['addr:postcode'],x.type];
+                const searchable = candidates.map(normalize).join(' ');
+                return nq.split(/\s+/).filter(Boolean).every(term=>searchable.includes(term));
             });
             if(result){ map.setView([result.lat,result.lng],15); checkboxes[result.type].checked=true; updateMarkers(); result.marker?.openPopup(); return; }
             fetch('https://nominatim.openstreetmap.org/search?format=json&q='+encodeURIComponent(q),{headers:{'Accept-Language':'fr'}}).then(r=>r.json()).then(d=>{if(d[0])map.setView([+d[0].lat,+d[0].lon],14);else alert('Lieu ou caserne non trouvé.');}).catch(()=>alert('Recherche indisponible.'));
@@ -771,12 +796,12 @@
         if(location.protocol==='file:'){
             debugLog('Attention : page ouverte via file:// — des fetchs peuvent échouer. Servez la page via HTTP (ex: python -m http.server)','warn');
         }
-        // Startup: import official datasets (centres + PEI). Avoid Overpass national loads by default.
-        discoverOfficialDatasets().then(()=>{
+        // Startup: use bundled official files; no external data request is needed.
+        loadLocalData().then(()=>{
             updateMarkers();
-            if(database.length===0) debugLog('Aucune donnée officielle trouvée — vérifiez la connexion ou servez via HTTP','warn');
+            if(database.length===0) debugLog('Aucune donnée locale trouvee — lancez le site via HTTP','warn');
             else debugLog(`Données chargées : ${database.length} point(s)`,'ok');
-        }).catch(e=>{ debugLog('Erreur découverte officielle : '+e.message,'err'); });
+        }).catch(e=>debugLog('Erreur chargement des fichiers locaux : '+e.message,'err'));
         // Avoid automatic Overpass calls on zoom/move to prevent 'failed to fetch' and heavy loads.
         map.on('zoomend',()=>{document.getElementById('zoom-level').innerText=map.getZoom();});
         map.on('moveend',()=>{});

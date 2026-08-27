@@ -1,0 +1,35 @@
+name: Actualiser les donnees CSP et PEI
+
+on:
+  schedule:
+    - cron: '0 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recuperer le depot
+        uses: actions/checkout@v4
+
+      - name: Telecharger les donnees officielles
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 --max-time 120 \
+            'https://opendata.doubs.fr/api/explore/v2.1/catalog/datasets/sdis25-centres-de-secours-du-doubs/exports/geojson' \
+            -o csp-doubs.geojson
+          curl --fail --location --retry 3 --max-time 120 \
+            'https://data.rennesmetropole.fr/api/explore/v2.1/catalog/datasets/deci-pei/exports/geojson' \
+            -o pei-rennes.geojson
+
+      - name: Publier les changements
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add csp-doubs.geojson pei-rennes.geojson
+          git diff --cached --quiet || git commit -m 'Actualiser les donnees CSP et PEI'
+          git push
