@@ -782,8 +782,12 @@
                 '',
                 'Merci de vérifier ces informations avant ajout.'
             ].join('\n');
+            const mailto='mailto:cta81codis@gmail.com?subject='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);
             const issueUrl='https://github.com/m75199413-hash/Cartes-Tactique-SPP-SPV/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);
-            window.open(issueUrl,'_blank','noopener,noreferrer');
+            window.location.href=mailto;
+            setTimeout(()=>{
+                if(confirm('Votre messagerie ne s’est pas ouverte ? Ouvrir le formulaire GitHub à la place.'))window.open(issueUrl,'_blank','noopener,noreferrer');
+            },800);
         }
         map.on('contextmenu',suggestStationAtLocation);
 
