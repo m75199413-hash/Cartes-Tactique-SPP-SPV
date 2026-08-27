@@ -25,11 +25,20 @@ jobs:
           curl --fail --location --retry 3 --max-time 120 \
             'https://data.rennesmetropole.fr/api/explore/v2.1/catalog/datasets/deci-pei/exports/geojson' \
             -o pei-rennes.geojson
+          curl --fail --location --retry 3 --max-time 120 \
+            'https://carto-sdis81.tigeo.fr/index.php/lizmap/service?repository=public&project=PEI_Hydraclic&SERVICE=WFS&typeName=pei_hydraclic_v2&VERSION=1.3.0&REQUEST=GetFeature&OutputFormat=geojson' \
+            -o pei-tarn.geojson
+          curl --fail --location --retry 3 --max-time 120 \
+            'https://www.herault-data.fr/api/explore/v2.1/catalog/datasets/points-deau-defense-des-forets-contre-les-incendies-dfci-herault/exports/geojson' \
+            -o pei-herault-dfci.geojson
+          curl --fail --location --retry 3 --max-time 120 \
+            'https://static.data.gouv.fr/resources/points-deau-incendie-de-lagglomeration-du-grand-annecy/20250128-081713/points-eau-incendie-2024.csv' \
+            -o pei-annecy.csv
 
       - name: Publier les changements
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add csp-doubs.geojson pei-rennes.geojson
+          git add csp-doubs.geojson pei-rennes.geojson pei-tarn.geojson pei-herault-dfci.geojson pei-annecy.csv
           git diff --cached --quiet || git commit -m 'Actualiser les donnees CSP et PEI'
           git push

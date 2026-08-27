@@ -662,10 +662,15 @@
         // Donnees locales officielles : elles permettent l'affichage sans Overpass.
         const LOCAL_DATASETS = [
             {url:'csp-doubs.geojson', type:'CSP', source:'SDIS 25 - donnees locales'},
-            {url:'pei-rennes.geojson', type:'PEI', source:'Rennes Metropole - donnees locales'}
+            {url:'pei-rennes.geojson', type:'PEI', source:'Rennes Metropole - donnees locales'},
+            {url:'pei-tarn.geojson', type:'PEI', source:'SDIS 81 - donnees locales'},
+            {url:'pei-herault-dfci.geojson', type:'PEI', source:'Herault Data - donnees locales'},
+            {url:'pei-annecy.csv', type:'PEI', format:'csv', source:'Grand Annecy - donnees locales'}
         ];
         function loadLocalDataset(dataset){
-            return fetch(dataset.url).then(r=>{if(!r.ok)throw new Error(`${dataset.url}: HTTP ${r.status}`);return r.json();}).then(geojson=>{
+            return fetch(dataset.url).then(r=>{if(!r.ok)throw new Error(`${dataset.url}: HTTP ${r.status}`);return dataset.format==='csv'?r.text():r.json();}).then(data=>{
+                if(dataset.format==='csv') return loadLocalCsv(data,dataset);
+                const geojson=data;
                 let added=0;
                 (geojson.features||[]).forEach(feature=>{
                     const properties=feature.properties||{};
@@ -681,7 +686,7 @@
                             const tags={...properties,name:properties.nom||properties.name,type:properties.type||'CSP',operator:properties.sdis||properties.operator||'SDIS'};
                             addItem({id:`local-csp-${properties.cs_cod||lat+'-'+lon}`,type:'CSP',lat,lng:lon,tags,source:dataset.source});
                         } else {
-                            const label=String(properties.type||'').toLowerCase();
+                            const label=String(properties.type||properties.type_hydrant||properties.type_pei||'').toLowerCase();
                             const type=/poteau|hydrant|borne/.test(label)?'PI':'BI';
                             const tags={...properties,name:properties.nom||properties.name,ref:properties.id_pei_sdis||properties.id_pei_rm,operator:properties.gestionnaire};
                             addItem({id:`local-pei-${properties.id_pei_sdis||properties.id_pei_rm||lat+'-'+lon}`,type,lat,lng:lon,tags,source:dataset.source});
@@ -692,6 +697,26 @@
                 debugLog(`${dataset.url} : ${added} emplacement(s) local(aux) charge(s)`,'ok');
                 return added;
             });
+        }
+        function loadLocalCsv(text,dataset){
+            const lines=text.split(/\r?\n/).filter(Boolean); if(lines.length<2)return 0;
+            const headers=lines[0].replace(/^"|"$/g,'').split(',').map(value=>value.replace(/^"|"$/g,'').trim().toLowerCase());
+            const latIndex=headers.indexOf('lat'); const lonIndex=headers.indexOf('lon');
+            if(latIndex<0||lonIndex<0)throw new Error(`${dataset.url}: colonnes lat/lon absentes`);
+            let added=0;
+            lines.slice(1).forEach(line=>{
+                const values=line.split(',').map(value=>value.replace(/^"|"$/g,'').trim());
+                const lat=Number(values[latIndex]); const lon=Number(values[lonIndex]);
+                if(!Number.isFinite(lat)||!Number.isFinite(lon))return;
+                const properties={}; headers.forEach((header,index)=>properties[header]=values[index]||'');
+                const label=String(properties.type_pei||'').toLowerCase();
+                const type=/poteau|hydrant|borne/.test(label)?'PI':'BI';
+                const tags={...properties,name:properties.ref_terr||properties.id_gestion,ref:properties.id_sdis||properties.id_gestion,operator:'Grand Annecy'};
+                addItem({id:`local-annecy-${properties.id_gestion||properties.ref_terr||lat+'-'+lon}`,type,lat,lng:lon,tags,source:dataset.source});
+                added++;
+            });
+            debugLog(`${dataset.url} : ${added} emplacement(s) local(aux) charge(s)`,'ok');
+            return added;
         }
         function loadLocalData(){
             setLoading(true);
