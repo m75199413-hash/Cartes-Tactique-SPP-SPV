@@ -1,4 +1,4 @@
-name: Actualiser les donnees CSP et PEI
+name: Actualiser les donnees locales CSP et PEI
 
 on:
   schedule:
@@ -42,45 +42,12 @@ jobs:
             jq '{type:"FeatureCollection",features:[.layers[].features[]]}' /tmp/cis-framacarte.json > cis-framacarte.geojson
           fi
 
-          boxes=('41,-5.5,44.4,-0.8' '41,-0.8,44.4,3.9' '41,3.9,44.4,8.5' '44.4,-5.5,47.8,-0.8' '44.4,-0.8,47.8,3.9' '44.4,3.9,47.8,8.5' '47.8,-5.5,51.3,-0.8' '47.8,-0.8,51.3,3.9' '47.8,3.9,51.3,8.5')
-          mkdir -p /tmp/pei-osm /tmp/commandement-osm
-          query_overpass() {
-            local query="$1"
-            local output="$2"
-            if ! curl --fail --silent --show-error --location --max-time 45 --retry 1 --retry-delay 2 --get \
-              --data-urlencode "data=$query" 'https://overpass-api.de/api/interpreter' -o "$output"; then
-              curl --fail --silent --show-error --location --max-time 45 --retry 1 --retry-delay 2 --get \
-                --data-urlencode "data=$query" 'https://overpass.kumi.systems/api/interpreter' -o "$output" || rm -f "$output"
-            fi
-          }
-          for i in "${!boxes[@]}"; do
-            query_overpass \
-              "[out:json][timeout:40];(nwr[\"emergency\"=\"fire_hydrant\"](${boxes[$i]});nwr[\"emergency\"=\"water_tank\"](${boxes[$i]});nwr[\"emergency\"=\"fire_water_pond\"](${boxes[$i]}););out center tags;" \
-              "/tmp/pei-osm/$i.json" &
-            query_overpass \
-              "[out:json][timeout:40];nwr[\"name\"~\"CTA|CODIS|etat-major|état-major|centre opérationnel\",i](${boxes[$i]});out center tags;" \
-              "/tmp/commandement-osm/$i.json" &
-          done
-          wait
-          valid_json() { jq empty "$1" >/dev/null 2>&1; }
-          pei_files=(); commandement_files=();
-          for file in /tmp/pei-osm/*.json; do valid_json "$file" && pei_files+=("$file"); done
-          for file in /tmp/commandement-osm/*.json; do valid_json "$file" && commandement_files+=("$file"); done
-          if ((${#pei_files[@]})); then
-            jq -s '{type:"FeatureCollection",features:[.[].elements[] | (.lat // .center.lat) as $lat | (.lon // .center.lon) as $lon | select($lat != null and $lon != null) | {type:"Feature",geometry:{type:"Point",coordinates:[$lon,$lat]},properties:(.tags // {})}]}' "${pei_files[@]}" > pei-france.geojson
-          else
-            printf '{"type":"FeatureCollection","features":[]}' > pei-france.geojson
-          fi
-          if ((${#commandement_files[@]})); then
-            jq -s '{type:"FeatureCollection",features:[.[].elements[] | (.lat // .center.lat) as $lat | (.lon // .center.lon) as $lon | select($lat != null and $lon != null) | {type:"Feature",geometry:{type:"Point",coordinates:[$lon,$lat]},properties:(.tags // {})}]}' "${commandement_files[@]}" > commandement-france.geojson
-          else
-            printf '{"type":"FeatureCollection","features":[]}' > commandement-france.geojson
-          fi
+          echo "Les donnees OSM nationales sont optionnelles et ne bloquent pas cette mise a jour."
 
       - name: Publier les changements
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add cis-framacarte.geojson commandement-france.geojson pei-france.geojson csp-doubs.geojson pei-rennes.geojson pei-tarn.geojson pei-herault-dfci.geojson pei-annecy.csv pei-sdis64.geojson pei-tours.geojson
+          git add cis-framacarte.geojson csp-doubs.geojson pei-rennes.geojson pei-tarn.geojson pei-herault-dfci.geojson pei-annecy.csv pei-sdis64.geojson pei-tours.geojson
           git diff --cached --quiet || git commit -m 'Actualiser les donnees CSP et PEI'
           git push
