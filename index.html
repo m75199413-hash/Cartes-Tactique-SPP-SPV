@@ -269,6 +269,7 @@
             const n = String(tags.name || tags.nom || tags['name:fr'] || '').toUpperCase();
             const note = String(tags.note || tags.description || '').toUpperCase();
             const haystack = `${t} ${n} ${note}`;
+            if (/\bCTA\b|\bCODIS\b|ETAT[ -]?MAJOR|ÉTAT[ -]?MAJOR|CENTRE OPERATIONNEL|CENTRE OPÉRATIONNEL/.test(haystack)) return 'SDIS';
             if (/\bCSP\b/.test(haystack) || /CENTRE\s+DE\s+SECOURS\s+PRINCIPAL/.test(haystack)) return 'CSP';
             return 'CS';
         }
@@ -662,6 +663,8 @@
         // Donnees locales officielles : elles permettent l'affichage sans Overpass.
         const LOCAL_DATASETS = [
             {url:'cis-framacarte.geojson', type:'CIS', source:'Framacarte - CIS de France'},
+            {url:'commandement-france.geojson', type:'COMMAND', optional:true, source:'OpenStreetMap - commandement local'},
+            {url:'pei-france.geojson', type:'PEI', optional:true, source:'OpenStreetMap - PEI locaux'},
             {url:'csp-france.geojson', type:'CSP', optional:true, source:'OpenStreetMap - donnees locales'},
             {url:'csp-doubs.geojson', type:'CSP', source:'SDIS 25 - donnees locales'},
             {url:'pei-rennes.geojson', type:'PEI', source:'Rennes Metropole - donnees locales'},
@@ -687,7 +690,10 @@
                         if(!Array.isArray(point) || point.length<2) return;
                         const lon=Number(point[0]); const lat=Number(point[1]);
                         if(!Number.isFinite(lat)||!Number.isFinite(lon)) return;
-                        if(dataset.type==='CIS'){
+                        if(dataset.type==='COMMAND'){
+                            const tags={...properties,name:properties.name||properties.nom||'Site de commandement',description:properties.description||''};
+                            addItem({id:`commandement-${feature.id||lat+'-'+lon}`,type:'SDIS',lat,lng:lon,tags,source:dataset.source});
+                        } else if(dataset.type==='CIS'){
                             const tags={...properties,name:properties.name||properties.nom||'Centre de secours',description:properties.description||''};
                             const type=normalizeType(tags);
                             addItem({id:`framacarte-${feature.id||lat+'-'+lon}`,type,lat,lng:lon,tags,source:dataset.source});

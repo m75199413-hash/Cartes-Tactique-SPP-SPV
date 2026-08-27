@@ -54,10 +54,22 @@ jobs:
           done
           jq -s '{type:"FeatureCollection",features:[.[].elements[] | select(([(.tags.name // ""),(.tags["fire_station:type:FR"] // ""),(.tags.description // "")] | join(" ")) | test("CSP|centre de secours principal"; "i")) | (.lat // .center.lat) as $lat | (.lon // .center.lon) as $lon | select($lat != null and $lon != null) | {type:"Feature",geometry:{type:"Point",coordinates:[$lon,$lat]},properties:(.tags // {})}]}' /tmp/csp-osm/*.json > csp-france.geojson
 
+          mkdir -p /tmp/pei-osm /tmp/commandement-osm
+          for i in "${!boxes[@]}"; do
+            curl --fail --location --retry 3 --max-time 120 --get \
+              --data-urlencode "data=[out:json][timeout:60];(nwr[\"emergency\"=\"fire_hydrant\"](${boxes[$i]});nwr[\"emergency\"=\"water_tank\"](${boxes[$i]});nwr[\"emergency\"=\"fire_water_pond\"](${boxes[$i]}););out center tags;" \
+              'https://overpass-api.de/api/interpreter' -o "/tmp/pei-osm/$i.json"
+            curl --fail --location --retry 3 --max-time 120 --get \
+              --data-urlencode "data=[out:json][timeout:60];nwr[\"name\"~\"CTA|CODIS|etat-major|état-major|centre opérationnel\",i](${boxes[$i]});out center tags;" \
+              'https://overpass-api.de/api/interpreter' -o "/tmp/commandement-osm/$i.json"
+          done
+          jq -s '{type:"FeatureCollection",features:[.[].elements[] | (.lat // .center.lat) as $lat | (.lon // .center.lon) as $lon | select($lat != null and $lon != null) | {type:"Feature",geometry:{type:"Point",coordinates:[$lon,$lat]},properties:(.tags // {})}]}' /tmp/pei-osm/*.json > pei-france.geojson
+          jq -s '{type:"FeatureCollection",features:[.[].elements[] | (.lat // .center.lat) as $lat | (.lon // .center.lon) as $lon | select($lat != null and $lon != null) | {type:"Feature",geometry:{type:"Point",coordinates:[$lon,$lat]},properties:(.tags // {})}]}' /tmp/commandement-osm/*.json > commandement-france.geojson
+
       - name: Publier les changements
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add cis-framacarte.geojson csp-france.geojson csp-doubs.geojson pei-rennes.geojson pei-tarn.geojson pei-herault-dfci.geojson pei-annecy.csv pei-sdis64.geojson pei-tours.geojson
+          git add cis-framacarte.geojson csp-france.geojson commandement-france.geojson pei-france.geojson csp-doubs.geojson pei-rennes.geojson pei-tarn.geojson pei-herault-dfci.geojson pei-annecy.csv pei-sdis64.geojson pei-tours.geojson
           git diff --cached --quiet || git commit -m 'Actualiser les donnees CSP et PEI'
           git push
