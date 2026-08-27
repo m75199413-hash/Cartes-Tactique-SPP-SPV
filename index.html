@@ -165,11 +165,11 @@
             <div id="searchSuggestions" class="search-suggestions" role="listbox"></div>
         </div>
         <div id="suggestionModal" class="suggestion-modal" role="dialog" aria-modal="true" aria-labelledby="suggestionTitle">
-            <form id="suggestionForm" class="suggestion-form">
+            <form id="suggestionForm" class="suggestion-form" novalidate>
                 <h2 id="suggestionTitle">Suggérer un emplacement</h2>
                 <p>Quel type de site souhaitez-vous suggérer ?</p>
                 <div class="suggestion-types">
-                    <label class="suggestion-type"><input type="radio" name="suggestionType" value="caserne" required> Caserne</label>
+                    <label class="suggestion-type"><input type="radio" name="suggestionType" value="caserne"> Caserne</label>
                     <label class="suggestion-type"><input type="radio" name="suggestionType" value="etat-major"> État-major</label>
                     <label class="suggestion-type"><input type="radio" name="suggestionType" value="cta-codis"> CTA / CODIS</label>
                 </div>
@@ -790,7 +790,7 @@
         function updateSuggestionFields(){
             const type=suggestionForm.elements.suggestionType.value;
             const isCaserne=type==='caserne';
-            suggestionFields.innerHTML=`${isCaserne?'<label for="suggestionName">Nom de la caserne</label><input id="suggestionName" name="name" type="text" placeholder="Ex : Nîmes Sainte-Césaire">':''}<label for="suggestionSdis">SDIS${isCaserne?' de la caserne':type==='etat-major'?" de l'état-major":' du CTA / CODIS'}</label><input id="suggestionSdis" name="sdis" type="text" placeholder="Ex : SDIS 30" required>`;
+            suggestionFields.innerHTML=`${isCaserne?'<label for="suggestionName">Nom de la caserne</label><input id="suggestionName" name="name" type="text" placeholder="Ex : Nîmes Sainte-Césaire">':''}<label for="suggestionSdis">SDIS${isCaserne?' de la caserne':type==='etat-major'?" de l'état-major":' du CTA / CODIS'}</label><input id="suggestionSdis" name="sdis" type="text" placeholder="Ex : SDIS 30">`;
         }
         function closeSuggestionModal(){suggestionModal.classList.remove('open');suggestionForm.reset();suggestionFields.innerHTML='';suggestionLocation=null;}
         function openSuggestionModal(event){
@@ -805,10 +805,13 @@
         suggestionModal.addEventListener('click',event=>{if(event.target===suggestionModal)closeSuggestionModal();});
         suggestionForm.addEventListener('submit',event=>{
             event.preventDefault();
-            const type=suggestionForm.elements.suggestionType.value;
-            const name=suggestionForm.elements.name?.value.trim()||'';
-            const sdis=suggestionForm.elements.sdis.value.trim();
-            if(!sdis||(type==='caserne'&&!name)||!suggestionLocation)return;
+            const type=suggestionForm.querySelector('input[name="suggestionType"]:checked')?.value||'';
+            const name=suggestionForm.querySelector('[name="name"]')?.value.trim()||'';
+            const sdis=suggestionForm.querySelector('[name="sdis"]')?.value.trim()||'';
+            if(!type){alert('Veuillez sélectionner un type de suggestion.');return;}
+            if(type==='caserne'&&!name){alert('Veuillez renseigner le nom de la caserne.');suggestionForm.querySelector('[name="name"]')?.focus();return;}
+            if(!sdis){alert('Veuillez renseigner le SDIS.');suggestionForm.querySelector('[name="sdis"]')?.focus();return;}
+            if(!suggestionLocation)return;
             const labels={caserne:'Caserne','etat-major':'État-major','cta-codis':'CTA / CODIS'};
             const lat=suggestionLocation.lat.toFixed(6); const lng=suggestionLocation.lng.toFixed(6);
             const title=`Suggestion ${labels[type]} : ${name||sdis}`;
