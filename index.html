@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carte Tactique</title>
+    <title>Carte Tactique SPP/SPV</title>
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -113,8 +113,9 @@
         </div>
 
         <div class="section-title">Secteur Géo</div>
-        <select>
-            <option>Toute la France (National)</option>
+        <select id="geo-sector" aria-label="Secteur géographique">
+            <option value="metropole">France Metropolitaine</option>
+            <option value="outremer">France Outremer</option>
         </select>
 
         <div class="section-title">Centres de Secours</div>
@@ -205,6 +206,16 @@
         });
         L.control.zoom({position:'topright'}).addTo(map);
         let currentLayer = satLayer;
+        const geoSector=document.getElementById('geo-sector');
+        const geoViews={
+            metropole:{center:[46.603354,1.888334],zoom:6},
+            outremer:{center:[16.265,-61.55],zoom:9}
+        };
+        function changeGeoSector(){
+            const view=geoViews[geoSector.value]||geoViews.metropole;
+            map.setView(view.center,view.zoom);
+        }
+        geoSector.addEventListener('change',changeGeoSector);
 
         const OVERPASS_ENDPOINTS = [
             'https://overpass-api.de/api/interpreter',
