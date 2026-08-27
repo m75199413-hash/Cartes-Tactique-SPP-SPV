@@ -661,6 +661,7 @@
 
         // Donnees locales officielles : elles permettent l'affichage sans Overpass.
         const LOCAL_DATASETS = [
+            {url:'csp-france.geojson', type:'CSP', optional:true, source:'OpenStreetMap - donnees locales'},
             {url:'csp-doubs.geojson', type:'CSP', source:'SDIS 25 - donnees locales'},
             {url:'pei-rennes.geojson', type:'PEI', source:'Rennes Metropole - donnees locales'},
             {url:'pei-tarn.geojson', type:'PEI', source:'SDIS 81 - donnees locales'},
@@ -668,7 +669,8 @@
             {url:'pei-annecy.csv', type:'PEI', format:'csv', source:'Grand Annecy - donnees locales'}
         ];
         function loadLocalDataset(dataset){
-            return fetch(dataset.url).then(r=>{if(!r.ok)throw new Error(`${dataset.url}: HTTP ${r.status}`);return dataset.format==='csv'?r.text():r.json();}).then(data=>{
+            return fetch(dataset.url).then(r=>{if(!r.ok){if(dataset.optional)return 0;throw new Error(`${dataset.url}: HTTP ${r.status}`);}return dataset.format==='csv'?r.text():r.json();}).then(data=>{
+                if(data===0){debugLog(`${dataset.url} absent : generation GitHub en attente`,'warn');return 0;}
                 if(dataset.format==='csv') return loadLocalCsv(data,dataset);
                 const geojson=data;
                 let added=0;

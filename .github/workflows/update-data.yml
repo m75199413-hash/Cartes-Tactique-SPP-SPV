@@ -35,10 +35,19 @@ jobs:
             'https://static.data.gouv.fr/resources/points-deau-incendie-de-lagglomeration-du-grand-annecy/20250128-081713/points-eau-incendie-2024.csv' \
             -o pei-annecy.csv
 
+          mkdir -p /tmp/csp-osm
+          boxes=('41,-5.5,44.4,-0.8' '41,-0.8,44.4,3.9' '41,3.9,44.4,8.5' '44.4,-5.5,47.8,-0.8' '44.4,-0.8,47.8,3.9' '44.4,3.9,47.8,8.5' '47.8,-5.5,51.3,-0.8' '47.8,-0.8,51.3,3.9' '47.8,3.9,51.3,8.5')
+          for i in "${!boxes[@]}"; do
+            curl --fail --location --retry 3 --max-time 120 --get \
+              --data-urlencode "data=[out:json][timeout:60];nwr[\"amenity\"=\"fire_station\"](${boxes[$i]});out center tags;" \
+              'https://overpass-api.de/api/interpreter' -o "/tmp/csp-osm/$i.json"
+          done
+          jq -s '{type:"FeatureCollection",features:[.[].elements[] | select(([(.tags.name // ""),(.tags["fire_station:type:FR"] // ""),(.tags.description // "")] | join(" ")) | test("CSP|centre de secours principal"; "i")) | (.lat // .center.lat) as $lat | (.lon // .center.lon) as $lon | select($lat != null and $lon != null) | {type:"Feature",geometry:{type:"Point",coordinates:[$lon,$lat]},properties:(.tags // {})}]}' /tmp/csp-osm/*.json > csp-france.geojson
+
       - name: Publier les changements
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add csp-doubs.geojson pei-rennes.geojson pei-tarn.geojson pei-herault-dfci.geojson pei-annecy.csv
+          git add csp-france.geojson csp-doubs.geojson pei-rennes.geojson pei-tarn.geojson pei-herault-dfci.geojson pei-annecy.csv
           git diff --cached --quiet || git commit -m 'Actualiser les donnees CSP et PEI'
           git push
