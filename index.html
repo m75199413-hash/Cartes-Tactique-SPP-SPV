@@ -124,14 +124,6 @@
             </div>
         </div>
 
-        <div class="section-title">Commandement & SDIS</div>
-        <div class="toggle-group">
-            <div class="toggle-item">
-                <span class="toggle-label"><span class="dot dot-sdis"></span> SDIS / État-Major / CODIS <span class="layer-count" id="count-SDIS">0</span></span>
-                <label class="switch"><input type="checkbox" id="chk-sdis" checked><span class="slider"></span></label>
-            </div>
-        </div>
-
         <div class="section-title">Alimentation en Eau (PEI)</div>
         <div class="toggle-group">
             <div class="toggle-item">
@@ -231,7 +223,7 @@
             BI: createCustomIcon('#3b82f6','BI',22)
         };
         const checkboxes = {
-            CSP: document.getElementById('chk-csp'), CS: document.getElementById('chk-cs'), SDIS: document.getElementById('chk-sdis'),
+            CSP: document.getElementById('chk-csp'), CS: document.getElementById('chk-cs'),
             PI: document.getElementById('chk-pi'), BI: document.getElementById('chk-bi')
         };
         let loadingRequests = 0;
