@@ -666,7 +666,9 @@
             {url:'pei-rennes.geojson', type:'PEI', source:'Rennes Metropole - donnees locales'},
             {url:'pei-tarn.geojson', type:'PEI', source:'SDIS 81 - donnees locales'},
             {url:'pei-herault-dfci.geojson', type:'PEI', source:'Herault Data - donnees locales'},
-            {url:'pei-annecy.csv', type:'PEI', format:'csv', source:'Grand Annecy - donnees locales'}
+            {url:'pei-annecy.csv', type:'PEI', format:'csv', source:'Grand Annecy - donnees locales'},
+            {url:'pei-sdis64.geojson', type:'PEI', source:'SDIS 64 - donnees locales'},
+            {url:'pei-tours.geojson', type:'PEI', source:'Tours Metropole - donnees locales'}
         ];
         function loadLocalDataset(dataset){
             return fetch(dataset.url).then(r=>{if(!r.ok){if(dataset.optional)return 0;throw new Error(`${dataset.url}: HTTP ${r.status}`);}return dataset.format==='csv'?r.text():r.json();}).then(data=>{
