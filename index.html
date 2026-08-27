@@ -962,6 +962,15 @@
             tags:{name:'CTA / CODIS SDIS 30',operator:'SDIS 30'},
             source:'Suggestion vérifiée par utilisateur'
         });
+        addItem({
+            id:'suggestion-etat-major-sdis-30',
+            type:'SDIS',
+            subtype:'ETAT_MAJOR',
+            lat:43.812770,
+            lng:4.316498,
+            tags:{name:'État-major SDIS 30',operator:'SDIS 30'},
+            source:'Suggestion vérifiée par utilisateur'
+        });
         updateMarkers();
         document.getElementById('zoom-level').innerText=map.getZoom();
         // Warn if page served via file:// which can cause many fetch failures (CORS/network)
