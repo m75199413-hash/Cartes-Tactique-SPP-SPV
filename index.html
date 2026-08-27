@@ -61,8 +61,6 @@
         .search-suggestion-name { overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.82rem; }
         .search-suggestion-meta { margin-left:auto;color:#9ca3af;font-size:.68rem;white-space:nowrap; }
 
-        .zoom-hint { position:absolute; top:62px; left:15px; z-index:999; background:rgba(120,53,15,.92); border:1px solid #f59e0b; color:#fde68a; padding:6px 12px; border-radius:6px; font-size:.72rem; max-width:400px; display:none; }
-
         .status-bar { position: absolute; bottom: 15px; left: 15px; z-index: 999; background: rgba(17, 24, 39, 0.9); padding: 6px 15px; border-radius: 6px; font-size: 0.75rem; display: flex; gap: 15px; border: 1px solid #374151; }
         .status-bar span { color: #10b981; font-weight: bold; }
 
@@ -90,7 +88,7 @@
         .import-btn{margin-top:10px;width:100%;padding:8px;border-radius:6px;border:1px solid #374151;background:#0f1724;color:#9ca3af;cursor:pointer}
         .import-btn:hover{background:#111827;color:#fff}
         .legend{display:block;position:absolute;right:15px;bottom:140px;z-index:999;background:rgba(17,24,39,.94);border:1px solid #374151;border-radius:8px;padding:10px 12px;font-size:.72rem;display:none}.legend div{display:flex;align-items:center;gap:7px;margin:4px 0}.legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
-        @media(max-width:700px){#sidebar{position:absolute;left:0;top:0;bottom:0;width:min(320px,88vw);transform:translateX(-105%);transition:.25s}#sidebar.mobile-open{transform:translateX(0)}.map-title{right:60px}.search-box{left:10px;top:10px;width:calc(100% - 20px);max-width:none}.zoom-hint{left:10px;top:58px;max-width:calc(100% - 20px)}.status-bar{left:10px;bottom:10px;gap:8px;font-size:.65rem}.legend{display:none}.mobile-menu{display:flex!important}}
+        @media(max-width:700px){#sidebar{position:absolute;left:0;top:0;bottom:0;width:min(320px,88vw);transform:translateX(-105%);transition:.25s}#sidebar.mobile-open{transform:translateX(0)}.map-title{right:60px}.search-box{left:10px;top:10px;width:calc(100% - 20px);max-width:none}.status-bar{left:10px;bottom:10px;gap:8px;font-size:.65rem}.legend{display:none}.mobile-menu{display:flex!important}}
         .mobile-menu{display:none;position:absolute;left:10px;bottom:65px;z-index:1200;width:42px;height:42px;border:1px solid #374151;border-radius:8px;background:#111827;color:#fff;align-items:center;justify-content:center;cursor:pointer}
         .cluster-wrap{border-radius:50%;background:#111827;color:#fff;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-weight:800}
 
@@ -158,8 +156,6 @@
             <input type="text" id="searchInput" placeholder="Rechercher une caserne (ex: CSP Paris, CPI, Nantes...)" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="searchSuggestions" aria-expanded="false" onkeypress="handleSearch(event)">
             <div id="searchSuggestions" class="search-suggestions" role="listbox"></div>
         </div>
-        <div class="zoom-hint" id="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Zoomez (niveau 11+) pour charger les PI / BI de la zone affichée</div>
-
         <div id="map"></div>
         <div class="map-title"><i class="fa-solid fa-map-location-dot"></i> FR-SIS TACTICAL</div>
         <button class="mobile-menu" onclick="toggleSidebar()" title="Afficher les couches"><i class="fa-solid fa-layer-group"></i></button>
@@ -479,7 +475,6 @@
         // PI/BI : volume bien trop important pour un chargement national (plusieurs centaines de
         // milliers de points en France) -> chargement par zone visible, activé à partir du zoom 11.
         async function loadPEIOSM() {
-            updateZoomHint();
             if(map.getZoom()<PEI_MIN_ZOOM) return;
             const b=map.getBounds(), key=b.toBBoxString();
             if(osmLoadedKeys.has('pei:'+key)) return; osmLoadedKeys.add('pei:'+key);
@@ -741,12 +736,6 @@
 
         function toggleSidebar(){document.getElementById('sidebar').classList.toggle('mobile-open');}
 
-        function updateZoomHint(){
-            const hint=document.getElementById('zoom-hint');
-            if(!hint) return;
-            hint.style.display = map.getZoom()<PEI_MIN_ZOOM ? 'block':'none';
-        }
-
         function updateMarkers(){
             let total=0;
             for(const type in checkboxes){
@@ -875,7 +864,6 @@
 
         updateMarkers();
         document.getElementById('zoom-level').innerText=map.getZoom();
-        updateZoomHint();
         // Warn if page served via file:// which can cause many fetch failures (CORS/network)
         if(location.protocol==='file:'){
             debugLog('Attention : page ouverte via file:// — des fetchs peuvent échouer. Servez la page via HTTP (ex: python -m http.server)','warn');
