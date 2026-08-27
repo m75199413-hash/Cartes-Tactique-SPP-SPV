@@ -312,7 +312,7 @@
             const t=item.tags||{};
             const address=t['addr:full'] || [t['addr:housenumber'],t['addr:street'],t['addr:postcode'],t['addr:city']].filter(Boolean).join(' ') || 'Non renseignée';
             const source=item.source || 'OpenStreetMap';
-            return `<div class="station-popup"><span class="badge" style="background:${item.type==='CSP'?'#ef4444':'#f97316'}">${esc(item.type)}</span><h3>${esc(t.name||t.nom||'Centre d’incendie et de secours')}</h3><table>
+            return `<div class="station-popup"><span class="badge" style="background:${item.type==='CSP'?'#ef4444':item.type==='SDIS'?'#a855f7':'#f97316'}">${esc(item.type)}</span><h3>${esc(t.name||t.nom||'Centre d’incendie et de secours')}</h3><table>
             <tr><td>Classement</td><td><b>${esc(t['fire_station:type:FR']||t.type||item.type)}</b></td></tr>
             <tr><td>SDIS / SIS</td><td>${esc(inferSdis(t)||'Non renseigné')}</td></tr>
             <tr><td>Référence</td><td>${esc(t['ref:FR:SDIS']||t.ref||t.reference||'—')}</td></tr>
@@ -941,6 +941,15 @@
             tags:{name:'Nîmes Sainte-Césaire',operator:'SDIS 30'},
             source:'Suggestion vérifiée par utilisateur'
         });
+        addItem({
+            id:'suggestion-cta-codis-sdis-30',
+            type:'SDIS',
+            lat:43.808285,
+            lng:4.314081,
+            tags:{name:'CTA / CODIS SDIS 30',operator:'SDIS 30'},
+            source:'Suggestion vérifiée par utilisateur'
+        });
+        map.addLayer(layers.SDIS);
         updateMarkers();
         document.getElementById('zoom-level').innerText=map.getZoom();
         // Warn if page served via file:// which can cause many fetch failures (CORS/network)
