@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FR-SIS TACTICAL - Cartographie Sécurité Civile</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; height: 100vh; display: flex; overflow: hidden; background: #0b0f19; color: #fff; }
+
+        /* Sidebar UI */
+        #sidebar { width: 320px; background: #111827; border-right: 1px solid #1f2937; display: flex; flex-direction: column; z-index: 1000; padding: 20px; box-shadow: 4px 0 15px rgba(0,0,0,0.5); }
+        .brand { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; }
+        .brand h1 { font-size: 1.2rem; font-weight: 800; color: #fff; }
+        .brand h1 span { color: #ef4444; }
+        .brand p { font-size: 0.65rem; color: #9ca3af; text-transform: uppercase; }
+        .brand-icon { color: #ef4444; font-size: 1.5rem; }
+
+        .section-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #6b7280; margin: 20px 0 10px 0; }
+        select { width: 100%; padding: 10px; background: #1f2937; border: 1px solid #374151; border-radius: 6px; color: #fff; font-size: 0.85rem; }
+
+        /* Switch Controls */
+        .toggle-group { display: flex; flex-direction: column; gap: 12px; }
+        .toggle-item { display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; color: #d1d5db; }
+        .toggle-label { display: flex; align-items: center; gap: 10px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .dot-csp { background: #ef4444; }
+        .dot-cs { background: #f97316; }
+        .dot-sdis { background: #a855f7; }
+        .dot-pi { background: #06b6d4; }
+        .dot-bi { background: #3b82f6; }
+
+        .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #374151; transition: .3s; border-radius: 20px; }
+        .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background-color: #ef4444; }
+        input:checked + .slider:before { transform: translateX(16px); }
+
+        .footer-info { margin-top: auto; font-size: 0.75rem; color: #6b7280; border-top: 1px solid #1f2937; padding-top: 15px; }
+
+        /* Carte et Overlays */
+        #map-container { flex: 1; position: relative; }
+        #map { width: 100%; height: 100%; background: #1a1a1a; }
+
+        .search-box { position: absolute; top: 15px; left: 15px; z-index: 999; width: calc(100% - 80px); max-width: 450px; }
+        .search-box input { width: 100%; padding: 12px 15px 12px 40px; background: rgba(17, 24, 39, 0.95); border: 1px solid #374151; border-radius: 8px; color: white; font-size: 0.9rem; }
+        .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #9ca3af; }
+
+        .zoom-hint { position:absolute; top:62px; left:15px; z-index:999; background:rgba(120,53,15,.92); border:1px solid #f59e0b; color:#fde68a; padding:6px 12px; border-radius:6px; font-size:.72rem; max-width:400px; display:none; }
+
+        .status-bar { position: absolute; bottom: 15px; left: 15px; z-index: 999; background: rgba(17, 24, 39, 0.9); padding: 6px 15px; border-radius: 6px; font-size: 0.75rem; display: flex; gap: 15px; border: 1px solid #374151; }
+        .status-bar span { color: #10b981; font-weight: bold; }
+
+        .map-tools { position: absolute; right: 15px; bottom: 30px; z-index: 999; display: flex; flex-direction: column; gap: 8px; }
+        .tool-btn { width: 38px; height: 38px; background: #111827; border: 1px solid #374151; border-radius: 6px; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .tool-btn:hover { background: #1f2937; }
+
+        /* Style des marqueurs sur la carte */
+        .custom-marker { border-radius: 50%; border: 2px solid #ffffff; box-shadow: 0 0 6px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 9px; }
+        .loading { position:absolute; top:15px; right:15px; z-index:1000; background:rgba(17,24,39,.95); border:1px solid #374151; padding:8px 12px; border-radius:7px; font-size:.75rem; display:none; }
+        .leaflet-popup-content-wrapper { border-radius:10px; }
+        .station-popup { min-width:240px; color:#111827; }
+        .station-popup h3 { margin:0 0 6px; font-size:15px; }
+        .station-popup .badge { display:inline-block; padding:3px 7px; border-radius:999px; color:#fff; font-size:10px; font-weight:800; margin-bottom:7px; }
+        .station-popup table { width:100%; border-collapse:collapse; font-size:12px; }
+        .station-popup td { padding:3px 0; vertical-align:top; }
+        .station-popup td:first-child { color:#6b7280; width:38%; }
+        .data-source { margin-top:8px; font-size:10px; color:#6b7280; }
+    
+        /* Inspiration uMap / Framacarte : panneau de couches compact et lisible */
+        .layer-count{font-size:.68rem;color:#9ca3af;background:#1f2937;padding:2px 7px;border-radius:999px;min-width:28px;text-align:center}
+        .toggle-item{gap:8px;padding:7px 8px;border-radius:7px}.toggle-item:hover{background:#182235}
+        /* national load buttons removed (use official datasets / viewport loads instead) */
+        .map-title{position:absolute;top:15px;right:70px;z-index:999;background:rgba(17,24,39,.92);border:1px solid #374151;border-radius:8px;padding:8px 12px;font-size:.75rem;font-weight:700;box-shadow:0 4px 15px #0005}
+        .import-btn{margin-top:10px;width:100%;padding:8px;border-radius:6px;border:1px solid #374151;background:#0f1724;color:#9ca3af;cursor:pointer}
+        .import-btn:hover{background:#111827;color:#fff}
+        .legend{display:block;position:absolute;right:15px;bottom:140px;z-index:999;background:rgba(17,24,39,.94);border:1px solid #374151;border-radius:8px;padding:10px 12px;font-size:.72rem;display:none}.legend div{display:flex;align-items:center;gap:7px;margin:4px 0}.legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
+        @media(max-width:700px){#sidebar{position:absolute;left:0;top:0;bottom:0;width:min(320px,88vw);transform:translateX(-105%);transition:.25s}#sidebar.mobile-open{transform:translateX(0)}.map-title{right:60px}.search-box{left:10px;top:10px;width:calc(100% - 20px);max-width:none}.zoom-hint{left:10px;top:58px;max-width:calc(100% - 20px)}.status-bar{left:10px;bottom:10px;gap:8px;font-size:.65rem}.legend{display:none}.mobile-menu{display:flex!important}}
+        .mobile-menu{display:none;position:absolute;left:10px;bottom:65px;z-index:1200;width:42px;height:42px;border:1px solid #374151;border-radius:8px;background:#111827;color:#fff;align-items:center;justify-content:center;cursor:pointer}
+        .cluster-wrap{border-radius:50%;background:#111827;color:#fff;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-weight:800}
+
+        #debug-panel{position:absolute;left:15px;bottom:50px;z-index:1300;width:min(480px,calc(100% - 30px));max-height:260px;overflow-y:auto;background:rgba(9,12,20,.97);border:1px solid #374151;border-radius:8px;padding:10px 12px;font-size:.72rem;font-family:ui-monospace,Menlo,Consolas,monospace;display:none;}
+        #debug-panel.open{display:block;}
+        #debug-panel .dbg-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-family:inherit;}
+        #debug-panel .dbg-head b{color:#e5e7eb;font-size:.75rem;}
+        #debug-panel .dbg-clear{cursor:pointer;color:#9ca3af;border:1px solid #374151;border-radius:5px;padding:1px 7px;}
+        .dbg-line{padding:3px 0;border-bottom:1px solid #1f2937;white-space:pre-wrap;word-break:break-word;}
+        .dbg-ok{color:#10b981;} .dbg-warn{color:#f59e0b;} .dbg-err{color:#ef4444;}
+    </style>
+</head>
+<body>
+
+    <div id="sidebar">
+        <div class="brand">
+            <div>
+                <h1>FR-SIS <span>TACTICAL</span></h1>
+                <p>Cartographie Sécurité Civile</p>
+            </div>
+            <i class="fa-solid fa-shield-halved brand-icon"></i>
+        </div>
+
+        <div class="section-title">Secteur Géo</div>
+        <select>
+            <option>Toute la France (National)</option>
+        </select>
+
+        <div class="section-title">Centres de Secours</div>
+        <div class="toggle-group">
+            <div class="toggle-item">
+                <span class="toggle-label"><span class="dot dot-csp"></span> CSP / Centres Principaux <span class="layer-count" id="count-CSP">0</span></span>
+                <label class="switch"><input type="checkbox" id="chk-csp" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-item">
+                <span class="toggle-label"><span class="dot dot-cs"></span> CS / CS-R / CPI / CPNI <span class="layer-count" id="count-CS">0</span></span>
+                <label class="switch"><input type="checkbox" id="chk-cs" checked><span class="slider"></span></label>
+            </div>
+        </div>
+
+        <div class="section-title">Commandement & SDIS</div>
+        <div class="toggle-group">
+            <div class="toggle-item">
+                <span class="toggle-label"><span class="dot dot-sdis"></span> SDIS / État-Major / CODIS <span class="layer-count" id="count-SDIS">0</span></span>
+                <label class="switch"><input type="checkbox" id="chk-sdis" checked><span class="slider"></span></label>
+            </div>
+        </div>
+
+        <div class="section-title">Alimentation en Eau (PEI)</div>
+        <div class="toggle-group">
+            <div class="toggle-item">
+                <span class="toggle-label"><span class="dot dot-pi"></span> Poteaux Incendie (PI) <span class="layer-count" id="count-PI">0</span></span>
+                <label class="switch"><input type="checkbox" id="chk-pi" checked><span class="slider"></span></label>
+            </div>
+            <div class="toggle-item">
+                <span class="toggle-label"><span class="dot dot-bi"></span> Bouches / Réserves / Points d'Eau <span class="layer-count" id="count-BI">0</span></span>
+                <label class="switch"><input type="checkbox" id="chk-bi" checked><span class="slider"></span></label>
+            </div>
+        </div>
+
+        <div class="footer-info">
+            <strong>BASE DE DONNÉES SÉCURITÉ CIVILE</strong><br>
+            Mode Carte : Satellite par défaut · données dynamiques OpenStreetMap.<br>
+            CSP : chargement national. PI/BI : chargés par zone visible à partir du zoom 11 (volume trop important pour un chargement national en un seul bloc).
+        </div>
+        <button class="import-btn" onclick="promptImportUmap()" title="Importer une carte uMap / Framacarte (GeoJSON)">Importer une carte uMap / Framacarte</button>
+    </div>
+
+    <div id="map-container">
+        <div id="loading" class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Chargement des données…<div id="loading-progress-wrap" style="margin-top:8px;display:flex;align-items:center;gap:8px"><div id="loading-progress-bar" style="height:8px;background:#111827;border:1px solid #374151;border-radius:6px;overflow:hidden;flex:1"><div id="loading-progress-fill" style="width:0%;height:100%;background:#ef4444"></div></div><div id="loading-progress-text" style="font-size:.72rem;color:#9ca3af;white-space:nowrap">0/0</div></div></div>
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" placeholder="Rechercher une caserne (ex: CSP Paris, CPI, Nantes...)" onkeypress="handleSearch(event)">
+        </div>
+        <div class="zoom-hint" id="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Zoomez (niveau 11+) pour charger les PI / BI de la zone affichée</div>
+
+        <div id="map"></div>
+        <div class="map-title"><i class="fa-solid fa-map-location-dot"></i> FR-SIS TACTICAL</div>
+        <button class="mobile-menu" onclick="toggleSidebar()" title="Afficher les couches"><i class="fa-solid fa-layer-group"></i></button>
+        <div class="legend" id="legend"><strong>Légende</strong><div><i style="background:#ef4444"></i>CSP</div><div><i style="background:#f97316"></i>CS / CPI / CIS</div><div><i style="background:#a855f7"></i>SDIS / État-Major</div><div><i style="background:#06b6d4"></i>PI</div><div><i style="background:#3b82f6"></i>BI / autres PEI</div></div>
+
+        <div class="status-bar">
+            <div>ZOOM: <span id="zoom-level">6</span></div>
+            <div>ÉQUIPEMENTS VISIBLES: <span id="visible-count">0</span></div>
+            <div>MODE: <span id="mode-text">SATELLITE</span></div>
+        </div>
+
+        <div class="map-tools">
+            <div class="tool-btn" title="Basculer Satellite / Carte Claire" onclick="toggleMapMode()"><i class="fa-solid fa-layer-group"></i></div>
+            <div class="tool-btn" title="Carte Satellite" onclick="setMode('sat')"><i class="fa-solid fa-globe"></i></div>
+            <div class="tool-btn" title="Carte Claire" onclick="setMode('light')"><i class="fa-solid fa-map"></i></div>
+            <div class="tool-btn" title="Ma Position" onclick="locateUser()"><i class="fa-solid fa-crosshairs"></i></div>
+            <div class="tool-btn" title="Journal technique (diagnostic)" onclick="toggleDebugPanel()"><i class="fa-solid fa-bug"></i></div>
+        </div>
+
+        <div id="debug-panel">
+            <div class="dbg-head"><b><i class="fa-solid fa-terminal"></i> Journal technique</b><span class="dbg-clear" onclick="clearDebugPanel()">vider</span></div>
+            <div id="debug-lines"></div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+    <script>
+        // FR-SIS TACTICAL V5 (fix CSP + fix PI/BI)
+        // Architecture des données : sources officielles data.gouv.fr en priorité,
+        // OpenStreetMap/Overpass en complément et secours.
+
+        const satLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Esri Satellite', maxZoom: 19
+        });
+        const lightLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'OpenStreetMap', maxZoom: 19
+        });
+
+        const map = L.map('map', {
+            center: [46.603354, 1.888334],
+            zoom: 6,
+            layers: [satLayer],
+            zoomControl: false
+        });
+        L.control.zoom({position:'topright'}).addTo(map);
+        let currentLayer = satLayer;
+
+        const OVERPASS_ENDPOINTS = [
+            'https://overpass-api.de/api/interpreter',
+            'https://overpass.kumi.systems/api/interpreter'
+        ];
+        const DATAGOUV_API = 'https://www.data.gouv.fr/api/1/datasets/';
+
+        const database = [];
+        const byId = new Map();
+        const layers = {
+            CSP: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:10,maxClusterRadius:42}),
+            CS: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:11,maxClusterRadius:42}),
+            SDIS: L.layerGroup(), PI: L.layerGroup(), BI: L.layerGroup()
+        };
+        const icons = {
+            CSP: createCustomIcon('#ef4444','CSP',34),
+            CS: createCustomIcon('#f97316','CS',28),
+            SDIS: createCustomIcon('#a855f7','EM',30),
+            PI: createCustomIcon('#06b6d4','PI',22),
+            BI: createCustomIcon('#3b82f6','BI',22)
+        };
+        const checkboxes = {
+            CSP: document.getElementById('chk-csp'), CS: document.getElementById('chk-cs'), SDIS: document.getElementById('chk-sdis'),
+            PI: document.getElementById('chk-pi'), BI: document.getElementById('chk-bi')
+        };
+        let loadingRequests = 0;
+        let officialDiscoveryDone = false;
+        let osmLoadedKeys = new Set();
+        let officialResourceKeys = new Set();
+        // Marqueurs pour chargements nationaux évités en double
+        let nationalLoaded = { CS: false, PI: false, BI: false };
+        // Queue/throttling Overpass
+        const overpassQueue = [];
+        let overpassRunning = 0;
+        const OVERPASS_CONCURRENCY = 1; // courant réduit pour éviter rate-limits
+        const OVERPASS_DELAY_MS = 1200; // délai entre démarrages de requêtes
+        const OVERPASS_MAX_RETRIES = 3;
+        let overpassTotalTasks = 0, overpassCompletedTasks = 0;
+        // Collections de ressources officielles par type (PEI/MISC)
+        const officialDatasets = { PEI: [], CS: [] };
+        const PEI_MIN_ZOOM = 11; // en dessous, le volume de PI/BI en France est trop important pour être chargé
+
+        function setLoading(on) {
+            loadingRequests += on ? 1 : -1;
+            loadingRequests = Math.max(0, loadingRequests);
+            document.getElementById('loading').style.display = loadingRequests ? 'block' : 'none';
+        }
+        function esc(value) { return String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])); }
+        function createCustomIcon(color,text,size=26) {
+            return L.divIcon({className:'custom-icon',html:`<div class="custom-marker" style="background:${color};width:${size}px;height:${size}px;font-size:${Math.max(8,size/3)}px">${text}</div>`,iconSize:[size,size],iconAnchor:[size/2,size/2]});
+        }
+        // Classification CSP vs CS : on ne peut PAS se fier uniquement au tag fire_station:type:FR
+        // (quasi absent dans OSM France). On se base d'abord sur le NOM (très majoritairement fiable),
+        // puis sur les tags de classement s'ils existent.
+        function normalizeType(tags={}) {
+            const t = String(tags['fire_station:type:FR'] || tags['fire_station:type'] || tags.type || '').toUpperCase();
+            const n = String(tags.name || tags.nom || tags['name:fr'] || '').toUpperCase();
+            const note = String(tags.note || tags.description || '').toUpperCase();
+            const haystack = `${t} ${n} ${note}`;
+            if (/\bCSP\b/.test(haystack) || /CENTRE\s+DE\s+SECOURS\s+PRINCIPAL/.test(haystack)) return 'CSP';
+            return 'CS';
+        }
+        function inferSdis(tags={}) {
+            return tags.operator || tags['operator:short'] || tags.sdis || tags.SDIS || '';
+        }
+        function elementLatLng(el) {
+            if (el.lat != null && el.lon != null) return [Number(el.lat),Number(el.lon)];
+            if (el.center) return [Number(el.center.lat),Number(el.center.lon)];
+            return null;
+        }
+        function stationPopup(item) {
+            const t=item.tags||{};
+            const address=t['addr:full'] || [t['addr:housenumber'],t['addr:street'],t['addr:postcode'],t['addr:city']].filter(Boolean).join(' ') || 'Non renseignée';
+            const source=item.source || 'OpenStreetMap';
+            return `<div class="station-popup"><span class="badge" style="background:${item.type==='CSP'?'#ef4444':'#f97316'}">${esc(item.type)}</span><h3>${esc(t.name||t.nom||'Centre d’incendie et de secours')}</h3><table>
+            <tr><td>Classement</td><td><b>${esc(t['fire_station:type:FR']||t.type||item.type)}</b></td></tr>
+            <tr><td>SDIS / SIS</td><td>${esc(inferSdis(t)||'Non renseigné')}</td></tr>
+            <tr><td>Référence</td><td>${esc(t['ref:FR:SDIS']||t.ref||t.reference||'—')}</td></tr>
+            <tr><td>Adresse</td><td>${esc(address)}</td></tr>
+            ${t.groupement||t['ref:FR:SDIS:GRPT']?`<tr><td>Groupement</td><td>${esc(t.groupement||t['ref:FR:SDIS:GRPT'])}</td></tr>`:''}
+            ${t.compagnie||t['ref:FR:SDIS:CIE']?`<tr><td>Compagnie</td><td>${esc(t.compagnie||t['ref:FR:SDIS:CIE'])}</td></tr>`:''}
+            ${t.phone?`<tr><td>Téléphone</td><td>${esc(t.phone)}</td></tr>`:''}
+            ${t.website?`<tr><td>Site</td><td><a href="${esc(t.website)}" target="_blank" rel="noopener">Ouvrir</a></td></tr>`:''}
+            </table><div class="data-source">Source : ${esc(source)}</div></div>`;
+        }
+        function hydrantPopup(item) {
+            const t=item.tags||{};
+            return `<div class="station-popup"><span class="badge" style="background:${item.type==='PI'?'#06b6d4':'#3b82f6'}">${item.type}</span><h3>${esc(t.name||t.nom||'Point d’eau incendie')}</h3><table>
+            <tr><td>Référence</td><td><b>${esc(t.ref||t.reference||t['ref:FR:SIS']||'—')}</b></td></tr>
+            <tr><td>Type</td><td>${esc(t['fire_hydrant:type']||t.type_pei||t.type||item.type)}</td></tr>
+            <tr><td>Débit</td><td>${esc(t.flow_rate||t.debit||t['fire_hydrant:flow_capacity']||'—')}</td></tr>
+            <tr><td>Diamètre</td><td>${esc(t['fire_hydrant:diameter']||t.diametre||'—')}</td></tr>
+            <tr><td>État</td><td>${esc(t.etat_cod||t.status||'—')}</td></tr>
+            <tr><td>Gestionnaire</td><td>${esc(t.operator||t.gestionnaire||'—')}</td></tr></table><div class="data-source">Source : ${esc(item.source||'Donnée publique')}</div></div>`;
+        }
+
+        function addItem(item) {
+            if (!item || item.lat==null || item.lng==null) return;
+            const id=item.id || `${item.type}-${item.lat}-${item.lng}-${item.source||''}`;
+            if(byId.has(id)) return;
+            item.id=id; byId.set(id,item); database.push(item);
+            let marker;
+            if(item.type==='PI'||item.type==='BI') {
+                marker=L.circleMarker([item.lat,item.lng],{radius:5,color:'#fff',weight:1.5,fillColor:item.type==='PI'?'#06b6d4':'#3b82f6',fillOpacity:.95});
+                marker.bindPopup(hydrantPopup(item),{maxWidth:360});
+            } else {
+                marker=L.marker([item.lat,item.lng],{icon:icons[item.type]});
+                marker.bindPopup(stationPopup(item),{maxWidth:380});
+            }
+            item.marker=marker;
+            layers[item.type].addLayer(marker);
+        }
+
+        // ---- Journal technique visible (remplace les console.warn invisibles pour l'utilisateur) ----
+        function debugLog(msg, kind){
+            const box=document.getElementById('debug-lines');
+            if(!box) return;
+            const line=document.createElement('div');
+            line.className='dbg-line '+(kind==='ok'?'dbg-ok':kind==='err'?'dbg-err':kind==='warn'?'dbg-warn':'');
+            const time=new Date().toLocaleTimeString('fr-FR');
+            line.textContent=`[${time}] ${msg}`;
+            box.prepend(line);
+            while(box.children.length>80) box.removeChild(box.lastChild);
+        }
+        function toggleDebugPanel(){document.getElementById('debug-panel').classList.toggle('open');}
+        function clearDebugPanel(){document.getElementById('debug-lines').innerHTML='';}
+
+        async function overpass(query, label) {
+            let last;
+            for(const endpoint of OVERPASS_ENDPOINTS) {
+                try {
+                    const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:'data='+encodeURIComponent(query)});
+                    const text=await r.text();
+                    if(!r.ok) throw new Error(`HTTP ${r.status} (${endpoint.includes('kumi')?'kumi':'overpass-api.de'})${text?': '+text.slice(0,180):''}`);
+                    try { return JSON.parse(text); }
+                    catch(parseErr){ throw new Error(`Réponse non-JSON de ${endpoint.includes('kumi')?'kumi':'overpass-api.de'} — ${text.slice(0,180).replace(/\s+/g,' ')}`); }
+                } catch(e){ last=e; debugLog(`${label?label+' — ':''}échec sur ${endpoint.includes('kumi')?'kumi':'overpass-api.de'} : ${e.message}`,'warn'); }
+            }
+            throw last||new Error('Overpass indisponible');
+        }
+
+        function setLoadingProgress(total, done, label){
+            const wrap=document.getElementById('loading'); if(!wrap) return;
+            const bar=document.getElementById('loading-progress-fill'); const text=document.getElementById('loading-progress-text');
+            if(total<=0){ if(bar) bar.style.width='0%'; if(text) text.innerText='0/0'; return; }
+            const pct=Math.round((done/total)*100);
+            if(bar) bar.style.width=pct+'%'; if(text) text.innerText=`${done}/${total}`;
+            if(label) document.getElementById('loading').setAttribute('data-label',label);
+        }
+
+        function enqueueOverpass(query,label){
+            overpassTotalTasks++;
+            setLoading(true);
+            setLoadingProgress(overpassTotalTasks, overpassCompletedTasks, label);
+            return new Promise((resolve,reject)=>{
+                overpassQueue.push({query,label,resolve,reject,attempts:0});
+                processOverpassQueue();
+            });
+        }
+
+        async function processOverpassQueue(){
+            if(overpassRunning>=OVERPASS_CONCURRENCY) return;
+            const task = overpassQueue.shift();
+            if(!task) return;
+            overpassRunning++;
+            try{
+                // small delay to avoid bursting
+                await new Promise(r=>setTimeout(r, OVERPASS_DELAY_MS));
+                const res = await (async ()=>{ // reuse original overpass logic but direct
+                    let last;
+                    for(const endpoint of OVERPASS_ENDPOINTS) {
+                        try {
+                            const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:'data='+encodeURIComponent(task.query)});
+                            const text=await r.text();
+                            if(!r.ok) throw new Error(`HTTP ${r.status} (${endpoint.includes('kumi')?'kumi':'overpass-api.de'})${text?': '+text.slice(0,180):''}`);
+                            try { return JSON.parse(text); }
+                            catch(parseErr){ throw new Error(`Réponse non-JSON de ${endpoint.includes('kumi')?'kumi':'overpass-api.de'} — ${text.slice(0,180).replace(/\s+/g,' ')}`); }
+                        } catch(e){ last=e; debugLog(`${task.label?task.label+' — ':''}échec sur ${endpoint.includes('kumi')?'kumi':'overpass-api.de'} : ${e.message}`,'warn'); }
+                    }
+                    throw last||new Error('Overpass indisponible');
+                })();
+                overpassCompletedTasks++; setLoadingProgress(overpassTotalTasks, overpassCompletedTasks, task.label);
+                task.resolve(res);
+            }catch(e){
+                // retry with exponential backoff
+                task.attempts = (task.attempts||0) + 1;
+                if(task.attempts <= OVERPASS_MAX_RETRIES){
+                    const backoff = OVERPASS_DELAY_MS * Math.pow(2, task.attempts-1);
+                    debugLog(`${task.label||''} tentative ${task.attempts}/${OVERPASS_MAX_RETRIES} - réessai dans ${backoff}ms`,'warn');
+                    setTimeout(()=>{ overpassQueue.push(task); processOverpassQueue(); }, backoff);
+                } else {
+                    overpassCompletedTasks++; setLoadingProgress(overpassTotalTasks, overpassCompletedTasks, task.label);
+                    debugLog(`${task.label||''} ÉCHEC définitif après ${task.attempts} tentatives: ${e.message}`,'err');
+                    task.reject(e);
+                }
+            }finally{
+                overpassRunning--;
+                if(overpassQueue.length) processOverpassQueue();
+                else if(overpassRunning===0){ setLoading(false); setTimeout(()=>{ overpassTotalTasks=0; overpassCompletedTasks=0; setLoadingProgress(0,0); },800); }
+            }
+        }
+
+        // CSP : chargement national. On interroge TOUS les amenity=fire_station, découpés en une
+        // grille fine (plus fiable qu'un gros quart de France côté Overpass), puis on classe chaque
+        // résultat via normalizeType() qui se base surtout sur le nom (le tag fire_station:type:FR
+        // est trop rarement renseigné pour être exploitable seul).
+        async function loadCSPFromOSM() {
+            // Grille 3x3 sur la France métropolitaine (lat 41→51.3, lon -5.5→8.5)
+            const lats=[41.0,44.4,47.8,51.3];
+            const lons=[-5.5,-0.8,3.9,8.5];
+            const boxes=[];
+            for(let i=0;i<3;i++) for(let j=0;j<3;j++) boxes.push([lats[i],lons[j],lats[i+1],lons[j+1]]);
+
+            setLoading(true);
+            let totalCSP=0, failedBoxes=0;
+            try {
+                await Promise.all(boxes.map(async ([s,w,n,e],idx)=>{
+                    const label=`CSP secteur ${idx+1}/${boxes.length}`;
+                    const q=`[out:json][timeout:50];(nwr["amenity"="fire_station"](${s},${w},${n},${e}););out center tags;`;
+                    try{
+                        const data=await enqueueOverpass(q,label);
+                        let found=0;
+                        (data.elements||[]).forEach(el=>{
+                            const ll=elementLatLng(el);
+                            if(!ll) return;
+                            const tags=el.tags||{};
+                            if(normalizeType(tags)==='CSP'){ addItem({id:`osm-${el.type}-${el.id}`,type:'CSP',lat:ll[0],lng:ll[1],tags,source:'OpenStreetMap'}); found++; }
+                        });
+                        totalCSP+=found;
+                        debugLog(`${label} : ${data.elements?.length||0} casernes reçues, ${found} classées CSP`,'ok');
+                        updateMarkers();
+                    }catch(e){ failedBoxes++; debugLog(`${label} : ÉCHEC DÉFINITIF — ${e.message}`,'err'); }
+                }));
+            } finally {
+                setLoading(false); updateMarkers();
+                debugLog(`Chargement CSP terminé : ${totalCSP} CSP au total, ${failedBoxes}/${boxes.length} secteur(s) en échec.`, failedBoxes? 'err':'ok');
+                if((totalCSP===0 || failedBoxes>0) && !document.getElementById('debug-panel').classList.contains('open')) toggleDebugPanel();
+            }
+        }
+
+        // CIS complémentaires (non-CSP) dans la zone affichée.
+        async function loadCISViewport() {
+            const b=map.getBounds(), key=b.toBBoxString();
+            if(osmLoadedKeys.has('cis:'+key)) return; osmLoadedKeys.add('cis:'+key);
+            const q=`[out:json][timeout:35];(nwr["amenity"="fire_station"](${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()}););out center tags;`;
+            try { const data=await enqueueOverpass(q,'CIS zone visible'); let n=0; (data.elements||[]).forEach(el=>{const ll=elementLatLng(el);if(!ll)return;const type=normalizeType(el.tags||{}); if(type!=='CSP'){ addItem({id:`osm-${el.type}-${el.id}`,type,lat:ll[0],lng:ll[1],tags:el.tags||{},source:'OpenStreetMap'}); n++; }}); debugLog(`CIS zone visible : ${n} centre(s) ajouté(s)`,'ok'); updateMarkers(); }
+            catch(e){debugLog('CIS zone visible : ÉCHEC — '+e.message,'err');}
+        }
+
+        // Chargement national des CS (CIS/CPI/CPNI non-CSP) en grille
+        async function loadCSFromOSMNational() {
+            if (nationalLoaded.CS) { debugLog('Chargement national CS déjà effectué','warn'); return; }
+            nationalLoaded.CS = true;
+            setLoading(true);
+            // Grille 6x6 pour meilleure couverture des petites communes
+            const lats=[41.0,42.3,43.6,44.9,46.2,47.5,48.8,51.3];
+            const lons=[-5.5,-3.6,-1.7,0.2,2.1,4.0,5.9,8.5];
+            const boxes=[];
+            for(let i=0;i<7;i++) for(let j=0;j<7;j++) boxes.push([lats[i],lons[j],lats[i+1],lons[j+1]]);
+            try{
+                await Promise.all(boxes.map(async ([s,w,n,e],idx)=>{
+                    const label=`CS national secteur ${idx+1}/${boxes.length}`;
+                    const q=`[out:json][timeout:50];(nwr["amenity"="fire_station"](${s},${w},${n},${e}););out center tags;`;
+                    try{
+                        const data=await enqueueOverpass(q,label);
+                        let found=0;
+                        (data.elements||[]).forEach(el=>{
+                            const ll=elementLatLng(el); if(!ll) return;
+                            const tags=el.tags||{};
+                            if(normalizeType(tags)!=='CSP'){ addItem({id:`osm-${el.type}-${el.id}`,type:'CS',lat:ll[0],lng:ll[1],tags,source:'OpenStreetMap'}); found++; }
+                        });
+                        debugLog(`${label} : ${data.elements?.length||0} casernes reçues, ${found} classées CS`,'ok');
+                        updateMarkers();
+                    }catch(e){ debugLog(`${label} : ÉCHEC — ${e.message}`,'err'); }
+                }));
+            }finally{ setLoading(false); updateMarkers(); debugLog('Chargement national CS terminé','ok'); }
+        }
+
+        // PI/BI : volume bien trop important pour un chargement national (plusieurs centaines de
+        // milliers de points en France) -> chargement par zone visible, activé à partir du zoom 11.
+        async function loadPEIOSM() {
+            updateZoomHint();
+            if(map.getZoom()<PEI_MIN_ZOOM) return;
+            const b=map.getBounds(), key=b.toBBoxString();
+            if(osmLoadedKeys.has('pei:'+key)) return; osmLoadedKeys.add('pei:'+key);
+            const q=`[out:json][timeout:35];(nwr["emergency"="fire_hydrant"](${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()});nwr["emergency"="water_tank"](${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()});nwr["emergency"="fire_water_pond"](${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()}););out center tags;`;
+            try { const data=await enqueueOverpass(q,'PI/BI zone visible'); (data.elements||[]).forEach(el=>{const ll=elementLatLng(el);if(!ll)return;const t=el.tags||{};const typ=String(t['fire_hydrant:type']||t.type_pei||t.type||'').toLowerCase();const type=typ==='pillar'||typ==='pi'||typ==='poteau'?'PI':'BI';addItem({id:`osmpei-${el.type}-${el.id}`,type,lat:ll[0],lng:ll[1],tags:t,source:'OpenStreetMap'});}); debugLog(`PI/BI zone visible : ${data.elements?.length||0} point(s) reçu(s)`,'ok'); updateMarkers(); }
+            catch(e){debugLog('PI/BI zone visible : ÉCHEC — '+e.message,'err');}
+        }
+
+        // Chargement national PI/BI (attention : volumineux). Utilise une grille plus large.
+        async function loadPEINationalFromOSM() {
+            if (nationalLoaded.PI && nationalLoaded.BI) { debugLog('Chargement national PI/BI déjà effectué','warn'); return; }
+            nationalLoaded.PI = nationalLoaded.BI = true;
+            setLoading(true);
+            // Grille 8x8 – chaque requête couvre une petite zone pour éviter les timeouts
+            const lats=[41.0,42.0,43.0,44.0,45.0,46.0,47.0,48.0,51.3];
+            const lons=[-5.5,-3.2,-0.9,1.4,3.7,6.0,8.3,8.5,8.5];
+            const boxes=[];
+            for(let i=0;i<8;i++) for(let j=0;j<8;j++) boxes.push([lats[i],lons[j],lats[i+1]||51.3,lons[j+1]||8.5]);
+            try{
+                // If official PEI datasets discovered, import them first
+                if(officialDatasets.PEI && officialDatasets.PEI.length){
+                    debugLog('Import des jeux officiels PEI priorisés ('+officialDatasets.PEI.length+')','ok');
+                    for(const url of officialDatasets.PEI) await importOfficialResource(url,'Source officielle PEI');
+                }
+                for(const [s,w,n,e] of boxes){
+                    const label=`PEI national secteur ${s},${w}`;
+                    const q=`[out:json][timeout:50];(nwr["emergency"="fire_hydrant"](${s},${w},${n},${e});nwr["emergency"="water_tank"](${s},${w},${n},${e});nwr["emergency"="fire_water_pond"](${s},${w},${n},${e}););out center tags;`;
+                    try{
+                        const data=await enqueueOverpass(q,label);
+                        (data.elements||[]).forEach(el=>{const ll=elementLatLng(el); if(!ll) return; const t=el.tags||{}; const typ=String(t['fire_hydrant:type']||t.type_pei||t.type||'').toLowerCase(); const type=typ.includes('pillar')||typ.includes('poteau')||typ==='pi'?'PI':'BI'; addItem({id:`osmpei-${el.type}-${el.id}`,type,lat:ll[0],lng:ll[1],tags:t,source:'OpenStreetMap'});});
+                        updateMarkers();
+                        debugLog(`${label} : ${data.elements?.length||0} PI/BI reçus`,'ok');
+                    }catch(e){ debugLog(`${label} : ÉCHEC — ${e.message}`,'warn'); }
+                }
+            }finally{ setLoading(false); updateMarkers(); debugLog('Chargement national PI/BI terminé','ok'); }
+        }
+
+        // -------- SOURCES OFFICIELLES DATA.GOUV --------
+        // On découvre les jeux de données publics sans supposer une URL unique par SDIS.
+        // Les ressources GeoJSON/JSON/CSV géolocalisées sont privilégiées.
+        // Two-phase official discovery: quick CSP pass at startup (only import CSP with name+SDIS),
+        // full discovery can be triggered manually later.
+        let quickDiscoveryDone = false;
+        async function discoverOfficialDatasets(quick=true) {
+            if(quick && quickDiscoveryDone) return; if(!quick) officialDiscoveryDone=true; if(quick) quickDiscoveryDone=true;
+            setLoading(true);
+            try{
+                const queriesQuick = [
+                    'CSP','centre de secours principal','centre de secours principal SDIS','csp sdis','casernes csp'
+                ];
+                const queriesFull = [
+                    'centres incendie secours SDIS','casernes SDIS','CIS SDIS','poteaux incendie','hydrant','borne incendie','point d\'eau incendie'
+                ];
+                const queries = quick ? queriesQuick : queriesFull;
+                const all = [];
+                for(const q of queries){
+                    try{ const r = await fetch(DATAGOUV_API+'?q='+encodeURIComponent(q)+'&page_size=100'); if(r.ok){ const j=await r.json(); all.push(...(j.data||[])); } }
+                    catch(e){ debugLog('data.gouv recherche échouée: '+q+' — '+e.message,'warn'); }
+                }
+                const seen = new Set(); let imported=0;
+                for(const ds of all){
+                    const title=(ds.title||'').toLowerCase();
+                    if(!/(centre|caserne|cis|incendie|secours|sdis|csp|poteau|hydrant|bouche|borne|point d\'eau)/i.test(title)) continue;
+                    for(const res of (ds.resources||[])){
+                        const fmt=String(res.format||'').toLowerCase(); const url=res.url||res.latest||'';
+                        if(!url || !/geojson|json|csv|gpkg/i.test(fmt+' '+url)) continue;
+                        if(seen.has(url)) continue; seen.add(url);
+                        const meta=(res.name||res.title||ds.title||'').toLowerCase();
+                        if(/poteau|hydrant|hydrants|bouche|bouches|pilon|point d\'eau|borne|pei/i.test(meta+url)){
+                            officialDatasets.PEI.push(url);
+                            debugLog('Ressource PEI détectée: '+url,'ok');
+                        } else {
+                            officialDatasets.CS.push(url);
+                        }
+                        try{
+                            // Quick mode: only fetch secure GeoJSON/JSON resources and avoid proxy fallbacks
+                            if(quick){
+                                if(!/^https:/i.test(url)) { debugLog('Ignorée (non-HTTPS en mode rapide): '+url,'warn'); continue; }
+                                if(!/geojson|json/i.test(fmt)) { debugLog('Ignorée (non-GeoJSON en mode rapide): '+url,'warn'); continue; }
+                                await importOfficialResource(url,ds.title||'Source officielle',{fallback:false});
+                            } else {
+                                await importOfficialResource(url,ds.title||'Source officielle',{fallback:true});
+                            }
+                            imported++;
+                            updateMarkers();
+                        }catch(e){ debugLog('Import officiel échoué: '+url+' — '+e.message,'warn'); }
+                    }
+                }
+                debugLog(`Découverte officielle (${quick?'rapide':'complète'}) terminée, ${imported} ressource(s) importée(s)`,'ok');
+                updateMarkers();
+            }catch(e){ debugLog('Découverte data.gouv erreur: '+e.message,'err'); }
+            finally{ setLoading(false); }
+        }
+
+        function getField(p, keys){
+            for(const k of keys){if(p[k]!==undefined&&p[k]!==null&&p[k]!=='')return p[k];}
+            return '';
+        }
+
+        // Robust fetch: try direct, then public CORS proxies if blocked (helps when running from file:// or CORS-restricted hosts)
+        async function fetchWithFallback(url, opts={}){
+            try{
+                const r = await fetch(url, opts);
+                if(r.ok) return r;
+                throw new Error(`HTTP ${r.status}`);
+            }catch(e){
+                debugLog(`Fetch direct failed: ${url} — ${e.message}`,'warn');
+                // Try AllOrigins
+                try{
+                    const proxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
+                    const r2 = await fetch(proxy);
+                    if(r2.ok) return r2;
+                    throw new Error(`proxy allorigins HTTP ${r2.status}`);
+                }catch(e2){ debugLog(`AllOrigins proxy failed: ${e2.message}`,'warn'); }
+                // Try jina.ai http_get as a fallback
+                try{
+                    const proxy2 = 'https://r.jina.ai/http_get?url=' + encodeURIComponent(url);
+                    const r3 = await fetch(proxy2);
+                    if(r3.ok) return r3;
+                    throw new Error(`proxy jina HTTP ${r3.status}`);
+                }catch(e3){ debugLog(`Jina proxy failed: ${e3.message}`,'warn'); }
+                throw new Error('All fetch attempts failed for '+url);
+            }
+        }
+        function makeOfficialItem(p,coords,source){
+            const props=p.properties||p;
+            const name=getField(props,['nom','name','NOM','NAME','libelle','LIBELLE','nom_cis']);
+            const typeRaw=String(getField(props,['type','TYPE','type_cis','classement','CLASSEMENT','fire_station:type:FR'])||'').toUpperCase();
+            // Determine type conservatively: prefer explicit tags, then name heuristics.
+            let type='OTHER';
+            if(typeRaw.includes('CSP')) type='CSP';
+            else if(typeRaw.includes('SDIS')||typeRaw.includes('ETAT')) type='SDIS';
+            else {
+                const n=(String(name||'')).toLowerCase();
+                if(/\b(csp|centre de secours principal|centre de secours|caserne|centre d'incendie|cis|cpi|cpni|compagnie|centre secours)\b/.test(n)) type='CS';
+                else if(/poteau|hydrant|hydrants|bouche|bouches|pilon|borne|point d'eau|point d eau|pie|pei/i.test(n)) {
+                    // PEI related
+                    const isPI = /poteau|pilon|hydrant/i.test(n);
+                    type = isPI ? 'PI' : 'BI';
+                }
+            }
+            // If still unknown, avoid creating potentially incorrect entries.
+            if(type==='OTHER') return null;
+            const operatorVal = getField(props,['sdis','SDIS','operator','OPERATEUR']);
+            // Require SDIS/operator for CSP entries to ensure authenticity
+            if(type==='CSP' && !operatorVal) return null;
+            const tags={name, type:typeRaw, operator:operatorVal,ref:getField(props,['ref','REF','reference','REFERENCE']),groupement:getField(props,['groupement','GROUPEMENT']),compagnie:getField(props,['compagnie','COMPAGNIE']),phone:getField(props,['telephone','phone','TEL']),website:getField(props,['site','website','URL'])};
+            return {id:`official-${source}-${name}-${coords[0]}-${coords[1]}`,type,lat:coords[1],lng:coords[0],tags,source};
+        }
+        // Import official resource; opts = {fallback:boolean} to allow disabling proxy fallbacks
+        async function importOfficialResource(url,source,opts={fallback:true}){
+            if(officialResourceKeys.has(url)) return; officialResourceKeys.add(url);
+            try{
+                let r;
+                if(opts.fallback) r = await fetchWithFallback(url,{mode:'cors'});
+                else r = await fetch(url,{mode:'cors'});
+                if(!r || !r.ok) { debugLog('Ressource officielle inaccessible: '+url,'warn'); return; }
+                const text = await r.text();
+                // Only accept GeoJSON/JSON for reliable quick loading; CSV handling remains but avoided in quick mode
+                const isCSV = url.toLowerCase().includes('.csv') || text.trim().split('\n')[0].includes(';');
+                if(isCSV) return importCSV(text,source);
+                const j=JSON.parse(text); const features=j.features||[];
+                for(const f of features){
+                    if(f.geometry?.type==='Point' && f.geometry.coordinates?.length>=2){
+                        const item = makeOfficialItem(f,f.geometry.coordinates,source);
+                        if(item) addItem(item);
+                    } else if(f.geometry?.type==='MultiPoint') for(const c of f.geometry.coordinates){
+                        const item = makeOfficialItem(f,c,source);
+                        if(item) addItem(item);
+                    }
+                }
+            }catch(e){ debugLog('Ressource officielle ignorée: '+url+' — '+e.message,'warn'); }
+        }
+        function importCSV(text,source){
+            const lines=text.split(/\r?\n/).filter(Boolean); if(lines.length<2)return;
+            const sep=lines[0].includes(';')?';':','; const headers=lines[0].split(sep).map(x=>x.replace(/^"|"$/g,'').trim().toLowerCase());
+            const latKey=headers.findIndex(x=>/^(lat|latitude|y|coord_y|y_coord)$/.test(x)); const lonKey=headers.findIndex(x=>/^(lon|longitude|x|coord_x|x_coord)$/.test(x)); if(latKey<0||lonKey<0)return;
+            for(let i=1;i<lines.length;i++){
+                const cols=lines[i].split(sep).map(x=>x.replace(/^"|"$/g,'').trim()); const lat=Number(String(cols[latKey]).replace(',','.')); const lon=Number(String(cols[lonKey]).replace(',','.')); if(!Number.isFinite(lat)||!Number.isFinite(lon)||Math.abs(lat)>90||Math.abs(lon)>180)continue;
+                const p={}; headers.forEach((h,k)=>p[h]=cols[k]); const item = makeOfficialItem(p,[lon,lat],source); if(item) addItem(item);
+            }
+        }
+
+        function toggleSidebar(){document.getElementById('sidebar').classList.toggle('mobile-open');}
+
+        function updateZoomHint(){
+            const hint=document.getElementById('zoom-hint');
+            if(!hint) return;
+            hint.style.display = map.getZoom()<PEI_MIN_ZOOM ? 'block':'none';
+        }
+
+        function updateMarkers(){
+            let total=0;
+            for(const type in checkboxes){
+                if(checkboxes[type].checked){if(!map.hasLayer(layers[type]))map.addLayer(layers[type]);total+=layers[type].getLayers().length;}
+                else if(map.hasLayer(layers[type]))map.removeLayer(layers[type]);
+            }
+            document.getElementById('visible-count').innerText=total;
+            for(const type in layers){const el=document.getElementById('count-'+type);if(el)el.innerText=layers[type].getLayers().length;}
+        }
+        for(const type in checkboxes) checkboxes[type].addEventListener('change', updateMarkers);
+
+        // National load buttons removed — rely on official datasets and viewport loads instead.
+
+        function setMode(mode){map.removeLayer(currentLayer);currentLayer=mode==='sat'?satLayer:lightLayer;document.getElementById('mode-text').innerText=mode==='sat'?'SATELLITE':'CARTE CLAIRE';map.addLayer(currentLayer);}
+        function toggleMapMode(){setMode(currentLayer===satLayer?'light':'sat');}
+        function locateUser(){map.locate({setView:true,maxZoom:13});}
+
+        function handleSearch(e){
+            if(e.key!=='Enter')return; const q=document.getElementById('searchInput').value.trim().toLowerCase(); if(!q)return;
+            const normalize = s=>String(s||'').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,'');
+            const nq = normalize(q);
+            const result = database.find(x=>{
+                if(!x) return false;
+                const t = x.tags||{};
+                const candidates = [t.name,t.nom,t.libelle,t['nom_cis'],t.ref,t.reference,t.operator,x.type];
+                return candidates.some(c=>normalize(c).includes(nq));
+            });
+            if(result){ map.setView([result.lat,result.lng],15); checkboxes[result.type].checked=true; updateMarkers(); result.marker?.openPopup(); return; }
+            fetch('https://nominatim.openstreetmap.org/search?format=json&q='+encodeURIComponent(q),{headers:{'Accept-Language':'fr'}}).then(r=>r.json()).then(d=>{if(d[0])map.setView([+d[0].lat,+d[0].lon],14);else alert('Lieu ou caserne non trouvé.');}).catch(()=>alert('Recherche indisponible.'));
+        }
+
+        // Utility to clear all loaded data (markers + in-memory db)
+        function clearAllData(){
+            for(const t in layers){ try{ layers[t].clearLayers(); }catch(e){} }
+            database.length=0; byId.clear(); osmLoadedKeys.clear(); officialResourceKeys.clear(); officialDatasets.PEI.length=0; officialDatasets.CS.length=0; nationalLoaded={CS:false,PI:false,BI:false}; updateMarkers(); debugLog('Toutes les données locales ont été effacées','ok');
+        }
+
+        // Prompt and import a uMap / Framacarte map (tries several endpoints).
+        function promptImportUmap(){
+            const url = prompt('URL uMap / Framacarte à importer (ex: https://framacarte.org/en/map/cis-de-france_78971#6/46.5/-1.1)');
+            if(!url) return; importUmapMap(url).catch(e=>debugLog('Import uMap échoué: '+e.message,'err'));
+        }
+
+        async function importUmapMap(mapUrl){
+            debugLog('Import uMap demandé: '+mapUrl,'ok');
+            // extract slug (last path segment before #)
+            try{
+                const parts = mapUrl.split('/').filter(Boolean);
+                let slug = parts.pop(); slug = slug.split('#')[0].split('?')[0];
+                const candidates = [
+                    `https://umap.openstreetmap.fr/en/map/${slug}/export?format=geojson`,
+                    `https://umap.openstreetmap.fr/fr/map/${slug}/export?format=geojson`,
+                    `https://umap.openstreetmap.fr/en/map/${slug}/data`,
+                    `https://umap.openstreetmap.fr/fr/map/${slug}/data`,
+                    `https://framacarte.org/en/map/${slug}/export?format=geojson`,
+                    `https://framacarte.org/fr/map/${slug}/export?format=geojson`,
+                    `https://framacarte.org/maps/${slug}.geojson`,
+                ];
+                for(const url of candidates){
+                    try{
+                        debugLog('Tentative import uMap: '+url,'ok');
+                        const r = await fetchWithFallback(url,{mode:'cors'});
+                        if(!r || !r.ok) { debugLog('uMap endpoint inaccessible: '+url,'warn'); continue; }
+                        const j = await r.json(); const features = j.features || j;
+                        let added=0;
+                        for(const f of features){
+                            if(f.geometry?.type==='Point' && f.geometry.coordinates?.length>=2){
+                                const item = makeOfficialItem(f,f.geometry.coordinates,url);
+                                if(item && item.type==='CSP') { addItem(item); added++; }
+                            } else if(f.geometry?.type==='MultiPoint'){
+                                for(const c of f.geometry.coordinates){ const item = makeOfficialItem(f,c,url); if(item && item.type==='CSP'){ addItem(item); added++; } }
+                            }
+                        }
+                        updateMarkers();
+                        debugLog(`Import uMap terminé (${added} CSP ajouté(s)) depuis ${url}`,'ok');
+                        return;
+                    }catch(e){ debugLog('uMap import échec '+url+' — '+e.message,'warn'); }
+                }
+                throw new Error('Aucun endpoint uMap/Framacarte n\'a répondu correctement');
+            }catch(e){ throw e; }
+        }
+
+        updateMarkers();
+        document.getElementById('zoom-level').innerText=map.getZoom();
+        updateZoomHint();
+        // Warn if page served via file:// which can cause many fetch failures (CORS/network)
+        if(location.protocol==='file:'){
+            debugLog('Attention : page ouverte via file:// — des fetchs peuvent échouer. Servez la page via HTTP (ex: python -m http.server)','warn');
+        }
+        // Startup: import official datasets (centres + PEI). Avoid Overpass national loads by default.
+        discoverOfficialDatasets().then(()=>{
+            updateMarkers();
+            if(database.length===0) debugLog('Aucune donnée officielle trouvée — vérifiez la connexion ou servez via HTTP','warn');
+            else debugLog(`Données chargées : ${database.length} point(s)`,'ok');
+        }).catch(e=>{ debugLog('Erreur découverte officielle : '+e.message,'err'); });
+        // Avoid automatic Overpass calls on zoom/move to prevent 'failed to fetch' and heavy loads.
+        map.on('zoomend',()=>{document.getElementById('zoom-level').innerText=map.getZoom();});
+        map.on('moveend',()=>{});
+
+        // Démarrage : découverte officielle rapide déjà lancée ci-dessus. Overpass auto désactivé.
+    </script>
+</body>
+</html>
