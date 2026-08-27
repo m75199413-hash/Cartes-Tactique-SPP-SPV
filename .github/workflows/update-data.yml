@@ -20,31 +20,27 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          curl --fail --location --retry 1 --max-time 60 \
-            'https://opendata.doubs.fr/api/explore/v2.1/catalog/datasets/sdis25-centres-de-secours-du-doubs/exports/geojson' \
-            -o csp-doubs.geojson
-          curl --fail --location --retry 1 --max-time 60 \
-            'https://data.rennesmetropole.fr/api/explore/v2.1/catalog/datasets/deci-pei/exports/geojson' \
-            -o pei-rennes.geojson
-          curl --fail --location --retry 1 --max-time 60 \
-            'https://carto-sdis81.tigeo.fr/index.php/lizmap/service?repository=public&project=PEI_Hydraclic&SERVICE=WFS&typeName=pei_hydraclic_v2&VERSION=1.3.0&REQUEST=GetFeature&OutputFormat=geojson' \
-            -o pei-tarn.geojson
-          curl --fail --location --retry 1 --max-time 60 \
-            'https://www.herault-data.fr/api/explore/v2.1/catalog/datasets/points-deau-defense-des-forets-contre-les-incendies-dfci-herault/exports/geojson' \
-            -o pei-herault-dfci.geojson
-          curl --fail --location --retry 1 --max-time 60 \
-            'https://static.data.gouv.fr/resources/points-deau-incendie-de-lagglomeration-du-grand-annecy/20250128-081713/points-eau-incendie-2024.csv' \
-            -o pei-annecy.csv
-          curl --fail --location --retry 1 --max-time 60 \
-            'https://www.pigma.org/fr/dataset/datasets/7554/resource/15478/download/' \
-            -o pei-sdis64.geojson
-          curl --fail --location --retry 1 --max-time 60 \
-            'https://data.tours-metropole.fr/api/explore/v2.1/catalog/datasets/points-d-eau-tours-metropole-val-de-loire/exports/geojson' \
-            -o pei-tours.geojson
-          curl --fail --location --retry 1 --max-time 90 \
-            'https://framacarte.org/map/78971/download/' \
-            -o /tmp/cis-framacarte.json
-          jq '{type:"FeatureCollection",features:[.layers[].features[]]}' /tmp/cis-framacarte.json > cis-framacarte.geojson
+          download() {
+            local url="$1" output="$2" temporary="${2}.tmp"
+            if curl --fail --silent --show-error --location --retry 1 --retry-delay 2 --max-time 60 "$url" -o "$temporary"; then
+              mv "$temporary" "$output"
+              echo "OK $output"
+            else
+              rm -f "$temporary"
+              echo "AVERTISSEMENT: source indisponible, ancienne version conservee: $output"
+            fi
+          }
+          download 'https://opendata.doubs.fr/api/explore/v2.1/catalog/datasets/sdis25-centres-de-secours-du-doubs/exports/geojson' csp-doubs.geojson
+          download 'https://data.rennesmetropole.fr/api/explore/v2.1/catalog/datasets/deci-pei/exports/geojson' pei-rennes.geojson
+          download 'https://carto-sdis81.tigeo.fr/index.php/lizmap/service?repository=public&project=PEI_Hydraclic&SERVICE=WFS&typeName=pei_hydraclic_v2&VERSION=1.3.0&REQUEST=GetFeature&OutputFormat=geojson' pei-tarn.geojson
+          download 'https://www.herault-data.fr/api/explore/v2.1/catalog/datasets/points-deau-defense-des-forets-contre-les-incendies-dfci-herault/exports/geojson' pei-herault-dfci.geojson
+          download 'https://static.data.gouv.fr/resources/points-deau-incendie-de-lagglomeration-du-grand-annecy/20250128-081713/points-eau-incendie-2024.csv' pei-annecy.csv
+          download 'https://www.pigma.org/fr/dataset/datasets/7554/resource/15478/download/' pei-sdis64.geojson
+          download 'https://data.tours-metropole.fr/api/explore/v2.1/catalog/datasets/points-d-eau-tours-metropole-val-de-loire/exports/geojson' pei-tours.geojson
+          download 'https://framacarte.org/map/78971/download/' /tmp/cis-framacarte.json
+          if [ -s /tmp/cis-framacarte.json ]; then
+            jq '{type:"FeatureCollection",features:[.layers[].features[]]}' /tmp/cis-framacarte.json > cis-framacarte.geojson
+          fi
 
           boxes=('41,-5.5,44.4,-0.8' '41,-0.8,44.4,3.9' '41,3.9,44.4,8.5' '44.4,-5.5,47.8,-0.8' '44.4,-0.8,47.8,3.9' '44.4,3.9,47.8,8.5' '47.8,-5.5,51.3,-0.8' '47.8,-0.8,51.3,3.9' '47.8,3.9,51.3,8.5')
           mkdir -p /tmp/pei-osm /tmp/commandement-osm
