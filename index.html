@@ -68,6 +68,9 @@
         .suggestion-types{display:grid;gap:8px;margin-bottom:14px}.suggestion-type{display:flex;align-items:center;gap:9px;padding:9px;border:1px solid #374151;border-radius:6px;color:#e5e7eb;cursor:pointer}.suggestion-type:has(input:checked){border-color:#ef4444;background:#1f2937}
         .suggestion-fields{display:grid;gap:6px;margin-bottom:16px}.suggestion-fields label{font-size:.75rem;color:#d1d5db}.suggestion-fields input{width:100%;padding:9px;background:#0f1724;border:1px solid #374151;border-radius:6px;color:#fff;font-size:.85rem}
         .suggestion-actions{display:flex;justify-content:flex-end;gap:8px}.suggestion-actions button{padding:8px 12px;border:1px solid #374151;border-radius:6px;background:#1f2937;color:#fff;cursor:pointer}.suggestion-actions button[type=submit]{background:#b91c1c;border-color:#ef4444}.suggestion-actions button:hover{filter:brightness(1.15)}
+        .welcome-notification{position:absolute;top:15px;right:15px;z-index:1350;width:min(390px,calc(100% - 30px));display:flex;gap:10px;align-items:flex-start;background:rgba(17,24,39,.97);border:1px solid #f59e0b;border-left:4px solid #f59e0b;border-radius:8px;padding:12px 12px 12px 14px;color:#fde68a;font-size:.78rem;line-height:1.4;box-shadow:0 8px 24px #0009;animation:notification-in .25s ease-out}
+        .welcome-notification p{flex:1}.welcome-notification button{border:0;background:transparent;color:#fde68a;font-size:1.1rem;line-height:1;cursor:pointer;padding:0 2px}.welcome-notification button:hover{color:#fff}@keyframes notification-in{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+        @media(max-width:700px){.welcome-notification{top:62px;right:10px;width:calc(100% - 20px)}}
 
         .status-bar { position: absolute; bottom: 15px; left: 15px; z-index: 999; background: rgba(17, 24, 39, 0.9); padding: 6px 15px; border-radius: 6px; font-size: 0.75rem; display: flex; gap: 15px; border: 1px solid #374151; }
         .status-bar span { color: #10b981; font-weight: bold; }
@@ -185,6 +188,10 @@
                 <div id="suggestionFields" class="suggestion-fields"></div>
                 <div class="suggestion-actions"><button type="button" id="cancelSuggestion">Annuler</button><button type="submit">Ouvrir GitHub</button></div>
             </form>
+        </div>
+        <div id="welcomeNotification" class="welcome-notification" role="status" aria-live="polite">
+            <p>Toutes les Casernes sont ajoutées manuellement donc si la votre n'y est pas faites un clic droit sur la l'emplacement de votre Caserne / Etat-Major/ CTA-CODIS et suivez les instructions</p>
+            <button type="button" onclick="closeWelcomeNotification()" aria-label="Fermer la notification">&times;</button>
         </div>
         <div id="map"></div>
         <div class="map-title"><i class="fa-solid fa-map-location-dot"></i> FR-SIS TACTICAL</div>
@@ -779,6 +786,14 @@
         }
 
         function toggleSidebar(){document.getElementById('sidebar').classList.toggle('mobile-open');}
+
+        let welcomeNotificationTimer;
+        function closeWelcomeNotification(){
+            const notification=document.getElementById('welcomeNotification');
+            if(notification)notification.remove();
+            clearTimeout(welcomeNotificationTimer);
+        }
+        welcomeNotificationTimer=setTimeout(closeWelcomeNotification,15000);
 
         function updateMarkers(){
             let total=0;
