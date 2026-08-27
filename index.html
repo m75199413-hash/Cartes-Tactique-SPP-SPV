@@ -53,6 +53,13 @@
         .search-box { position: absolute; top: 15px; left: 15px; z-index: 999; width: calc(100% - 80px); max-width: 450px; }
         .search-box input { width: 100%; padding: 12px 15px 12px 40px; background: rgba(17, 24, 39, 0.95); border: 1px solid #374151; border-radius: 8px; color: white; font-size: 0.9rem; }
         .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #9ca3af; }
+        .search-suggestions { position:absolute;top:calc(100% + 5px);left:0;right:0;background:#111827;border:1px solid #374151;border-radius:8px;box-shadow:0 8px 20px #0008;overflow:hidden;display:none; }
+        .search-suggestions.open { display:block; }
+        .search-suggestion { display:flex;align-items:center;gap:9px;width:100%;padding:9px 12px;border:0;background:transparent;color:#e5e7eb;text-align:left;cursor:pointer; }
+        .search-suggestion:hover,.search-suggestion.active { background:#1f2937; }
+        .search-suggestion-type { flex:0 0 auto;padding:2px 5px;border-radius:4px;color:#fff;font-size:.65rem;font-weight:800; }
+        .search-suggestion-name { overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.82rem; }
+        .search-suggestion-meta { margin-left:auto;color:#9ca3af;font-size:.68rem;white-space:nowrap; }
 
         .zoom-hint { position:absolute; top:62px; left:15px; z-index:999; background:rgba(120,53,15,.92); border:1px solid #f59e0b; color:#fde68a; padding:6px 12px; border-radius:6px; font-size:.72rem; max-width:400px; display:none; }
 
@@ -148,7 +155,8 @@
         <div id="loading" class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Chargement des données…<div id="loading-progress-wrap" style="margin-top:8px;display:flex;align-items:center;gap:8px"><div id="loading-progress-bar" style="height:8px;background:#111827;border:1px solid #374151;border-radius:6px;overflow:hidden;flex:1"><div id="loading-progress-fill" style="width:0%;height:100%;background:#ef4444"></div></div><div id="loading-progress-text" style="font-size:.72rem;color:#9ca3af;white-space:nowrap">0/0</div></div></div>
         <div class="search-box">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="searchInput" placeholder="Rechercher une caserne (ex: CSP Paris, CPI, Nantes...)" onkeypress="handleSearch(event)">
+            <input type="text" id="searchInput" placeholder="Rechercher une caserne (ex: CSP Paris, CPI, Nantes...)" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="searchSuggestions" aria-expanded="false" onkeypress="handleSearch(event)">
+            <div id="searchSuggestions" class="search-suggestions" role="listbox"></div>
         </div>
         <div class="zoom-hint" id="zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i> Zoomez (niveau 11+) pour charger les PI / BI de la zone affichée</div>
 
@@ -314,6 +322,7 @@
             }
             item.marker=marker;
             layers[item.type].addLayer(marker);
+            updateSearchSuggestions();
         }
 
         // ---- Journal technique visible (remplace les console.warn invisibles pour l'utilisateur) ----
@@ -755,20 +764,63 @@
         function toggleMapMode(){setMode(currentLayer===satLayer?'light':'sat');}
         function locateUser(){map.locate({setView:true,maxZoom:13});}
 
-        function handleSearch(e){
-            if(e.key!=='Enter')return; const q=document.getElementById('searchInput').value.trim().toLowerCase(); if(!q)return;
-            const normalize = s=>String(s||'').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,'');
-            const nq = normalize(q);
-            const result = database.find(x=>{
-                if(!x) return false;
-                const t = x.tags||{};
-                const candidates = [t.name,t.nom,t.libelle,t['nom_cis'],t.ref,t.reference,t.operator,t['addr:full'],t['addr:city'],t['addr:postcode'],x.type];
-                const searchable = candidates.map(normalize).join(' ');
-                return nq.split(/\s+/).filter(Boolean).every(term=>searchable.includes(term));
+        const searchInput=document.getElementById('searchInput');
+        const searchSuggestions=document.getElementById('searchSuggestions');
+        let activeSuggestion=-1;
+        function normalizeSearch(value){return String(value||'').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,'');}
+        function searchItemName(item){const t=item.tags||{};return String(t.name||t.nom||t.libelle||t['nom_cis']||'Centre de secours');}
+        function searchItemText(item){
+            const t=item.tags||{};
+            return normalizeSearch([searchItemName(item),t.ref,t.reference,t.operator,t['addr:full'],t['addr:city'],t['addr:postcode'],item.type].join(' '));
+        }
+        function getSearchMatches(query){
+            const terms=normalizeSearch(query).trim().split(/\s+/).filter(Boolean);
+            if(!terms.length)return [];
+            const normalizedQuery=normalizeSearch(query).trim();
+            return database.filter(item=>terms.every(term=>searchItemText(item).includes(term))).sort((a,b)=>{
+                const aName=normalizeSearch(searchItemName(a)); const bName=normalizeSearch(searchItemName(b));
+                const aStarts=aName.startsWith(normalizedQuery); const bStarts=bName.startsWith(normalizedQuery);
+                const aWordStarts=terms.some(term=>aName.split(/\s+/).some(word=>word.startsWith(term)));
+                const bWordStarts=terms.some(term=>bName.split(/\s+/).some(word=>word.startsWith(term)));
+                return Number(bStarts)-Number(aStarts) || (a.type==='CSP'?1:0)-(b.type==='CSP'?1:0) || Number(bWordStarts)-Number(aWordStarts) || aName.localeCompare(bName,'fr');
+            }).slice(0,8);
+        }
+        function closeSearchSuggestions(){
+            searchSuggestions.classList.remove('open'); searchInput.setAttribute('aria-expanded','false'); activeSuggestion=-1;
+        }
+        function updateSearchSuggestions(){
+            if(!searchInput || !searchSuggestions)return;
+            const matches=getSearchMatches(searchInput.value);
+            searchSuggestions.innerHTML=''; activeSuggestion=-1;
+            if(!searchInput.value.trim()||!matches.length){closeSearchSuggestions();return;}
+            matches.forEach((item,index)=>{
+                const button=document.createElement('button'); button.type='button'; button.className='search-suggestion'; button.setAttribute('role','option'); button.dataset.id=item.id;
+                const type=document.createElement('span'); type.className='search-suggestion-type'; type.textContent=item.type; type.style.background=item.type==='CSP'?'#ef4444':item.type==='CS'?'#f97316':'#6b7280';
+                const name=document.createElement('span'); name.className='search-suggestion-name'; name.textContent=searchItemName(item).replace(new RegExp('^'+item.type+'\\s*','i'),'');
+                const meta=document.createElement('span'); meta.className='search-suggestion-meta'; meta.textContent=item.tags?.operator||'';
+                button.append(type,name,meta); button.addEventListener('mousedown',event=>{event.preventDefault();selectSearchItem(item);}); searchSuggestions.appendChild(button);
             });
-            if(result){ map.setView([result.lat,result.lng],15); checkboxes[result.type].checked=true; updateMarkers(); result.marker?.openPopup(); return; }
+            searchSuggestions.classList.add('open'); searchInput.setAttribute('aria-expanded','true');
+        }
+        function selectSearchItem(item){
+            searchInput.value=searchItemName(item); closeSearchSuggestions();
+            map.setView([item.lat,item.lng],15); if(checkboxes[item.type])checkboxes[item.type].checked=true; updateMarkers(); item.marker?.openPopup();
+        }
+        function handleSearch(e){
+            if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+                const matches=getSearchMatches(searchInput.value); if(!matches.length)return;
+                e.preventDefault(); activeSuggestion=(activeSuggestion+(e.key==='ArrowDown'?1:-1)+matches.length)%matches.length;
+                [...searchSuggestions.children].forEach((element,index)=>element.classList.toggle('active',index===activeSuggestion)); return;
+            }
+            if(e.key==='Escape'){closeSearchSuggestions();return;}
+            if(e.key!=='Enter')return;
+            const matches=getSearchMatches(searchInput.value);
+            if(matches[activeSuggestion]||matches[0]){e.preventDefault();selectSearchItem(matches[activeSuggestion]||matches[0]);return;}
+            const q=searchInput.value.trim(); if(!q)return;
             fetch('https://nominatim.openstreetmap.org/search?format=json&q='+encodeURIComponent(q),{headers:{'Accept-Language':'fr'}}).then(r=>r.json()).then(d=>{if(d[0])map.setView([+d[0].lat,+d[0].lon],14);else alert('Lieu ou caserne non trouvé.');}).catch(()=>alert('Recherche indisponible.'));
         }
+        searchInput.addEventListener('input',updateSearchSuggestions);
+        searchInput.addEventListener('blur',()=>setTimeout(closeSearchSuggestions,150));
 
         // Utility to clear all loaded data (markers + in-memory db)
         function clearAllData(){
