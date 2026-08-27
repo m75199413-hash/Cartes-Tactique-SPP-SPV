@@ -763,6 +763,29 @@
         function setMode(mode){map.removeLayer(currentLayer);currentLayer=mode==='sat'?satLayer:lightLayer;document.getElementById('mode-text').innerText=mode==='sat'?'SATELLITE':'CARTE CLAIRE';map.addLayer(currentLayer);}
         function toggleMapMode(){setMode(currentLayer===satLayer?'light':'sat');}
         function locateUser(){map.locate({setView:true,maxZoom:13});}
+        function suggestStationAtLocation(event){
+            if(!confirm('Suggérer une caserne à cet emplacement ?'))return;
+            const name=prompt('Nom de la caserne :'); if(!name?.trim())return;
+            const sdis=prompt('SDIS de la caserne :'); if(!sdis?.trim())return;
+            const lat=event.latlng.lat.toFixed(6); const lng=event.latlng.lng.toFixed(6);
+            const title=`Suggestion caserne : ${name.trim()}`;
+            const body=[
+                'Bonjour,',
+                '',
+                'Je suggère une caserne à vérifier sur la carte.',
+                '',
+                `Nom : ${name.trim()}`,
+                `SDIS : ${sdis.trim()}`,
+                `Latitude : ${lat}`,
+                `Longitude : ${lng}`,
+                `Lien carte : https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=17/${lat}/${lng}`,
+                '',
+                'Merci de vérifier ces informations avant ajout.'
+            ].join('\n');
+            const issueUrl='https://github.com/m75199413-hash/Cartes-Tactique-SPP-SPV/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);
+            window.open(issueUrl,'_blank','noopener,noreferrer');
+        }
+        map.on('contextmenu',suggestStationAtLocation);
 
         const searchInput=document.getElementById('searchInput');
         const searchSuggestions=document.getElementById('searchSuggestions');
