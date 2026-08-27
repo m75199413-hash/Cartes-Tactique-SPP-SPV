@@ -896,6 +896,14 @@
             }catch(e){ throw e; }
         }
 
+        addItem({
+            id:'suggestion-nimes-sainte-cesaire',
+            type:'CS',
+            lat:43.807986,
+            lng:4.313078,
+            tags:{name:'Nîmes Sainte-Césaire',operator:'SDIS 30'},
+            source:'Suggestion vérifiée par utilisateur'
+        });
         updateMarkers();
         document.getElementById('zoom-level').innerText=map.getZoom();
         // Warn if page served via file:// which can cause many fetch failures (CORS/network)
