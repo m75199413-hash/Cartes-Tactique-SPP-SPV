@@ -800,7 +800,7 @@
             updateSuggestionFields();
             suggestionFields.querySelector('input')?.focus();
         }
-        suggestionForm.addEventListener('change',updateSuggestionFields);
+        suggestionForm.querySelectorAll('input[name="suggestionType"]').forEach(radio=>radio.addEventListener('change',updateSuggestionFields));
         document.getElementById('cancelSuggestion').addEventListener('click',closeSuggestionModal);
         suggestionModal.addEventListener('click',event=>{if(event.target===suggestionModal)closeSuggestionModal();});
         suggestionForm.addEventListener('submit',event=>{
