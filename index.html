@@ -837,9 +837,29 @@
         function toggleMapMode(){setMode(currentLayer===satLayer?'light':'sat');}
         function locateUser(){map.locate({setView:true,maxZoom:17,watch:true,enableHighAccuracy:true,timeout:20000,maximumAge:0});}
         let userLocationMarker=null;
+        let nearestStationLine=null;
         const userLocationIcon=L.divIcon({className:'user-location-icon',html:'<div class="user-location-marker"></div>',iconSize:[14,14],iconAnchor:[7,7]});
+        function showNearestStation(){
+            if(!userLocationMarker)return;
+            const userLatLng=userLocationMarker.getLatLng();
+            const stations=database.filter(item=>['CS','CSP','SIS','BMPM','BSPP'].includes(item.type));
+            if(!stations.length){userLocationMarker.bindPopup('<b>Aucun CIS disponible</b><br>Les données des casernes ne sont pas encore chargées.').openPopup();return;}
+            const nearest=stations.reduce((closest,item)=>{
+                const distance=userLatLng.distanceTo([item.lat,item.lng]);
+                return !closest||distance<closest.distance?{item,distance}:closest;
+            },null);
+            const distanceText=nearest.distance<1000?`${Math.round(nearest.distance)} m`:`${(nearest.distance/1000).toFixed(1)} km`;
+            if(nearestStationLine)map.removeLayer(nearestStationLine);
+            nearestStationLine=L.polyline([userLatLng,[nearest.item.lat,nearest.item.lng]],{color:'#2563eb',weight:3,dashArray:'6 6',opacity:.85}).addTo(map);
+            nearest.item.marker?.openPopup();
+            userLocationMarker.bindTooltip(`${searchItemName(nearest.item)} : ${distanceText}`,{direction:'top',offset:[0,-8]}).openTooltip();
+            map.setView([nearest.item.lat,nearest.item.lng],Math.max(map.getZoom(),14));
+        }
         map.on('locationfound',event=>{
-            if(!userLocationMarker)userLocationMarker=L.marker(event.latlng,{icon:userLocationIcon,keyboard:false,interactive:false,zIndexOffset:1000}).addTo(map);
+            if(!userLocationMarker){
+                userLocationMarker=L.marker(event.latlng,{icon:userLocationIcon,keyboard:false,interactive:true,zIndexOffset:1000}).addTo(map);
+                userLocationMarker.on('click',showNearestStation);
+            }
             else userLocationMarker.setLatLng(event.latlng);
         });
         map.on('locationerror',event=>debugLog(`Localisation indisponible : ${event.message}`,'warn'));
