@@ -38,6 +38,8 @@
         .dot-cta { background: #ec4899; }
         .dot-pi { background: #06b6d4; }
         .dot-bi { background: #3b82f6; }
+        .dot-bmpm { background: #f59e0b; }
+        .dot-bspp { background: #14b8a6; }
 
         .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -147,6 +149,14 @@
             <div class="toggle-item">
                 <span class="toggle-label"><span class="dot dot-sdis"></span> État-major <span class="layer-count" id="count-ETAT_MAJOR">0</span></span>
                 <label class="switch"><input type="checkbox" id="chk-etat-major"><span class="slider"></span></label>
+            </div>
+            <div class="toggle-item">
+                <span class="toggle-label"><span class="dot dot-bmpm"></span> BMPM <span class="layer-count" id="count-BMPM">0</span></span>
+                <label class="switch"><input type="checkbox" id="chk-bmpm"><span class="slider"></span></label>
+            </div>
+            <div class="toggle-item">
+                <span class="toggle-label"><span class="dot dot-bspp"></span> BSPP <span class="layer-count" id="count-BSPP">0</span></span>
+                <label class="switch"><input type="checkbox" id="chk-bspp"><span class="slider"></span></label>
             </div>
         </div>
 
@@ -265,19 +275,22 @@
         const layers = {
             CSP: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:10,maxClusterRadius:42}),
             CS: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:11,maxClusterRadius:42}),
-            CTA: L.layerGroup(), ETAT_MAJOR: L.layerGroup(), PI: L.layerGroup(), BI: L.layerGroup()
+            CTA: L.layerGroup(), ETAT_MAJOR: L.layerGroup(), BMPM: L.layerGroup(), BSPP: L.layerGroup(), PI: L.layerGroup(), BI: L.layerGroup()
         };
         const icons = {
             CSP: createCustomIcon('#ef4444','CSP',34),
             CS: createCustomIcon('#f97316','CS',28),
             CTA: createCustomIcon('#ec4899','CTA',30),
             ETAT_MAJOR: createCustomIcon('#a855f7','EM',30),
+            BMPM: createCustomIcon('#f59e0b','BMPM',34),
+            BSPP: createCustomIcon('#14b8a6','BSPP',34),
             PI: createCustomIcon('#06b6d4','PI',22),
             BI: createCustomIcon('#3b82f6','BI',22)
         };
         const checkboxes = {
             CSP: document.getElementById('chk-csp'), CS: document.getElementById('chk-cs'),
             CTA: document.getElementById('chk-cta'), ETAT_MAJOR: document.getElementById('chk-etat-major'),
+            BMPM: document.getElementById('chk-bmpm'), BSPP: document.getElementById('chk-bspp'),
             PI: document.getElementById('chk-pi'), BI: document.getElementById('chk-bi')
         };
         let loadingRequests = 0;
@@ -356,6 +369,7 @@
         function addItem(item) {
             if (!item || item.lat==null || item.lng==null) return;
             if(item.type==='SDIS') item.layerType=item.subtype==='CTA'||/\bCTA\b|\bCODIS\b/i.test(searchItemName(item))?'CTA':'ETAT_MAJOR';
+            else if(item.type==='BMPM'||item.type==='BSPP') item.layerType=item.type;
             else item.layerType=item.type;
             const id=item.id || `${item.type}-${item.lat}-${item.lng}-${item.source||''}`;
             if(byId.has(id)) return;
@@ -819,7 +833,13 @@
         function updateSuggestionFields(){
             const type=suggestionForm.elements.suggestionType.value;
             const isCaserne=type==='caserne';
-            suggestionFields.innerHTML=`${isCaserne?'<label for="suggestionName">Nom de la caserne</label><input id="suggestionName" name="name" type="text" placeholder="Ex : Nîmes Sainte-Césaire">':''}<label for="suggestionSdis">SDIS${isCaserne?' de la caserne':type==='etat-major'?" de l'état-major":' du CTA / CODIS'}</label><input id="suggestionSdis" name="sdis" type="text" placeholder="Ex : SDIS 30">`;
+            suggestionFields.innerHTML=isCaserne
+                ? '<label for="suggestionName">Nom de la caserne</label><input id="suggestionName" name="name" type="text" placeholder="Ex : Nîmes Sainte-Césaire"><label>Organisme de la caserne</label><div class="suggestion-types"><label class="suggestion-type"><input type="radio" name="caserneOrganization" value="BSPP"> BSPP</label><label class="suggestion-type"><input type="radio" name="caserneOrganization" value="BMPM"> BMPM</label><label class="suggestion-type"><input type="radio" name="caserneOrganization" value="SDIS" checked> SDIS</label></div><div id="sdisNumberField"><label for="suggestionSdisNumber">Numéro du SDIS</label><input id="suggestionSdisNumber" name="sdisNumber" type="text" inputmode="numeric" placeholder="Ex : 30"></div>'
+                : `<label for="suggestionSdis">SDIS${type==='etat-major'?" de l'état-major":' du CTA / CODIS'}</label><input id="suggestionSdis" name="sdis" type="text" placeholder="Ex : SDIS 30">`;
+            suggestionFields.querySelectorAll('input[name="caserneOrganization"]').forEach(radio=>radio.addEventListener('change',()=>{
+                const sdisNumberField=document.getElementById('sdisNumberField');
+                if(sdisNumberField)sdisNumberField.hidden=radio.value!=='SDIS' || !radio.checked;
+            }));
         }
         function closeSuggestionModal(){suggestionModal.classList.remove('open');suggestionForm.reset();suggestionFields.innerHTML='';suggestionLocation=null;}
         function openSuggestionModal(event){
@@ -836,15 +856,19 @@
             event.preventDefault();
             const type=suggestionForm.querySelector('input[name="suggestionType"]:checked')?.value||'';
             const name=suggestionForm.querySelector('[name="name"]')?.value.trim()||'';
-            const sdis=suggestionForm.querySelector('[name="sdis"]')?.value.trim()||'';
+            const caserneOrganization=suggestionForm.querySelector('input[name="caserneOrganization"]:checked')?.value||'';
+            const sdisNumber=suggestionForm.querySelector('[name="sdisNumber"]')?.value.trim()||'';
+            const sdis=suggestionForm.querySelector('[name="sdis"]')?.value.trim()|| (caserneOrganization==='SDIS' ? `SDIS ${sdisNumber}` : '');
             if(!type){alert('Veuillez sélectionner un type de suggestion.');return;}
             if(type==='caserne'&&!name){alert('Veuillez renseigner le nom de la caserne.');suggestionForm.querySelector('[name="name"]')?.focus();return;}
-            if(!sdis){alert('Veuillez renseigner le SDIS.');suggestionForm.querySelector('[name="sdis"]')?.focus();return;}
+            if(type==='caserne'&&!caserneOrganization){alert('Veuillez sélectionner un organisme.');return;}
+            if(type==='caserne'&&caserneOrganization==='SDIS'&&!sdisNumber){alert('Veuillez renseigner le numéro du SDIS.');suggestionForm.querySelector('[name="sdisNumber"]')?.focus();return;}
+            if(type!=='caserne'&&!sdis){alert('Veuillez renseigner le SDIS.');suggestionForm.querySelector('[name="sdis"]')?.focus();return;}
             if(!suggestionLocation)return;
             const labels={caserne:'Caserne','etat-major':'État-major','cta-codis':'CTA / CODIS'};
             const lat=suggestionLocation.lat.toFixed(6); const lng=suggestionLocation.lng.toFixed(6);
             const title=`Suggestion ${labels[type]} : ${name||sdis}`;
-            const body=['Bonjour,','','Je suggère un nouvel emplacement à vérifier sur la carte.','',`Type : ${labels[type]}`,name?`Nom : ${name}`:'',`SDIS : ${sdis}`,`Latitude : ${lat}`,`Longitude : ${lng}`,`Lien carte : https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=17/${lat}/${lng}`,'','Merci de vérifier ces informations avant ajout.'].filter(Boolean).join('\n');
+            const body=['Bonjour,','','Je suggère un nouvel emplacement à vérifier sur la carte.','',`Type : ${labels[type]}`,name?`Nom : ${name}`:'',type==='caserne'&&caserneOrganization!=='SDIS'?`Organisme : ${caserneOrganization}`:'',sdis?`SDIS : ${sdis}`:'',`Latitude : ${lat}`,`Longitude : ${lng}`,`Lien carte : https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=17/${lat}/${lng}`,'','Merci de vérifier ces informations avant ajout.'].filter(Boolean).join('\n');
             const issueUrl='https://github.com/m75199413-hash/Cartes-Tactique-SPP-SPV/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body);
             closeSuggestionModal(); window.open(issueUrl,'_blank','noopener,noreferrer');
         });
@@ -1101,6 +1125,22 @@
             lat:44.376819,
             lng:2.545234,
             tags:{name:'CTA / CODIS SDIS 12',operator:'SDIS 12'},
+            source:'Suggestion vérifiée par utilisateur'
+        });
+        addItem({
+            id:'suggestion-cis-nice-nord-sdis-06',
+            type:'CS',
+            lat:43.733293,
+            lng:7.248431,
+            tags:{name:'CIS Nice Nord',operator:'SDIS 06'},
+            source:'Suggestion vérifiée par utilisateur'
+        });
+        addItem({
+            id:'suggestion-cis-nice-magnan-sdis-06',
+            type:'CS',
+            lat:43.692076,
+            lng:7.245062,
+            tags:{name:'CIS Nice Magnan',operator:'SDIS 06'},
             source:'Suggestion vérifiée par utilisateur'
         });
         updateMarkers();
