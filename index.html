@@ -83,6 +83,7 @@
 
         /* Style des marqueurs sur la carte */
         .custom-marker { border-radius: 50%; border: 2px solid #ffffff; box-shadow: 0 0 6px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 9px; }
+        .user-location-marker { width: 14px; height: 14px; border: 3px solid #ffffff; border-radius: 50%; background: #2563eb; box-shadow: 0 0 0 2px rgba(37,99,235,.35), 0 1px 6px rgba(0,0,0,.8); }
         .loading { position:absolute; top:15px; right:15px; z-index:1000; background:rgba(17,24,39,.95); border:1px solid #374151; padding:8px 12px; border-radius:7px; font-size:.75rem; display:none; }
         .leaflet-popup-content-wrapper { border-radius:10px; }
         .station-popup { min-width:240px; color:#111827; }
@@ -835,6 +836,12 @@
         function setMode(mode){map.removeLayer(currentLayer);currentLayer=mode==='sat'?satLayer:lightLayer;document.getElementById('mode-text').innerText=mode==='sat'?'SATELLITE':'CARTE CLAIRE';map.addLayer(currentLayer);}
         function toggleMapMode(){setMode(currentLayer===satLayer?'light':'sat');}
         function locateUser(){map.locate({setView:true,maxZoom:13});}
+        let userLocationMarker=null;
+        const userLocationIcon=L.divIcon({className:'user-location-icon',html:'<div class="user-location-marker"></div>',iconSize:[14,14],iconAnchor:[7,7]});
+        map.on('locationfound',event=>{
+            if(!userLocationMarker)userLocationMarker=L.marker(event.latlng,{icon:userLocationIcon,keyboard:false,interactive:false,zIndexOffset:1000}).addTo(map);
+            else userLocationMarker.setLatLng(event.latlng);
+        });
         const suggestionModal=document.getElementById('suggestionModal');
         const suggestionForm=document.getElementById('suggestionForm');
         const suggestionFields=document.getElementById('suggestionFields');
