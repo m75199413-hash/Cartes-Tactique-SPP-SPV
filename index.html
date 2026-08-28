@@ -959,6 +959,12 @@
             }
             return inside;
         }
+        function pointInGeometry(point,geometry){
+            if(!geometry)return false;
+            if(geometry.type==='Polygon')return geometry.coordinates.some(ring=>pointInPolygon(point,ring));
+            if(geometry.type==='MultiPolygon')return geometry.coordinates.some(polygon=>polygon.some(ring=>pointInPolygon(point,ring)));
+            return false;
+        }
         function clearDepartmentFilter(){
             departmentFilter=null;
             if(departmentBoundaryLayer){map.removeLayer(departmentBoundaryLayer);departmentBoundaryLayer=null;}
@@ -966,18 +972,23 @@
         async function searchDepartment(code){
             closeSearchSuggestions();
             clearDepartmentFilter();
-            const iso=departmentIsoCode(code);
-            const query=`[out:json][timeout:45];rel["boundary"="administrative"]["admin_level"="6"]["ISO3166-2"="${iso}"]->.departmentRel;map_to_area .departmentRel->.department;(rel["boundary"="administrative"]["admin_level"="6"]["ISO3166-2"="${iso}"];);out geom;nwr["amenity"="fire_station"](area.department);out center tags;`;
             try{
                 setLoading(true);
-                const data=await overpass(query,`Département ${code}`);
-                const relation=(data.elements||[]).find(element=>element.type==='relation');
+                const boundaryQuery=`[out:json][timeout:45];(rel["boundary"="administrative"]["admin_level"="6"]["ref:INSEE"="${code}"];rel["boundary"="administrative"]["admin_level"="6"]["ISO3166-2"="FR-${code}"];);out geom;`;
+                const boundaryData=await overpass(boundaryQuery,`Contour du département ${code}`);
+                const relation=(boundaryData.elements||[]).find(element=>element.type==='relation');
                 const boundaryWays=(relation?.members||[]).filter(member=>member.type==='way'&&member.role==='outer'&&Array.isArray(member.geometry));
                 const polylines=boundaryWays.map(member=>member.geometry.map(point=>[Number(point.lon),Number(point.lat)]).filter(point=>Number.isFinite(point[0])&&Number.isFinite(point[1]))).filter(points=>points.length>1);
                 if(!relation||!polylines.length)throw new Error(`Contour du département ${code} introuvable`);
-                departmentFilter={code};
+                const allPoints=polylines.flat();
+                const west=Math.min(...allPoints.map(point=>point[0])); const east=Math.max(...allPoints.map(point=>point[0]));
+                const south=Math.min(...allPoints.map(point=>point[1])); const north=Math.max(...allPoints.map(point=>point[1]));
+                departmentFilter={code,polylines};
                 departmentBoundaryLayer=L.layerGroup(polylines.map(points=>L.polyline(points.map(point=>[point[1],point[0]]),{color:'#f59e0b',weight:3}))).addTo(map);
-                const stationElements=(data.elements||[]).filter(element=>element.type!=='relation');
+                const departmentAreaId=3600000000+Number(relation.id);
+                const query=`[out:json][timeout:45];nwr["amenity"="fire_station"](area:${departmentAreaId});out center tags;`;
+                const data=await overpass(query,`Casernes du département ${code}`);
+                const stationElements=data.elements||[];
                 let added=0;
                 stationElements.forEach(element=>{
                     const ll=elementLatLng(element); if(!ll)return;
