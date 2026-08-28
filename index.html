@@ -97,6 +97,8 @@
         /* Inspiration uMap / Framacarte : panneau de couches compact et lisible */
         .layer-count{font-size:.68rem;color:#9ca3af;background:#1f2937;padding:2px 7px;border-radius:999px;min-width:28px;text-align:center}
         .toggle-item{gap:8px;padding:7px 8px;border-radius:7px}.toggle-item:hover{background:#182235}
+        .main-filter{margin:10px 0}.main-filter label{display:block;margin-bottom:5px;font-size:.7rem;color:#9ca3af}.main-filter select{padding:8px;font-size:.78rem}
+        .map-export-overlay{position:absolute;left:18px;top:18px;z-index:1600;display:grid;gap:3px;padding:10px 13px;background:rgba(17,24,39,.94);border:1px solid #f59e0b;border-left:4px solid #ef4444;border-radius:6px;color:#fff;box-shadow:0 4px 15px #0008}.map-export-overlay strong{font-size:15px}.map-export-overlay span,.map-export-overlay small{font-size:11px;color:#cbd5e1}
         /* national load buttons removed (use official datasets / viewport loads instead) */
         .map-title{position:absolute;top:15px;right:70px;z-index:999;background:rgba(17,24,39,.92);border:1px solid #374151;border-radius:8px;padding:8px 12px;font-size:.75rem;font-weight:700;box-shadow:0 4px 15px #0005}
         .import-btn{margin-top:10px;width:100%;padding:8px;border-radius:6px;border:1px solid #374151;background:#0f1724;color:#9ca3af;cursor:pointer}
@@ -142,6 +144,7 @@
         </select>
 
         <div class="section-title">Centres de Secours</div>
+        <div class="main-filter"><label for="organization-filter">Filtrer par organisme</label><select id="organization-filter"><option value="all">Tous les organismes</option><option value="SDIS">SDIS</option><option value="SIS">SIS</option><option value="SDMIS">SDMIS</option><option value="BMPM">BMPM</option><option value="BSPP">BSPP</option></select></div>
         <div class="toggle-group">
             <div class="toggle-item">
                 <span class="toggle-label"><span class="dot dot-csp"></span> CSP / Centres Principaux <span class="layer-count" id="count-CSP">0</span></span>
@@ -238,6 +241,7 @@
             <div class="tool-btn" title="Basculer Satellite / Carte Claire" onclick="toggleMapMode()"><i class="fa-solid fa-layer-group"></i></div>
             <div class="tool-btn" title="Carte Satellite" onclick="setMode('sat')"><i class="fa-solid fa-globe"></i></div>
             <div class="tool-btn" title="Carte Claire" onclick="setMode('light')"><i class="fa-solid fa-map"></i></div>
+            <div class="tool-btn" title="Exporter une image de la carte" onclick="exportMainMapImage()"><i class="fa-solid fa-camera"></i></div>
             <div class="tool-btn" title="Journal technique (diagnostic)" onclick="toggleDebugPanel()"><i class="fa-solid fa-bug"></i></div>
         </div>
 
@@ -250,6 +254,7 @@
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <script>
         // FR-SIS TACTICAL V5 (fix CSP + fix PI/BI)
@@ -270,6 +275,7 @@
             zoomControl: false
         });
         L.control.zoom({position:'topright'}).addTo(map);
+        L.control.scale({imperial:false,position:'bottomleft',maxWidth:150}).addTo(map);
         let currentLayer = lightLayer;
         const geoSector=document.getElementById('geo-sector');
         const geoViews={
@@ -425,7 +431,7 @@
         const layers = {
             CSP: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:10,maxClusterRadius:42}),
             CS: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:11,maxClusterRadius:42}),
-            CTA: L.layerGroup(), ETAT_MAJOR: L.layerGroup(), BMPM: L.layerGroup(), BSPP: L.layerGroup(), SIS: L.layerGroup()
+            CTA: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:12,maxClusterRadius:38}), ETAT_MAJOR: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:12,maxClusterRadius:38}), BMPM: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:12,maxClusterRadius:38}), BSPP: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:12,maxClusterRadius:38}), SIS: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:12,maxClusterRadius:38})
         };
         const icons = {
             CSP: createCustomIcon('#ef4444','CSP',34),
@@ -507,21 +513,32 @@
             const t=item.tags||{};
             const address=t['addr:full'] || [t['addr:housenumber'],t['addr:street'],t['addr:postcode'],t['addr:city']].filter(Boolean).join(' ') || 'Non renseignée';
             const source=item.source || 'OpenStreetMap';
+            const updated=t.updated||t['updated_at']||t.date||'Donnée importée le '+new Date().toLocaleDateString('fr-FR');
             return `<div class="station-popup"><span class="badge" style="background:${item.type==='CSP'?'#ef4444':item.type==='SDIS'?'#a855f7':'#f97316'}">${esc(item.type)}</span><h3>${esc(t.name||t.nom||'Centre d’incendie et de secours')}</h3><table>
             <tr><td>Classement</td><td><b>${esc(t['fire_station:type:FR']||t.type||item.type)}</b></td></tr>
             <tr><td>SDIS / SIS</td><td>${esc(inferSdis(t)||'Non renseigné')}</td></tr>
             <tr><td>Référence</td><td>${esc(t['ref:FR:SDIS']||t.ref||t.reference||'—')}</td></tr>
             <tr><td>Adresse</td><td>${esc(address)}</td></tr>
+            <tr><td>Coordonnées</td><td>${Number(item.lat).toFixed(6)}, ${Number(item.lng).toFixed(6)}</td></tr>
             ${t.groupement||t['ref:FR:SDIS:GRPT']?`<tr><td>Groupement</td><td>${esc(t.groupement||t['ref:FR:SDIS:GRPT'])}</td></tr>`:''}
             ${t.compagnie||t['ref:FR:SDIS:CIE']?`<tr><td>Compagnie</td><td>${esc(t.compagnie||t['ref:FR:SDIS:CIE'])}</td></tr>`:''}
             ${vehicleSummary(t.description)}
             ${t.phone?`<tr><td>Téléphone</td><td>${esc(t.phone)}</td></tr>`:''}
             ${t.website?`<tr><td>Site</td><td><a href="${esc(t.website)}" target="_blank" rel="noopener">Ouvrir</a></td></tr>`:''}
-            </table><div class="station-actions"><button type="button" data-action="copy" data-station-id="${esc(item.id)}">Copier GPS</button><button type="button" data-action="csv" data-station-id="${esc(item.id)}">Export CSV</button><button type="button" data-action="pdf" data-station-id="${esc(item.id)}">Export PDF</button></div><div class="data-source">Source : ${esc(source)}</div></div>`;
+            </table><div class="station-actions"><button type="button" data-action="copy" data-station-id="${esc(item.id)}">Copier GPS</button><button type="button" data-action="csv" data-station-id="${esc(item.id)}">Export CSV</button><button type="button" data-action="pdf" data-station-id="${esc(item.id)}">Export PDF</button></div><div class="data-source">Source : ${esc(source)}<br>Dernière mise à jour : ${esc(updated)}</div></div>`;
         }
         function stationExportData(item){
             const tags=item.tags||{};
             return {Nom:searchItemName(item),Type:item.type,Organisme:inferSdis(tags)||'Non renseigné',Latitude:item.lat,Longitude:item.lng,Adresse:tags['addr:full']||'Non renseignée',Vehicules:vehicleSummary(tags.description).replace(/<[^>]+>/g,'')||'Non renseigné',Source:item.source||'OpenStreetMap'};
+        }
+        function itemOrganization(item){
+            const organization=String([item.type,inferSdis(item.tags||{}),searchItemName(item)].join(' ')).toUpperCase();
+            if(/BMPM|MARINS[- ]?POMPIERS/.test(organization))return 'BMPM';
+            if(/BSPP|SAPEURS[- ]?POMPIERS\s+DE\s+PARIS/.test(organization))return 'BSPP';
+            if(/SDMIS/.test(organization))return 'SDMIS';
+            if(item.type==='SIS'||/\bSIS\b/.test(organization))return 'SIS';
+            if(/SDIS/.test(organization)||item.type==='CSP'||item.type==='CS'||item.type==='SDIS')return 'SDIS';
+            return 'other';
         }
         function exportStationCsv(item){
             const data=stationExportData(item); const csv=Object.keys(data).map(key=>`"${key}"`).join(';')+'\n'+Object.values(data).map(value=>`"${String(value).replace(/"/g,'""')}"`).join(';');
@@ -998,19 +1015,29 @@
 
         function updateMarkers(){
             let total=0;
+            const organizationFilter=document.getElementById('organization-filter')?.value||'all';
             for(const type in checkboxes){
-                if(checkboxes[type].checked){if(!map.hasLayer(layers[type]))map.addLayer(layers[type]);total+=layers[type].getLayers().length;}
+                const visibleItems=database.filter(item=>item.layerType===type&&(organizationFilter==='all'||itemOrganization(item)===organizationFilter));
+                layers[type].clearLayers(); visibleItems.forEach(item=>layers[type].addLayer(item.marker));
+                if(checkboxes[type].checked){if(!map.hasLayer(layers[type]))map.addLayer(layers[type]);total+=visibleItems.length;}
                 else if(map.hasLayer(layers[type]))map.removeLayer(layers[type]);
             }
             document.getElementById('visible-count').innerText=total;
-            for(const type in layers){const el=document.getElementById('count-'+type);if(el)el.innerText=layers[type].getLayers().length;}
+            for(const type in layers){const el=document.getElementById('count-'+type);if(el)el.innerText=database.filter(item=>item.layerType===type&&(organizationFilter==='all'||itemOrganization(item)===organizationFilter)).length;}
         }
         for(const type in checkboxes) checkboxes[type].addEventListener('change', updateMarkers);
+        document.getElementById('organization-filter').addEventListener('change',updateMarkers);
 
         // National load buttons removed — rely on official datasets and viewport loads instead.
 
         function setMode(mode){map.removeLayer(currentLayer);currentLayer=mode==='sat'?satLayer:lightLayer;document.getElementById('mode-text').innerText=mode==='sat'?'SATELLITE':'CARTE CLAIRE';map.addLayer(currentLayer);}
         function toggleMapMode(){setMode(currentLayer===satLayer?'light':'sat');}
+        async function exportMainMapImage(){
+            if(typeof html2canvas!=='function'){alert('Export image indisponible.');return;}
+            const container=document.getElementById('map-container');
+            const overlay=document.createElement('div'); overlay.className='map-export-overlay'; overlay.innerHTML=`<strong>FR-SIS TACTICAL</strong><span>Carte principale · ${new Date().toLocaleDateString('fr-FR')}</span><small>CSP · CS / CPI / CIS · SDIS / État-major</small>`; container.appendChild(overlay);
+            try{const canvas=await html2canvas(container,{useCORS:true,allowTaint:false,backgroundColor:'#1a1a1a',logging:false}); const link=document.createElement('a');link.download=`carte-tactique-${new Date().toISOString().slice(0,10)}.png`;link.href=canvas.toDataURL('image/png');link.click();}catch(error){alert('Impossible de créer la capture de la carte.');debugLog('Export image échoué : '+error.message,'warn');}finally{overlay.remove();}
+        }
         map.on('popupopen',event=>{
             event.popup.getElement()?.querySelectorAll('[data-action="copy"],[data-action="csv"],[data-action="pdf"]').forEach(button=>button.addEventListener('click',()=>{
                 const item=byId.get(button.dataset.stationId); if(!item)return;
@@ -1081,7 +1108,7 @@
         function searchItemName(item){const t=item.tags||{};return String(t.name||t.nom||t.libelle||t['nom_cis']||'Centre de secours');}
         function searchItemText(item){
             const t=item.tags||{};
-            return normalizeSearch([searchItemName(item),t.ref,t.reference,t.operator,t['addr:full'],t['addr:city'],t['addr:postcode'],item.type].join(' '));
+            return normalizeSearch([searchItemName(item),t.ref,t.reference,t.operator,t.sdis,t.departement,t.department,t.code_departement,t['addr:full'],t['addr:street'],t['addr:city'],t['addr:postcode'],item.type].join(' '));
         }
         function getSearchMatches(query){
             const terms=normalizeSearch(query).trim().split(/\s+/).filter(Boolean);
