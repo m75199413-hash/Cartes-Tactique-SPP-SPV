@@ -355,9 +355,11 @@
             <tr><td>État</td><td>${esc(t.etat_cod||t.status||'—')}</td></tr>
             <tr><td>Gestionnaire</td><td>${esc(t.operator||t.gestionnaire||'—')}</td></tr></table><div class="data-source">Source : ${esc(item.source||'Donnée publique')}</div></div>`;
         }
+        function isCorsica(lat,lng){return lat>=41.3&&lat<=43.1&&lng>=8.5&&lng<=9.7;}
 
         function addItem(item) {
             if (!item || item.lat==null || item.lng==null) return;
+            if((item.type==='CSP'||item.type==='CS')&&isCorsica(Number(item.lat),Number(item.lng)))item.type='SIS';
             if(item.type==='SDIS') item.layerType=item.subtype==='CTA'||/\bCTA\b|\bCODIS\b/i.test(searchItemName(item))?'CTA':'ETAT_MAJOR';
             else if(item.type==='BMPM'||item.type==='BSPP'||item.type==='SIS') item.layerType=item.type;
             else item.layerType=item.type;
