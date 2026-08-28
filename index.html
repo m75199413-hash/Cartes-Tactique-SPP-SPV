@@ -842,6 +842,8 @@
             if(!userLocationMarker)userLocationMarker=L.marker(event.latlng,{icon:userLocationIcon,keyboard:false,interactive:false,zIndexOffset:1000}).addTo(map);
             else userLocationMarker.setLatLng(event.latlng);
         });
+        map.on('locationerror',event=>debugLog(`Localisation indisponible : ${event.message}`,'warn'));
+        map.locate({setView:false,watch:false,enableHighAccuracy:true,timeout:10000,maximumAge:300000});
         const suggestionModal=document.getElementById('suggestionModal');
         const suggestionForm=document.getElementById('suggestionForm');
         const suggestionFields=document.getElementById('suggestionFields');
