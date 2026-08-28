@@ -835,7 +835,7 @@
 
         function setMode(mode){map.removeLayer(currentLayer);currentLayer=mode==='sat'?satLayer:lightLayer;document.getElementById('mode-text').innerText=mode==='sat'?'SATELLITE':'CARTE CLAIRE';map.addLayer(currentLayer);}
         function toggleMapMode(){setMode(currentLayer===satLayer?'light':'sat');}
-        function locateUser(){map.locate({setView:true,maxZoom:13});}
+        function locateUser(){map.locate({setView:true,maxZoom:17,watch:true,enableHighAccuracy:true,timeout:20000,maximumAge:0});}
         let userLocationMarker=null;
         const userLocationIcon=L.divIcon({className:'user-location-icon',html:'<div class="user-location-marker"></div>',iconSize:[14,14],iconAnchor:[7,7]});
         map.on('locationfound',event=>{
@@ -843,7 +843,7 @@
             else userLocationMarker.setLatLng(event.latlng);
         });
         map.on('locationerror',event=>debugLog(`Localisation indisponible : ${event.message}`,'warn'));
-        map.locate({setView:false,watch:false,enableHighAccuracy:true,timeout:10000,maximumAge:300000});
+        map.locate({setView:false,watch:true,enableHighAccuracy:true,timeout:20000,maximumAge:0});
         const suggestionModal=document.getElementById('suggestionModal');
         const suggestionForm=document.getElementById('suggestionForm');
         const suggestionFields=document.getElementById('suggestionFields');
