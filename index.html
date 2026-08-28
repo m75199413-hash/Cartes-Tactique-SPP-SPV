@@ -203,7 +203,7 @@
         <div class="status-bar">
             <div>ZOOM: <span id="zoom-level">6</span></div>
             <div>ÉQUIPEMENTS VISIBLES: <span id="visible-count">0</span></div>
-            <div>MODE: <span id="mode-text">SATELLITE</span></div>
+            <div>MODE: <span id="mode-text">CARTE CLAIRE</span></div>
         </div>
 
         <div class="map-tools">
@@ -239,11 +239,11 @@
         const map = L.map('map', {
             center: [46.603354, 1.888334],
             zoom: 6,
-            layers: [satLayer],
+            layers: [lightLayer],
             zoomControl: false
         });
         L.control.zoom({position:'topright'}).addTo(map);
-        let currentLayer = satLayer;
+        let currentLayer = lightLayer;
         const geoSector=document.getElementById('geo-sector');
         const geoViews={
             metropole:{center:[46.603354,1.888334],zoom:6},
