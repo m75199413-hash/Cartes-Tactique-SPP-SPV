@@ -356,9 +356,18 @@
             <tr><td>Gestionnaire</td><td>${esc(t.operator||t.gestionnaire||'—')}</td></tr></table><div class="data-source">Source : ${esc(item.source||'Donnée publique')}</div></div>`;
         }
         function isCorsica(lat,lng){return lat>=41.3&&lat<=43.1&&lng>=8.5&&lng<=9.7;}
+        function specialOrganizationType(item){
+            const tags=item.tags||{};
+            const organization=String([searchItemName(item),inferSdis(tags),tags.description,tags.operator].filter(Boolean).join(' ')).toUpperCase();
+            if(/\bBMPM\b|BATAILLON\s+DE\s+MARINS[- ]?POMPIERS/.test(organization))return 'BMPM';
+            if(/\bBSPP\b|BRIGADE\s+DE\s+SAPEURS[- ]?POMPIERS\s+DE\s+PARIS/.test(organization))return 'BSPP';
+            return null;
+        }
 
         function addItem(item) {
             if (!item || item.lat==null || item.lng==null) return;
+            const specialType=(item.type==='CSP'||item.type==='CS')&&specialOrganizationType(item);
+            if(specialType)item.type=specialType;
             if((item.type==='CSP'||item.type==='CS')&&isCorsica(Number(item.lat),Number(item.lng)))item.type='SIS';
             if(item.type==='SDIS') item.layerType=item.subtype==='CTA'||/\bCTA\b|\bCODIS\b/i.test(searchItemName(item))?'CTA':'ETAT_MAJOR';
             else if(item.type==='BMPM'||item.type==='BSPP'||item.type==='SIS') item.layerType=item.type;
