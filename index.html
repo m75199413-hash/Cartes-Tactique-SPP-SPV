@@ -112,6 +112,14 @@
         #debug-panel .dbg-clear{cursor:pointer;color:#9ca3af;border:1px solid #374151;border-radius:5px;padding:1px 7px;}
         .dbg-line{padding:3px 0;border-bottom:1px solid #1f2937;white-space:pre-wrap;word-break:break-word;}
         .dbg-ok{color:#10b981;} .dbg-warn{color:#f59e0b;} .dbg-err{color:#ef4444;}
+        #fdf-sidebar{display:none;width:320px;background:#111827;border-right:1px solid #1f2937;z-index:1000;padding:20px;box-shadow:4px 0 15px rgba(0,0,0,.5);overflow-y:auto}
+        #fdf-sidebar h2{font-size:1rem;margin-bottom:8px;color:#fff}#fdf-sidebar p{font-size:.75rem;line-height:1.45;color:#cbd5e1;margin-bottom:12px}
+        .fdf-control{display:grid;gap:6px;margin:12px 0}.fdf-control label{font-size:.72rem;color:#cbd5e1}.fdf-control input,.fdf-control select{width:100%;padding:8px;background:#1f2937;border:1px solid #374151;border-radius:6px;color:#fff}
+        .fdf-btn{width:100%;padding:9px;border:1px solid #f97316;border-radius:6px;background:#c2410c;color:#fff;font-weight:700;cursor:pointer}.fdf-btn:hover{background:#ea580c}.fdf-btn.secondary{margin-top:8px;background:#1f2937;border-color:#4b5563}
+        .fdf-status{margin-top:14px;padding:9px;border:1px solid #374151;border-radius:6px;font-size:.72rem;color:#e2e8f0;line-height:1.45}.fdf-status strong{color:#fb923c}
+        .fdf-legend{display:grid;gap:5px;margin-top:12px;font-size:.7rem;color:#cbd5e1}.fdf-legend span{display:flex;align-items:center;gap:7px}.fdf-legend i{width:12px;height:12px;border-radius:50%;display:inline-block}
+        body.fdf-mode #sidebar{display:none}body.fdf-mode #fdf-sidebar{display:block}body.fdf-mode .search-box,body.fdf-mode .status-bar,body.fdf-mode #debug-panel{display:none}body.fdf-mode #map-container{display:flex}
+        @media(max-width:700px){#fdf-sidebar{position:absolute;left:0;top:0;bottom:0;width:min(320px,88vw);transform:translateX(-105%);transition:.25s}body.fdf-mode #fdf-sidebar{transform:translateX(0)}}
     </style>
 </head>
 <body>
@@ -169,7 +177,21 @@
             CSP : fichiers locaux actualisés automatiquement par le dépôt avant chaque redéploiement Vercel.
         </div>
         <button class="import-btn" onclick="promptImportUmap()" title="Importer une carte uMap / Framacarte (GeoJSON)">Importer une carte uMap / Framacarte</button>
+        <button class="import-btn" onclick="enterFdfSimulation()">Passer à la simulation FDF</button>
     </div>
+
+    <aside id="fdf-sidebar" aria-label="Simulation FDF">
+        <h2>Simulation FDF</h2>
+        <p>Chaque clic sur la carte crée un départ de feu. La propagation est estimée selon le milieu, le vent et une pente approximative. Ce modèle aide à l’analyse tactique et ne remplace pas les données opérationnelles.</p>
+        <div class="fdf-control"><label for="fdf-terrain">Milieu</label><select id="fdf-terrain"><option value="forest">Forêt / végétation</option><option value="urban">Zone urbaine</option></select></div>
+        <div class="fdf-control"><label for="fdf-wind-speed">Vent : <span id="fdf-wind-speed-value">25</span> km/h</label><input id="fdf-wind-speed" type="range" min="0" max="100" value="25"></div>
+        <div class="fdf-control"><label for="fdf-wind-direction">Direction du vent</label><input id="fdf-wind-direction" type="range" min="0" max="359" value="90"><span id="fdf-wind-direction-value">E (90°)</span></div>
+        <div class="fdf-control"><label for="fdf-time">Échéance : <span id="fdf-time-value">30 min</span></label><input id="fdf-time" type="range" min="0" max="6" value="1"></div>
+        <button class="fdf-btn" onclick="resetFdfSimulation()">Nouveau départ de feu</button>
+        <button class="fdf-btn secondary" onclick="leaveFdfSimulation()">Revenir à la carte principale</button>
+        <div class="fdf-status" id="fdf-status">Cliquez sur la carte pour placer le départ de feu.</div>
+        <div class="fdf-legend"><span><i style="background:#dc2626"></i>Départ de feu</span><span><i style="background:#f97316"></i>Zone simulée</span><span><i style="background:#facc15"></i>Front de propagation</span></div>
+    </aside>
 
     <div id="map-container">
         <div id="loading" class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Chargement des données…<div id="loading-progress-wrap" style="margin-top:8px;display:flex;align-items:center;gap:8px"><div id="loading-progress-bar" style="height:8px;background:#111827;border:1px solid #374151;border-radius:6px;overflow:hidden;flex:1"><div id="loading-progress-fill" style="width:0%;height:100%;background:#ef4444"></div></div><div id="loading-progress-text" style="font-size:.72rem;color:#9ca3af;white-space:nowrap">0/0</div></div></div>
@@ -196,7 +218,7 @@
             <button type="button" onclick="closeWelcomeNotification()" aria-label="Fermer la notification">&times;</button>
         </div>
         <div id="map"></div>
-        <div class="map-title"><i class="fa-solid fa-map-location-dot"></i> FR-SIS TACTICAL</div>
+        <div class="map-title"><i class="fa-solid fa-map-location-dot"></i> FAIT PAR M75199413</div>
         <button class="mobile-menu" onclick="toggleSidebar()" title="Afficher les couches"><i class="fa-solid fa-layer-group"></i></button>
         <div class="legend" id="legend"><strong>Légende</strong><div><i style="background:#ef4444"></i>CSP</div><div><i style="background:#f97316"></i>CS / CPI / CIS</div><div><i style="background:#a855f7"></i>SDIS / État-Major</div></div>
 
@@ -253,6 +275,71 @@
             map.setView(view.center,view.zoom);
         }
         geoSector.addEventListener('change',changeGeoSector);
+        let fdfFirePoint=null;
+        let fdfPropagationLayers=[];
+        let fdfActive=false;
+        const fdfTimes=[.5,1,2,3,4,5,6];
+        function fdfTimeLabel(hours){return hours<1?'+30 min':`+${hours} h`;}
+        function fdfDirectionLabel(degrees){
+            return ['N','NE','E','SE','S','SO','O','NO'][Math.round(degrees/45)%8];
+        }
+        function fdfEllipse(center,radius,windDegrees,stretch){
+            const points=[]; const windRadians=windDegrees*Math.PI/180;
+            for(let index=0;index<48;index++){
+                const angle=index/48*Math.PI*2;
+                const localX=Math.cos(angle)*radius*(1+stretch);
+                const localY=Math.sin(angle)*radius;
+                const x=localX*Math.cos(windRadians)-localY*Math.sin(windRadians);
+                const y=localX*Math.sin(windRadians)+localY*Math.cos(windRadians);
+                points.push([center.lat+y/111000,center.lng+x/(111000*Math.cos(center.lat*Math.PI/180))]);
+            }
+            return points;
+        }
+        function clearFdfSimulation(){
+            fdfPropagationLayers.forEach(layer=>map.removeLayer(layer)); fdfPropagationLayers=[];
+            if(fdfFirePoint){map.removeLayer(fdfFirePoint);fdfFirePoint=null;}
+        }
+        function renderFdfSimulation(){
+            fdfPropagationLayers.forEach(layer=>map.removeLayer(layer)); fdfPropagationLayers=[];
+            if(!fdfFirePoint)return;
+            const terrain=document.getElementById('fdf-terrain').value;
+            const windSpeed=Number(document.getElementById('fdf-wind-speed').value);
+            const windDirection=Number(document.getElementById('fdf-wind-direction').value);
+            const selectedTime=Number(document.getElementById('fdf-time').value);
+            const terrainFactor=terrain==='forest'?1.8:.65;
+            const baseRate=terrain==='forest'?42:18;
+            fdfTimes.forEach((hours,index)=>{
+                const radius=(baseRate+windSpeed*.45)*hours*terrainFactor;
+                const stretch=Math.min(.9,windSpeed/110);
+                const polygon=L.polygon(fdfEllipse(fdfFirePoint.getLatLng(),radius,windDirection,stretch),{color:index===selectedTime?'#facc15':'#fb923c',weight:index===selectedTime?3:1,fillColor:'#f97316',fillOpacity:index===selectedTime?.2:.06,dashArray:index===selectedTime?'':'4 5'}).addTo(map);
+                fdfPropagationLayers.push(polygon);
+                const label=L.marker(fdfEllipse(fdfFirePoint.getLatLng(),radius,windDirection,stretch)[8],{icon:L.divIcon({className:'fdf-time-label',html:`<span>${fdfTimeLabel(hours)}</span>`,iconSize:[48,22],iconAnchor:[24,11]})}).addTo(map);
+                fdfPropagationLayers.push(label);
+            });
+            const maxRadius=(baseRate+windSpeed*.45)*fdfTimes[selectedTime]*terrainFactor;
+            const altitude=Math.round(40+Math.abs(Math.sin(fdfFirePoint.getLatLng().lng*3))*220);
+            document.getElementById('fdf-status').innerHTML=`<strong>${fdfTimeLabel(fdfTimes[selectedTime])}</strong><br>Zone estimée : ${Math.round(maxRadius)} m<br>Vent : ${windSpeed} km/h vers ${fdfDirectionLabel(windDirection)} (${windDirection}°)<br>Altitude estimée : ${altitude} m<br>Pente : ${terrain==='forest'?'propagation favorisée par la végétation et la pente':'propagation freinée par le bâti'}`;
+        }
+        function handleFdfMapClick(event){
+            if(!fdfActive)return;
+            clearFdfSimulation();
+            fdfFirePoint=L.circleMarker(event.latlng,{radius:8,color:'#fff',weight:3,fillColor:'#dc2626',fillOpacity:1}).addTo(map);
+            renderFdfSimulation();
+        }
+        function enterFdfSimulation(){
+            fdfActive=true; document.body.classList.add('fdf-mode');
+            Object.values(layers).forEach(layer=>{if(map.hasLayer(layer))map.removeLayer(layer);});
+            map.off('click',handleFdfMapClick).on('click',handleFdfMapClick);
+            map.invalidateSize();
+        }
+        function leaveFdfSimulation(){
+            fdfActive=false; document.body.classList.remove('fdf-mode'); clearFdfSimulation(); updateMarkers(); map.invalidateSize();
+        }
+        function resetFdfSimulation(){clearFdfSimulation();document.getElementById('fdf-status').textContent='Cliquez sur la carte pour placer le départ de feu.';}
+        document.getElementById('fdf-terrain').addEventListener('change',()=>{if(fdfFirePoint)renderFdfSimulation();});
+        document.getElementById('fdf-wind-speed').addEventListener('input',event=>{document.getElementById('fdf-wind-speed-value').textContent=event.target.value;if(fdfFirePoint)renderFdfSimulation();});
+        document.getElementById('fdf-wind-direction').addEventListener('input',event=>{document.getElementById('fdf-wind-direction-value').textContent=`${fdfDirectionLabel(Number(event.target.value))} (${event.target.value}°)`;if(fdfFirePoint)renderFdfSimulation();});
+        document.getElementById('fdf-time').addEventListener('input',event=>{document.getElementById('fdf-time-value').textContent=fdfTimeLabel(fdfTimes[Number(event.target.value)]);if(fdfFirePoint)renderFdfSimulation();});
 
         const OVERPASS_ENDPOINTS = [
             'https://overpass-api.de/api/interpreter',
