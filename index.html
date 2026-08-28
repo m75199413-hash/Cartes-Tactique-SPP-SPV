@@ -325,6 +325,20 @@
         function inferSdis(tags={}) {
             return tags.operator || tags['operator:short'] || tags.sdis || tags.SDIS || '';
         }
+        function vehicleSummary(description){
+            const lines=String(description||'').replace(/\s+-\s+/g,'\n').replace(/\s*;\s*/g,'\n').split(/\r?\n/);
+            const vehicles=[];
+            const excluded=/^(?:SPP?|SPV|interventions?|ans?|dont|environ|saison|été|hiver|pma)$/i;
+            lines.forEach(line=>{
+                const match=line.trim().match(/^(\d+)\s+([A-Z][A-Z0-9]*(?:\s+[A-Z0-9]+){0,2})\b/);
+                if(!match||excluded.test(match[2])||/intervention|spp|spv/i.test(match[2]))return;
+                vehicles.push({count:Number(match[1]),name:match[2].trim()});
+            });
+            if(!vehicles.length)return '';
+            const total=vehicles.reduce((sum,vehicle)=>sum+vehicle.count,0);
+            const rows=vehicles.map(vehicle=>`<tr><td>${esc(vehicle.name)}</td><td>${vehicle.count}</td></tr>`).join('');
+            return `<tr><td>Véhicules</td><td><b>${total}</b></td></tr><tr><td colspan="2"><table>${rows}</table></td></tr>`;
+        }
         function elementLatLng(el) {
             if (el.lat != null && el.lon != null) return [Number(el.lat),Number(el.lon)];
             if (el.center) return [Number(el.center.lat),Number(el.center.lon)];
@@ -341,6 +355,7 @@
             <tr><td>Adresse</td><td>${esc(address)}</td></tr>
             ${t.groupement||t['ref:FR:SDIS:GRPT']?`<tr><td>Groupement</td><td>${esc(t.groupement||t['ref:FR:SDIS:GRPT'])}</td></tr>`:''}
             ${t.compagnie||t['ref:FR:SDIS:CIE']?`<tr><td>Compagnie</td><td>${esc(t.compagnie||t['ref:FR:SDIS:CIE'])}</td></tr>`:''}
+            ${vehicleSummary(t.description)}
             ${t.phone?`<tr><td>Téléphone</td><td>${esc(t.phone)}</td></tr>`:''}
             ${t.website?`<tr><td>Site</td><td><a href="${esc(t.website)}" target="_blank" rel="noopener">Ouvrir</a></td></tr>`:''}
             </table><div class="data-source">Source : ${esc(source)}</div></div>`;
