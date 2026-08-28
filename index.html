@@ -974,21 +974,19 @@
             clearDepartmentFilter();
             try{
                 setLoading(true);
-                const boundaryQuery=`[out:json][timeout:45];(rel["boundary"="administrative"]["admin_level"="6"]["ref:INSEE"="${code}"];rel["boundary"="administrative"]["admin_level"="6"]["ISO3166-2"="FR-${code}"];);out geom;`;
-                const boundaryData=await overpass(boundaryQuery,`Contour du département ${code}`);
-                const relation=(boundaryData.elements||[]).find(element=>element.type==='relation');
-                const boundaryWays=(relation?.members||[]).filter(member=>member.type==='way'&&member.role==='outer'&&Array.isArray(member.geometry));
-                const polylines=boundaryWays.map(member=>member.geometry.map(point=>[Number(point.lon),Number(point.lat)]).filter(point=>Number.isFinite(point[0])&&Number.isFinite(point[1]))).filter(points=>points.length>1);
-                if(!relation||!polylines.length)throw new Error(`Contour du département ${code} introuvable`);
-                const allPoints=polylines.flat();
-                const west=Math.min(...allPoints.map(point=>point[0])); const east=Math.max(...allPoints.map(point=>point[0]));
-                const south=Math.min(...allPoints.map(point=>point[1])); const north=Math.max(...allPoints.map(point=>point[1]));
-                departmentFilter={code,polylines};
-                departmentBoundaryLayer=L.layerGroup(polylines.map(points=>L.polyline(points.map(point=>[point[1],point[0]]),{color:'#f59e0b',weight:3}))).addTo(map);
-                const departmentAreaId=3600000000+Number(relation.id);
-                const query=`[out:json][timeout:45];nwr["amenity"="fire_station"](area:${departmentAreaId});out center tags;`;
+                const boundaryResponse=await fetchWithFallback('https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements.geojson');
+                const departments=await boundaryResponse.json();
+                const boundary=departments.features?.find(feature=>String(feature.properties?.code)===String(code));
+                if(!boundary)throw new Error(`Contour du département ${code} introuvable`);
+                departmentFilter={code,geometry:boundary.geometry};
+                departmentBoundaryLayer=L.geoJSON(boundary,{style:{color:'#f59e0b',weight:3,fillColor:'#f59e0b',fillOpacity:.08}}).addTo(map);
+                const bounds=departmentBoundaryLayer.getBounds();
+                const south=bounds.getSouth(); const west=bounds.getWest(); const north=bounds.getNorth(); const east=bounds.getEast();
+                const query=`[out:json][timeout:45];nwr["amenity"="fire_station"](${south},${west},${north},${east});out center tags;`;
                 const data=await overpass(query,`Casernes du département ${code}`);
-                const stationElements=data.elements||[];
+                const stationElements=(data.elements||[]).filter(element=>{
+                    const ll=elementLatLng(element); return ll&&pointInGeometry([ll[1],ll[0]],boundary.geometry);
+                });
                 let added=0;
                 stationElements.forEach(element=>{
                     const ll=elementLatLng(element); if(!ll)return;
