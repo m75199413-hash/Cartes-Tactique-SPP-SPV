@@ -839,7 +839,7 @@
         let userLocationMarker=null;
         let nearestStationLine=null;
         const userLocationIcon=L.divIcon({className:'user-location-icon',html:'<div class="user-location-marker"></div>',iconSize:[14,14],iconAnchor:[7,7]});
-        function showNearestStation(){
+        async function showNearestStation(){
             if(!userLocationMarker)return;
             const userLatLng=userLocationMarker.getLatLng();
             const stations=database.filter(item=>['CS','CSP','SIS','BMPM','BSPP'].includes(item.type));
@@ -848,12 +848,27 @@
                 const distance=userLatLng.distanceTo([item.lat,item.lng]);
                 return !closest||distance<closest.distance?{item,distance}:closest;
             },null);
-            const distanceText=nearest.distance<1000?`${Math.round(nearest.distance)} m`:`${(nearest.distance/1000).toFixed(1)} km`;
             if(nearestStationLine)map.removeLayer(nearestStationLine);
-            nearestStationLine=L.polyline([userLatLng,[nearest.item.lat,nearest.item.lng]],{color:'#2563eb',weight:3,dashArray:'6 6',opacity:.85}).addTo(map);
             nearest.item.marker?.openPopup();
-            userLocationMarker.bindTooltip(`${searchItemName(nearest.item)} : ${distanceText}`,{direction:'top',offset:[0,-8]}).openTooltip();
             map.setView([nearest.item.lat,nearest.item.lng],Math.max(map.getZoom(),14));
+            const fallbackLine=[userLatLng,[nearest.item.lat,nearest.item.lng]];
+            try{
+                const coordinates=`${userLatLng.lng},${userLatLng.lat};${nearest.item.lng},${nearest.item.lat}`;
+                const response=await fetch(`https://router.project-osrm.org/route/v1/driving/${coordinates}?overview=full&geometries=geojson`);
+                if(!response.ok)throw new Error(`HTTP ${response.status}`);
+                const route=await response.json();
+                const geometry=route.routes?.[0]?.geometry;
+                if(!geometry?.coordinates?.length)throw new Error('Itinéraire introuvable');
+                const routeDistance=route.routes[0].distance;
+                const distanceText=routeDistance<1000?`${Math.round(routeDistance)} m`:`${(routeDistance/1000).toFixed(1)} km`;
+                nearestStationLine=L.geoJSON(geometry,{style:{color:'#2563eb',weight:4,opacity:.9}}).addTo(map);
+                userLocationMarker.bindTooltip(`${searchItemName(nearest.item)} : ${distanceText} par la route`,{direction:'top',offset:[0,-8]}).openTooltip();
+            }catch(error){
+                nearestStationLine=L.polyline(fallbackLine,{color:'#2563eb',weight:3,dashArray:'6 6',opacity:.85}).addTo(map);
+                const distanceText=nearest.distance<1000?`${Math.round(nearest.distance)} m`:`${(nearest.distance/1000).toFixed(1)} km`;
+                userLocationMarker.bindTooltip(`${searchItemName(nearest.item)} : ${distanceText} (trajet routier indisponible)`,{direction:'top',offset:[0,-8]}).openTooltip();
+                debugLog(`Calcul de l'itinéraire routier indisponible : ${error.message}`,'warn');
+            }
         }
         map.on('locationfound',event=>{
             if(!userLocationMarker){
