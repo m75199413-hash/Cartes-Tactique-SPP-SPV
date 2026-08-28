@@ -804,15 +804,7 @@
         }
         function loadLocalData(){
             setLoading(true);
-            const stationDatasets=LOCAL_DATASETS.filter(dataset=>dataset.type!=='PEI');
-            return Promise.all(stationDatasets.map(loadLocalDataset)).finally(()=>{setLoading(false);updateMarkers();});
-        }
-        let localPEIDataLoaded=false;
-        function loadLocalPEIData(){
-            if(localPEIDataLoaded)return Promise.resolve();
-            localPEIDataLoaded=true;
-            setLoading(true);
-            return Promise.all(LOCAL_DATASETS.filter(dataset=>dataset.type==='PEI').map(loadLocalDataset)).finally(()=>{setLoading(false);updateMarkers();});
+            return Promise.all(LOCAL_DATASETS.map(loadLocalDataset)).finally(()=>{setLoading(false);updateMarkers();});
         }
 
         function toggleSidebar(){document.getElementById('sidebar').classList.toggle('mobile-open');}
@@ -834,10 +826,7 @@
             document.getElementById('visible-count').innerText=total;
             for(const type in layers){const el=document.getElementById('count-'+type);if(el)el.innerText=layers[type].getLayers().length;}
         }
-        for(const type in checkboxes) checkboxes[type].addEventListener('change', ()=>{
-            if((type==='PI'||type==='BI')&&checkboxes[type].checked)loadLocalPEIData();
-            updateMarkers();
-        });
+        for(const type in checkboxes) checkboxes[type].addEventListener('change', updateMarkers);
 
         // National load buttons removed — rely on official datasets and viewport loads instead.
 
