@@ -823,7 +823,7 @@
             let total=0;
             for(const type in layers){
                 layers[type].clearLayers();
-                database.filter(item=>item.layerType===type && (!departmentFilter||pointInPolygon([item.lng,item.lat],departmentFilter.polygon))).forEach(item=>layers[type].addLayer(item.marker));
+                database.filter(item=>item.layerType===type && (!departmentFilter||item.departmentCode===departmentFilter.code)).forEach(item=>layers[type].addLayer(item.marker));
             }
             for(const type in checkboxes){
                 if(checkboxes[type].checked){if(!map.hasLayer(layers[type]))map.addLayer(layers[type]);total+=layers[type].getLayers().length;}
@@ -971,18 +971,18 @@
             try{
                 setLoading(true);
                 const data=await overpass(query,`Département ${code}`);
-                const relation=(data.elements||[]).find(element=>element.type==='relation'&&Array.isArray(element.geometry)&&element.geometry.length>2);
-                if(!relation)throw new Error(`Contour du département ${code} introuvable`);
-                const polygon=relation.geometry.map(point=>[Number(point.lon),Number(point.lat)]).filter(point=>Number.isFinite(point[0])&&Number.isFinite(point[1]));
-                departmentFilter={code,polygon};
-                departmentBoundaryLayer=L.polygon(polygon.map(point=>[point[1],point[0]]),{color:'#f59e0b',weight:3,fillColor:'#f59e0b',fillOpacity:.08});
-                departmentBoundaryLayer.addTo(map);
+                const relation=(data.elements||[]).find(element=>element.type==='relation');
+                const boundaryWays=(relation?.members||[]).filter(member=>member.type==='way'&&member.role==='outer'&&Array.isArray(member.geometry));
+                const polylines=boundaryWays.map(member=>member.geometry.map(point=>[Number(point.lon),Number(point.lat)]).filter(point=>Number.isFinite(point[0])&&Number.isFinite(point[1]))).filter(points=>points.length>1);
+                if(!relation||!polylines.length)throw new Error(`Contour du département ${code} introuvable`);
+                departmentFilter={code};
+                departmentBoundaryLayer=L.layerGroup(polylines.map(points=>L.polyline(points.map(point=>[point[1],point[0]]),{color:'#f59e0b',weight:3}))).addTo(map);
                 const stationElements=(data.elements||[]).filter(element=>element.type!=='relation');
                 let added=0;
                 stationElements.forEach(element=>{
                     const ll=elementLatLng(element); if(!ll)return;
                     const tags=element.tags||{}; const type=normalizeType(tags);
-                    addItem({id:`osm-department-${element.type}-${element.id}`,type,lat:ll[0],lng:ll[1],tags,source:`OpenStreetMap - SDIS ${code}`}); added++;
+                    addItem({id:`osm-department-${element.type}-${element.id}`,type,lat:ll[0],lng:ll[1],tags,source:`OpenStreetMap - SDIS ${code}`,departmentCode:code}); added++;
                 });
                 Object.keys(checkboxes).filter(type=>['CSP','CS','CTA','ETAT_MAJOR'].includes(type)).forEach(type=>checkboxes[type].checked=true);
                 updateMarkers();
