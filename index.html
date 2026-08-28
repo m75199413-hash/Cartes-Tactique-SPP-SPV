@@ -83,7 +83,6 @@
 
         /* Style des marqueurs sur la carte */
         .custom-marker { border-radius: 50%; border: 2px solid #ffffff; box-shadow: 0 0 6px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 9px; }
-        .user-location-marker { width: 14px; height: 14px; border: 3px solid #ffffff; border-radius: 50%; background: #2563eb; box-shadow: 0 0 0 2px rgba(37,99,235,.35), 0 1px 6px rgba(0,0,0,.8); }
         .loading { position:absolute; top:15px; right:15px; z-index:1000; background:rgba(17,24,39,.95); border:1px solid #374151; padding:8px 12px; border-radius:7px; font-size:.75rem; display:none; }
         .leaflet-popup-content-wrapper { border-radius:10px; }
         .station-popup { min-width:240px; color:#111827; }
@@ -92,8 +91,6 @@
         .station-popup table { width:100%; border-collapse:collapse; font-size:12px; }
         .station-popup td { padding:3px 0; vertical-align:top; }
         .station-popup td:first-child { color:#6b7280; width:38%; }
-        .station-popup .go-station { margin-top:8px; width:100%; padding:7px 10px; border:0; border-radius:6px; background:#2563eb; color:#fff; cursor:pointer; font-weight:700; }
-        .station-popup .go-station:hover { background:#1d4ed8; }
         .data-source { margin-top:8px; font-size:10px; color:#6b7280; }
     
         /* Inspiration uMap / Framacarte : panneau de couches compact et lisible */
@@ -213,7 +210,6 @@
             <div class="tool-btn" title="Basculer Satellite / Carte Claire" onclick="toggleMapMode()"><i class="fa-solid fa-layer-group"></i></div>
             <div class="tool-btn" title="Carte Satellite" onclick="setMode('sat')"><i class="fa-solid fa-globe"></i></div>
             <div class="tool-btn" title="Carte Claire" onclick="setMode('light')"><i class="fa-solid fa-map"></i></div>
-            <div class="tool-btn" title="Ma Position" onclick="locateUser()"><i class="fa-solid fa-crosshairs"></i></div>
             <div class="tool-btn" title="Journal technique (diagnostic)" onclick="toggleDebugPanel()"><i class="fa-solid fa-bug"></i></div>
         </div>
 
@@ -361,7 +357,7 @@
             ${vehicleSummary(t.description)}
             ${t.phone?`<tr><td>Téléphone</td><td>${esc(t.phone)}</td></tr>`:''}
             ${t.website?`<tr><td>Site</td><td><a href="${esc(t.website)}" target="_blank" rel="noopener">Ouvrir</a></td></tr>`:''}
-            </table><button type="button" class="go-station" data-station-id="${esc(item.id)}">Y aller</button><div class="data-source">Source : ${esc(source)}</div></div>`;
+            </table><div class="data-source">Source : ${esc(source)}</div></div>`;
         }
         function hydrantPopup(item) {
             const t=item.tags||{};
@@ -837,72 +833,6 @@
 
         function setMode(mode){map.removeLayer(currentLayer);currentLayer=mode==='sat'?satLayer:lightLayer;document.getElementById('mode-text').innerText=mode==='sat'?'SATELLITE':'CARTE CLAIRE';map.addLayer(currentLayer);}
         function toggleMapMode(){setMode(currentLayer===satLayer?'light':'sat');}
-        function locateUser(){map.locate({setView:true,maxZoom:17,watch:true,enableHighAccuracy:true,timeout:20000,maximumAge:0});}
-        let userLocationMarker=null;
-        let nearestStationLine=null;
-        let routeRequestId=0;
-        const userLocationIcon=L.divIcon({className:'user-location-icon',html:'<div class="user-location-marker"></div>',iconSize:[14,14],iconAnchor:[7,7]});
-        function clearNearestStationRoute(){
-            routeRequestId++;
-            if(nearestStationLine){map.removeLayer(nearestStationLine);nearestStationLine=null;}
-            if(userLocationMarker){userLocationMarker.closeTooltip();userLocationMarker.closePopup();}
-        }
-        async function routeToStation(station){
-            if(!userLocationMarker)return;
-            const requestId=++routeRequestId;
-            const userLatLng=userLocationMarker.getLatLng();
-            if(nearestStationLine)map.removeLayer(nearestStationLine);
-            station.marker?.openPopup();
-            map.setView([station.lat,station.lng],Math.max(map.getZoom(),14));
-            const fallbackLine=[userLatLng,[station.lat,station.lng]];
-            try{
-                const coordinates=`${userLatLng.lng},${userLatLng.lat};${station.lng},${station.lat}`;
-                const response=await fetch(`https://router.project-osrm.org/route/v1/driving/${coordinates}?overview=full&geometries=geojson`);
-                if(!response.ok)throw new Error(`HTTP ${response.status}`);
-                const route=await response.json();
-                const geometry=route.routes?.[0]?.geometry;
-                if(!geometry?.coordinates?.length)throw new Error('Itinéraire introuvable');
-                const routeDistance=route.routes[0].distance;
-                const distanceText=routeDistance<1000?`${Math.round(routeDistance)} m`:`${(routeDistance/1000).toFixed(1)} km`;
-                if(requestId!==routeRequestId)return;
-                nearestStationLine=L.geoJSON(geometry,{style:{color:'#2563eb',weight:4,opacity:.9}}).addTo(map);
-                userLocationMarker.bindTooltip(`${searchItemName(station)} : ${distanceText} par la route`,{direction:'top',offset:[0,-8]}).openTooltip();
-            }catch(error){
-                if(requestId!==routeRequestId)return;
-                nearestStationLine=L.polyline(fallbackLine,{color:'#2563eb',weight:3,dashArray:'6 6',opacity:.85}).addTo(map);
-                const distance=userLatLng.distanceTo([station.lat,station.lng]);
-                const distanceText=distance<1000?`${Math.round(distance)} m`:`${(distance/1000).toFixed(1)} km`;
-                userLocationMarker.bindTooltip(`${searchItemName(station)} : ${distanceText} (trajet routier indisponible)`,{direction:'top',offset:[0,-8]}).openTooltip();
-                debugLog(`Calcul de l'itinéraire routier indisponible : ${error.message}`,'warn');
-            }
-        }
-        async function showNearestStation(){
-            if(!userLocationMarker)return;
-            if(nearestStationLine){clearNearestStationRoute();return;}
-            const userLatLng=userLocationMarker.getLatLng();
-            const stations=database.filter(item=>['CS','CSP','SIS','BMPM','BSPP'].includes(item.type));
-            if(!stations.length){userLocationMarker.bindPopup('<b>Aucun CIS disponible</b><br>Les données des casernes ne sont pas encore chargées.').openPopup();return;}
-            const nearest=stations.reduce((closest,item)=>{
-                const distance=userLatLng.distanceTo([item.lat,item.lng]);
-                return !closest||distance<closest.distance?{item,distance}:closest;
-            },null);
-            routeToStation(nearest.item);
-        }
-        map.on('locationfound',event=>{
-            if(!userLocationMarker){
-                userLocationMarker=L.marker(event.latlng,{icon:userLocationIcon,keyboard:false,interactive:true,zIndexOffset:1000}).addTo(map);
-                userLocationMarker.on('click',showNearestStation);
-            }
-            else userLocationMarker.setLatLng(event.latlng);
-        });
-        map.on('popupopen',event=>{
-            const button=event.popup.getElement()?.querySelector('.go-station');
-            const station=button&&byId.get(button.dataset.stationId);
-            if(button&&station)button.addEventListener('click',()=>routeToStation(station));
-        });
-        map.on('click',clearNearestStationRoute);
-        map.on('locationerror',event=>debugLog(`Localisation indisponible : ${event.message}`,'warn'));
-        map.locate({setView:false,watch:true,enableHighAccuracy:true,timeout:20000,maximumAge:0});
         const suggestionModal=document.getElementById('suggestionModal');
         const suggestionForm=document.getElementById('suggestionForm');
         const suggestionFields=document.getElementById('suggestionFields');
@@ -1222,6 +1152,38 @@
             lat:43.692076,
             lng:7.245062,
             tags:{name:'CIS Nice Magnan',operator:'SDIS 06'},
+            source:'Suggestion vérifiée par utilisateur'
+        });
+        addItem({
+            id:'suggestion-cis-fort-de-france-sdis-972',
+            type:'CSP',
+            lat:14.601516,
+            lng:-61.040533,
+            tags:{name:'CIS Fort-De-France',operator:'SDIS 972'},
+            source:'Suggestion vérifiée par utilisateur'
+        });
+        addItem({
+            id:'suggestion-cs-le-robert-sdis-972',
+            type:'CS',
+            lat:14.681361,
+            lng:-60.944206,
+            tags:{name:'CS du Robert',operator:'SDIS 972'},
+            source:'Suggestion vérifiée par utilisateur'
+        });
+        addItem({
+            id:'suggestion-cis-le-lamentin-sdis-972',
+            type:'CS',
+            lat:14.626818,
+            lng:-60.988090,
+            tags:{name:'CIS Le Lamentin',operator:'SDIS 972'},
+            source:'Suggestion vérifiée par utilisateur'
+        });
+        addItem({
+            id:'suggestion-cs-de-la-trinite-sdis-972',
+            type:'CS',
+            lat:14.735816,
+            lng:-60.955718,
+            tags:{name:'CS De la Trinité',operator:'SDIS 972'},
             source:'Suggestion vérifiée par utilisateur'
         });
         updateMarkers();
