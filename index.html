@@ -36,8 +36,6 @@
         .dot-cs { background: #f97316; }
         .dot-sdis { background: #a855f7; }
         .dot-cta { background: #ec4899; }
-        .dot-pi { background: #06b6d4; }
-        .dot-bi { background: #3b82f6; }
         .dot-bmpm { background: #f59e0b; }
         .dot-bspp { background: #14b8a6; }
         .dot-sis { background: #8b5cf6; }
@@ -165,22 +163,10 @@
             </div>
         </div>
 
-        <div class="section-title">Alimentation en Eau (PEI)</div>
-        <div class="toggle-group">
-            <div class="toggle-item">
-                <span class="toggle-label"><span class="dot dot-pi"></span> Poteaux Incendie (PI) <span class="layer-count" id="count-PI">0</span></span>
-                <label class="switch"><input type="checkbox" id="chk-pi"><span class="slider"></span></label>
-            </div>
-            <div class="toggle-item">
-                <span class="toggle-label"><span class="dot dot-bi"></span> Bouches / Réserves / Points d'Eau <span class="layer-count" id="count-BI">0</span></span>
-                <label class="switch"><input type="checkbox" id="chk-bi"><span class="slider"></span></label>
-            </div>
-        </div>
-
         <div class="footer-info">
             <strong>BASE DE DONNÉES SÉCURITÉ CIVILE</strong><br>
             Mode Carte : Satellite par défaut · données officielles locales.<br>
-            CSP et PEI : fichiers locaux actualisés automatiquement par le dépôt avant chaque redéploiement Vercel.
+            CSP : fichiers locaux actualisés automatiquement par le dépôt avant chaque redéploiement Vercel.
         </div>
         <button class="import-btn" onclick="promptImportUmap()" title="Importer une carte uMap / Framacarte (GeoJSON)">Importer une carte uMap / Framacarte</button>
     </div>
@@ -212,7 +198,7 @@
         <div id="map"></div>
         <div class="map-title"><i class="fa-solid fa-map-location-dot"></i> FR-SIS TACTICAL</div>
         <button class="mobile-menu" onclick="toggleSidebar()" title="Afficher les couches"><i class="fa-solid fa-layer-group"></i></button>
-        <div class="legend" id="legend"><strong>Légende</strong><div><i style="background:#ef4444"></i>CSP</div><div><i style="background:#f97316"></i>CS / CPI / CIS</div><div><i style="background:#a855f7"></i>SDIS / État-Major</div><div><i style="background:#06b6d4"></i>PI</div><div><i style="background:#3b82f6"></i>BI / autres PEI</div></div>
+        <div class="legend" id="legend"><strong>Légende</strong><div><i style="background:#ef4444"></i>CSP</div><div><i style="background:#f97316"></i>CS / CPI / CIS</div><div><i style="background:#a855f7"></i>SDIS / État-Major</div></div>
 
         <div class="status-bar">
             <div>ZOOM: <span id="zoom-level">6</span></div>
@@ -280,7 +266,7 @@
         const layers = {
             CSP: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:10,maxClusterRadius:42}),
             CS: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:11,maxClusterRadius:42}),
-            CTA: L.layerGroup(), ETAT_MAJOR: L.layerGroup(), BMPM: L.layerGroup(), BSPP: L.layerGroup(), SIS: L.layerGroup(), PI: L.layerGroup(), BI: L.layerGroup()
+            CTA: L.layerGroup(), ETAT_MAJOR: L.layerGroup(), BMPM: L.layerGroup(), BSPP: L.layerGroup(), SIS: L.layerGroup()
         };
         const icons = {
             CSP: createCustomIcon('#ef4444','CSP',34),
@@ -289,16 +275,13 @@
             ETAT_MAJOR: createCustomIcon('#a855f7','EM',30),
             BMPM: createCustomIcon('#f59e0b','BMPM',34),
             BSPP: createCustomIcon('#14b8a6','BSPP',34),
-            SIS: createCustomIcon('#8b5cf6','SIS',30),
-            PI: createCustomIcon('#06b6d4','PI',22),
-            BI: createCustomIcon('#3b82f6','BI',22)
+            SIS: createCustomIcon('#8b5cf6','SIS',30)
         };
         const checkboxes = {
             CSP: document.getElementById('chk-csp'), CS: document.getElementById('chk-cs'),
             CTA: document.getElementById('chk-cta'), ETAT_MAJOR: document.getElementById('chk-etat-major'),
             BMPM: document.getElementById('chk-bmpm'), BSPP: document.getElementById('chk-bspp'),
-            SIS: document.getElementById('chk-sis'),
-            PI: document.getElementById('chk-pi'), BI: document.getElementById('chk-bi')
+            SIS: document.getElementById('chk-sis')
         };
         let loadingRequests = 0;
         let officialDiscoveryDone = false;
@@ -733,15 +716,8 @@
         const LOCAL_DATASETS = [
             {url:'cis-framacarte.geojson', type:'CIS', source:'Framacarte - CIS de France'},
             {url:'commandement-france.geojson', type:'COMMAND', optional:true, source:'OpenStreetMap - commandement local'},
-            {url:'pei-france.geojson', type:'PEI', optional:true, source:'OpenStreetMap - PEI locaux'},
             {url:'csp-france.geojson', type:'CSP', optional:true, source:'OpenStreetMap - donnees locales'},
-            {url:'csp-doubs.geojson', type:'CSP', source:'SDIS 25 - donnees locales'},
-            {url:'pei-rennes.geojson', type:'PEI', source:'Rennes Metropole - donnees locales'},
-            {url:'pei-tarn.geojson', type:'PEI', source:'SDIS 81 - donnees locales'},
-            {url:'pei-herault-dfci.geojson', type:'PEI', source:'Herault Data - donnees locales'},
-            {url:'pei-annecy.csv', type:'PEI', format:'csv', source:'Grand Annecy - donnees locales'},
-            {url:'pei-sdis64.geojson', type:'PEI', source:'SDIS 64 - donnees locales'},
-            {url:'pei-tours.geojson', type:'PEI', source:'Tours Metropole - donnees locales'}
+            {url:'csp-doubs.geojson', type:'CSP', source:'SDIS 25 - donnees locales'}
         ];
         function loadLocalDataset(dataset){
             return fetch(dataset.url).then(r=>{if(!r.ok){if(dataset.optional)return 0;throw new Error(`${dataset.url}: HTTP ${r.status}`);}return dataset.format==='csv'?r.text():r.json();}).then(data=>{
