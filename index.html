@@ -92,6 +92,8 @@
         .station-popup table { width:100%; border-collapse:collapse; font-size:12px; }
         .station-popup td { padding:3px 0; vertical-align:top; }
         .station-popup td:first-child { color:#6b7280; width:38%; }
+        .station-popup .go-station { margin-top:8px; width:100%; padding:7px 10px; border:0; border-radius:6px; background:#2563eb; color:#fff; cursor:pointer; font-weight:700; }
+        .station-popup .go-station:hover { background:#1d4ed8; }
         .data-source { margin-top:8px; font-size:10px; color:#6b7280; }
     
         /* Inspiration uMap / Framacarte : panneau de couches compact et lisible */
@@ -359,7 +361,7 @@
             ${vehicleSummary(t.description)}
             ${t.phone?`<tr><td>Téléphone</td><td>${esc(t.phone)}</td></tr>`:''}
             ${t.website?`<tr><td>Site</td><td><a href="${esc(t.website)}" target="_blank" rel="noopener">Ouvrir</a></td></tr>`:''}
-            </table><div class="data-source">Source : ${esc(source)}</div></div>`;
+            </table><button type="button" class="go-station" data-station-id="${esc(item.id)}">Y aller</button><div class="data-source">Source : ${esc(source)}</div></div>`;
         }
         function hydrantPopup(item) {
             const t=item.tags||{};
@@ -845,23 +847,16 @@
             if(nearestStationLine){map.removeLayer(nearestStationLine);nearestStationLine=null;}
             if(userLocationMarker){userLocationMarker.closeTooltip();userLocationMarker.closePopup();}
         }
-        async function showNearestStation(){
+        async function routeToStation(station){
             if(!userLocationMarker)return;
-            if(nearestStationLine){clearNearestStationRoute();return;}
             const requestId=++routeRequestId;
             const userLatLng=userLocationMarker.getLatLng();
-            const stations=database.filter(item=>['CS','CSP','SIS','BMPM','BSPP'].includes(item.type));
-            if(!stations.length){userLocationMarker.bindPopup('<b>Aucun CIS disponible</b><br>Les données des casernes ne sont pas encore chargées.').openPopup();return;}
-            const nearest=stations.reduce((closest,item)=>{
-                const distance=userLatLng.distanceTo([item.lat,item.lng]);
-                return !closest||distance<closest.distance?{item,distance}:closest;
-            },null);
             if(nearestStationLine)map.removeLayer(nearestStationLine);
-            nearest.item.marker?.openPopup();
-            map.setView([nearest.item.lat,nearest.item.lng],Math.max(map.getZoom(),14));
-            const fallbackLine=[userLatLng,[nearest.item.lat,nearest.item.lng]];
+            station.marker?.openPopup();
+            map.setView([station.lat,station.lng],Math.max(map.getZoom(),14));
+            const fallbackLine=[userLatLng,[station.lat,station.lng]];
             try{
-                const coordinates=`${userLatLng.lng},${userLatLng.lat};${nearest.item.lng},${nearest.item.lat}`;
+                const coordinates=`${userLatLng.lng},${userLatLng.lat};${station.lng},${station.lat}`;
                 const response=await fetch(`https://router.project-osrm.org/route/v1/driving/${coordinates}?overview=full&geometries=geojson`);
                 if(!response.ok)throw new Error(`HTTP ${response.status}`);
                 const route=await response.json();
@@ -871,14 +866,27 @@
                 const distanceText=routeDistance<1000?`${Math.round(routeDistance)} m`:`${(routeDistance/1000).toFixed(1)} km`;
                 if(requestId!==routeRequestId)return;
                 nearestStationLine=L.geoJSON(geometry,{style:{color:'#2563eb',weight:4,opacity:.9}}).addTo(map);
-                userLocationMarker.bindTooltip(`${searchItemName(nearest.item)} : ${distanceText} par la route`,{direction:'top',offset:[0,-8]}).openTooltip();
+                userLocationMarker.bindTooltip(`${searchItemName(station)} : ${distanceText} par la route`,{direction:'top',offset:[0,-8]}).openTooltip();
             }catch(error){
                 if(requestId!==routeRequestId)return;
                 nearestStationLine=L.polyline(fallbackLine,{color:'#2563eb',weight:3,dashArray:'6 6',opacity:.85}).addTo(map);
-                const distanceText=nearest.distance<1000?`${Math.round(nearest.distance)} m`:`${(nearest.distance/1000).toFixed(1)} km`;
-                userLocationMarker.bindTooltip(`${searchItemName(nearest.item)} : ${distanceText} (trajet routier indisponible)`,{direction:'top',offset:[0,-8]}).openTooltip();
+                const distance=userLatLng.distanceTo([station.lat,station.lng]);
+                const distanceText=distance<1000?`${Math.round(distance)} m`:`${(distance/1000).toFixed(1)} km`;
+                userLocationMarker.bindTooltip(`${searchItemName(station)} : ${distanceText} (trajet routier indisponible)`,{direction:'top',offset:[0,-8]}).openTooltip();
                 debugLog(`Calcul de l'itinéraire routier indisponible : ${error.message}`,'warn');
             }
+        }
+        async function showNearestStation(){
+            if(!userLocationMarker)return;
+            if(nearestStationLine){clearNearestStationRoute();return;}
+            const userLatLng=userLocationMarker.getLatLng();
+            const stations=database.filter(item=>['CS','CSP','SIS','BMPM','BSPP'].includes(item.type));
+            if(!stations.length){userLocationMarker.bindPopup('<b>Aucun CIS disponible</b><br>Les données des casernes ne sont pas encore chargées.').openPopup();return;}
+            const nearest=stations.reduce((closest,item)=>{
+                const distance=userLatLng.distanceTo([item.lat,item.lng]);
+                return !closest||distance<closest.distance?{item,distance}:closest;
+            },null);
+            routeToStation(nearest.item);
         }
         map.on('locationfound',event=>{
             if(!userLocationMarker){
@@ -886,6 +894,11 @@
                 userLocationMarker.on('click',showNearestStation);
             }
             else userLocationMarker.setLatLng(event.latlng);
+        });
+        map.on('popupopen',event=>{
+            const button=event.popup.getElement()?.querySelector('.go-station');
+            const station=button&&byId.get(button.dataset.stationId);
+            if(button&&station)button.addEventListener('click',()=>routeToStation(station));
         });
         map.on('click',clearNearestStationRoute);
         map.on('locationerror',event=>debugLog(`Localisation indisponible : ${event.message}`,'warn'));
