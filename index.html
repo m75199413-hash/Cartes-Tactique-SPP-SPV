@@ -91,6 +91,7 @@
         .station-popup table { width:100%; border-collapse:collapse; font-size:12px; }
         .station-popup td { padding:3px 0; vertical-align:top; }
         .station-popup td:first-child { color:#6b7280; width:38%; }
+        .station-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-top:9px}.station-actions button{padding:6px 4px;border:1px solid #cbd5e1;border-radius:5px;background:#f8fafc;color:#1e293b;cursor:pointer;font-size:11px}.station-actions button:hover{background:#e2e8f0}
         .data-source { margin-top:8px; font-size:10px; color:#6b7280; }
     
         /* Inspiration uMap / Framacarte : panneau de couches compact et lisible */
@@ -118,6 +119,7 @@
         .fdf-btn{width:100%;padding:9px;border:1px solid #f97316;border-radius:6px;background:#c2410c;color:#fff;font-weight:700;cursor:pointer}.fdf-btn:hover{background:#ea580c}.fdf-btn.secondary{margin-top:8px;background:#1f2937;border-color:#4b5563}
         .fdf-status{margin-top:14px;padding:9px;border:1px solid #374151;border-radius:6px;font-size:.72rem;color:#e2e8f0;line-height:1.45}.fdf-status strong{color:#fb923c}
         .fdf-legend{display:grid;gap:5px;margin-top:12px;font-size:.7rem;color:#cbd5e1}.fdf-legend span{display:flex;align-items:center;gap:7px}.fdf-legend i{width:12px;height:12px;border-radius:50%;display:inline-block}
+        .fdf-tools{display:grid;grid-template-columns:1fr 1fr;gap:7px}.fdf-tools .fdf-btn{font-size:.72rem}.fdf-drawing{border-color:#0ea5e9;background:#075985}
         body.fdf-mode #sidebar{display:none}body.fdf-mode #fdf-sidebar{display:block}body.fdf-mode .search-box,body.fdf-mode .status-bar,body.fdf-mode #debug-panel{display:none}body.fdf-mode #map-container{display:flex}
         @media(max-width:700px){#fdf-sidebar{position:absolute;left:0;top:0;bottom:0;width:min(320px,88vw);transform:translateX(-105%);transition:.25s}body.fdf-mode #fdf-sidebar{transform:translateX(0)}}
     </style>
@@ -186,7 +188,11 @@
         <div class="fdf-control"><label for="fdf-terrain">Milieu</label><select id="fdf-terrain"><option value="forest">Forêt / végétation</option><option value="urban">Zone urbaine</option></select></div>
         <div class="fdf-control"><label for="fdf-wind-speed">Vent : <span id="fdf-wind-speed-value">25</span> km/h</label><input id="fdf-wind-speed" type="range" min="0" max="100" value="25"></div>
         <div class="fdf-control"><label for="fdf-wind-direction">Direction du vent</label><input id="fdf-wind-direction" type="range" min="0" max="359" value="90"><span id="fdf-wind-direction-value">E (90°)</span></div>
-        <div class="fdf-control"><label for="fdf-time">Échéance : <span id="fdf-time-value">30 min</span></label><input id="fdf-time" type="range" min="0" max="6" value="1"></div>
+        <div class="fdf-control"><label for="fdf-wind-mode">Évolution du vent</label><select id="fdf-wind-mode"><option value="constant">Vent constant</option><option value="turning">Vent tournant</option></select></div>
+        <div class="fdf-control"><label for="fdf-time">Échéance : <span id="fdf-time-value">30 min</span></label><input id="fdf-time" type="range" min="0" max="6" value="0"></div>
+        <div class="fdf-tools"><button class="fdf-btn" id="fdf-play" type="button">Lire la propagation</button><button class="fdf-btn secondary" id="fdf-weather" type="button">Actualiser vent</button></div>
+        <div class="fdf-control"><label for="fdf-tactical-type">Point tactique</label><select id="fdf-tactical-type"><option value="water">Point d'eau</option><option value="command">Poste de commandement</option><option value="safety">Zone de repli</option><option value="access">Accès engins</option></select><button class="fdf-btn fdf-drawing" id="fdf-tactical-mode" type="button">Placer sur la carte</button></div>
+        <div class="fdf-tools"><button class="fdf-btn fdf-drawing" id="fdf-front-mode" type="button">Dessiner une ligne</button><button class="fdf-btn fdf-drawing" id="fdf-safe-mode" type="button">Dessiner zone protégée</button></div>
         <button class="fdf-btn" onclick="resetFdfSimulation()">Nouveau départ de feu</button>
         <button class="fdf-btn secondary" onclick="leaveFdfSimulation()">Revenir à la carte principale</button>
         <div class="fdf-status" id="fdf-status">Cliquez sur la carte pour placer le départ de feu.</div>
@@ -277,7 +283,15 @@
         geoSector.addEventListener('change',changeGeoSector);
         let fdfFirePoint=null;
         let fdfPropagationLayers=[];
+        let fdfThreatLayer=null;
         let fdfActive=false;
+        let fdfTacticalLayers=[];
+        let fdfDrawingLayer=null;
+        let fdfDrawingPoints=[];
+        let fdfInteractionMode=null;
+        let fdfAnimationTimer=null;
+        let fdfWeatherData=null;
+        let fdfElevationData=null;
         const fdfTimes=[.5,1,2,3,4,5,6];
         function fdfTimeLabel(hours){return hours<1?'+30 min':`+${hours} h`;}
         function fdfDirectionLabel(degrees){
@@ -297,49 +311,108 @@
         }
         function clearFdfSimulation(){
             fdfPropagationLayers.forEach(layer=>map.removeLayer(layer)); fdfPropagationLayers=[];
+            if(fdfThreatLayer){map.removeLayer(fdfThreatLayer);fdfThreatLayer=null;}
             if(fdfFirePoint){map.removeLayer(fdfFirePoint);fdfFirePoint=null;}
+            fdfTacticalLayers.forEach(layer=>map.removeLayer(layer)); fdfTacticalLayers=[];
+            if(fdfDrawingLayer){map.removeLayer(fdfDrawingLayer);fdfDrawingLayer=null;}
+            fdfDrawingPoints=[]; fdfInteractionMode=null; fdfWeatherData=null; fdfElevationData=null;
+            stopFdfAnimation();
         }
+        async function loadFdfEnvironment(latlng){
+            const weatherUrl=`https://api.open-meteo.com/v1/forecast?latitude=${latlng.lat}&longitude=${latlng.lng}&current=wind_speed_10m,wind_direction_10m&wind_speed_unit=kmh`;
+            const elevationUrl=`https://api.open-meteo.com/v1/elevation?latitude=${latlng.lat},${latlng.lat+.01},${latlng.lat-.01}&longitude=${latlng.lng},${latlng.lng+.01},${latlng.lng-.01}`;
+            try{
+                const [weatherResponse,elevationResponse]=await Promise.all([fetch(weatherUrl),fetch(elevationUrl)]);
+                if(weatherResponse.ok){fdfWeatherData=await weatherResponse.json();const current=fdfWeatherData.current||{};document.getElementById('fdf-wind-speed').value=Math.round(current.wind_speed_10m||0);document.getElementById('fdf-wind-speed-value').textContent=Math.round(current.wind_speed_10m||0);document.getElementById('fdf-wind-direction').value=Math.round(current.wind_direction_10m||0);document.getElementById('fdf-wind-direction-value').textContent=`${fdfDirectionLabel(current.wind_direction_10m||0)} (${Math.round(current.wind_direction_10m||0)}°)`;}
+                if(elevationResponse.ok)fdfElevationData=await elevationResponse.json();
+                renderFdfSimulation();
+            }catch(error){debugLog(`Données météo/altitude indisponibles : ${error.message}`,'warn');}
+        }
+        function stopFdfAnimation(){if(fdfAnimationTimer){clearInterval(fdfAnimationTimer);fdfAnimationTimer=null;}const button=document.getElementById('fdf-play');if(button)button.textContent='Lire la propagation';}
+        function toggleFdfAnimation(){
+            if(fdfAnimationTimer){stopFdfAnimation();return;}
+            if(!fdfFirePoint)return;
+            const timeInput=document.getElementById('fdf-time');
+            timeInput.value=0; timeInput.dispatchEvent(new Event('input'));
+            fdfAnimationTimer=setInterval(()=>{const next=Number(timeInput.value)+1;if(next>6){stopFdfAnimation();return;}timeInput.value=next;timeInput.dispatchEvent(new Event('input'));},900);
+            document.getElementById('fdf-play').textContent='Pause propagation';
+        }
+        function addFdfTacticalPoint(latlng){
+            const type=document.getElementById('fdf-tactical-type').value;
+            const labels={water:'Point d’eau',command:'Poste de commandement',safety:'Zone de repli',access:'Accès engins'};
+            const colors={water:'#06b6d4',command:'#8b5cf6',safety:'#22c55e',access:'#eab308'};
+            const marker=L.circleMarker(latlng,{radius:7,color:'#fff',weight:2,fillColor:colors[type],fillOpacity:.95}).bindTooltip(labels[type],{direction:'top'}).addTo(map);
+            fdfTacticalLayers.push(marker); fdfInteractionMode=null; document.getElementById('fdf-status').innerHTML=`<strong>${labels[type]}</strong><br>Point tactique ajouté.`;
+        }
+        function finishFdfDrawing(){
+            if(fdfDrawingPoints.length<2)return;
+            if(fdfDrawingLayer)map.removeLayer(fdfDrawingLayer);
+            const isProtected=fdfInteractionMode==='protected';
+            fdfDrawingLayer=isProtected?L.polygon(fdfDrawingPoints,{color:'#22c55e',weight:3,fillColor:'#22c55e',fillOpacity:.18}):L.polyline(fdfDrawingPoints,{color:'#ef4444',weight:4,dashArray:'8 6'});
+            fdfDrawingLayer.bindTooltip(isProtected?'Zone protégée':'Ligne de front').addTo(map);
+            fdfInteractionMode=null; fdfDrawingPoints=[]; document.getElementById('fdf-status').innerHTML=`<strong>${isProtected?'Zone protégée':'Ligne de front'}</strong><br>Dessin terminé.`;
+        }
+        function startFdfDrawing(mode){fdfInteractionMode=mode;fdfDrawingPoints=[];if(fdfDrawingLayer){map.removeLayer(fdfDrawingLayer);fdfDrawingLayer=null;}document.getElementById('fdf-status').textContent='Cliquez sur la carte pour dessiner, puis double-cliquez pour terminer.';}
         function renderFdfSimulation(){
             fdfPropagationLayers.forEach(layer=>map.removeLayer(layer)); fdfPropagationLayers=[];
             if(!fdfFirePoint)return;
             const terrain=document.getElementById('fdf-terrain').value;
             const windSpeed=Number(document.getElementById('fdf-wind-speed').value);
             const windDirection=Number(document.getElementById('fdf-wind-direction').value);
+            const windMode=document.getElementById('fdf-wind-mode').value;
             const selectedTime=Number(document.getElementById('fdf-time').value);
             const terrainFactor=terrain==='forest'?1.8:.65;
             const baseRate=terrain==='forest'?42:18;
+            const slopeFactor=fdfElevationData?.elevation?.length===3?Math.max(.7,Math.min(1.5,1+(fdfElevationData.elevation[1]-fdfElevationData.elevation[2])/200)):1;
             fdfTimes.forEach((hours,index)=>{
-                const radius=(baseRate+windSpeed*.45)*hours*terrainFactor;
+                const radius=(baseRate+windSpeed*.45)*hours*terrainFactor*slopeFactor;
+                const direction=windMode==='turning'?(windDirection+hours*18)%360:windDirection;
                 const stretch=Math.min(.9,windSpeed/110);
-                const polygon=L.polygon(fdfEllipse(fdfFirePoint.getLatLng(),radius,windDirection,stretch),{color:index===selectedTime?'#facc15':'#fb923c',weight:index===selectedTime?3:1,fillColor:'#f97316',fillOpacity:index===selectedTime?.2:.06,dashArray:index===selectedTime?'':'4 5'}).addTo(map);
+                const ellipse=fdfEllipse(fdfFirePoint.getLatLng(),radius,direction,stretch);
+                const polygon=L.polygon(ellipse,{color:index===selectedTime?'#facc15':'#fb923c',weight:index===selectedTime?3:1,fillColor:'#f97316',fillOpacity:index===selectedTime?.2:.06,dashArray:index===selectedTime?'':'4 5'}).addTo(map);
                 fdfPropagationLayers.push(polygon);
-                const label=L.marker(fdfEllipse(fdfFirePoint.getLatLng(),radius,windDirection,stretch)[8],{icon:L.divIcon({className:'fdf-time-label',html:`<span>${fdfTimeLabel(hours)}</span>`,iconSize:[48,22],iconAnchor:[24,11]})}).addTo(map);
+                const label=L.marker(ellipse[8],{icon:L.divIcon({className:'fdf-time-label',html:`<span>${fdfTimeLabel(hours)}</span>`,iconSize:[48,22],iconAnchor:[24,11]})}).addTo(map);
                 fdfPropagationLayers.push(label);
             });
-            const maxRadius=(baseRate+windSpeed*.45)*fdfTimes[selectedTime]*terrainFactor;
-            const altitude=Math.round(40+Math.abs(Math.sin(fdfFirePoint.getLatLng().lng*3))*220);
-            document.getElementById('fdf-status').innerHTML=`<strong>${fdfTimeLabel(fdfTimes[selectedTime])}</strong><br>Zone estimée : ${Math.round(maxRadius)} m<br>Vent : ${windSpeed} km/h vers ${fdfDirectionLabel(windDirection)} (${windDirection}°)<br>Altitude estimée : ${altitude} m<br>Pente : ${terrain==='forest'?'propagation favorisée par la végétation et la pente':'propagation freinée par le bâti'}`;
+            const maxRadius=(baseRate+windSpeed*.45)*fdfTimes[selectedTime]*terrainFactor*slopeFactor;
+            const displayedDirection=windMode==='turning'?(windDirection+fdfTimes[selectedTime]*18)%360:windDirection;
+            const altitude=Math.round(fdfElevationData?.elevation?.[0]||0);
+            const slope=fdfElevationData?.elevation?.length===3?Math.round(Math.abs(fdfElevationData.elevation[1]-fdfElevationData.elevation[2])/1110*100):0;
+            fdfThreatLayer=L.polygon(fdfEllipse(fdfFirePoint.getLatLng(),maxRadius*1.25,displayedDirection,Math.min(1.1,windSpeed/90)),{color:'#dc2626',weight:2,dashArray:'3 7',fillColor:'#dc2626',fillOpacity:.05}).addTo(map);
+            fdfPropagationLayers.push(fdfThreatLayer);
+            document.getElementById('fdf-status').innerHTML=`<strong>${fdfTimeLabel(fdfTimes[selectedTime])}</strong><br>Zone estimée : ${Math.round(maxRadius)} m<br>Vent : ${windSpeed} km/h vers ${fdfDirectionLabel(displayedDirection)} (${Math.round(displayedDirection)}°)<br>Mode : ${windMode==='turning'?'vent tournant':'vent constant'}<br>Altitude : ${altitude?`${altitude} m`:'indisponible'}<br>Pente estimée : ${slope}%<br>${terrain==='forest'?'Propagation favorisée par la végétation.':'Propagation freinée par le bâti.'}`;
         }
         function handleFdfMapClick(event){
             if(!fdfActive)return;
+            if(fdfInteractionMode==='tactical'){addFdfTacticalPoint(event.latlng);return;}
+            if(fdfInteractionMode==='front'||fdfInteractionMode==='protected'){fdfDrawingPoints.push(event.latlng);return;}
             clearFdfSimulation();
             fdfFirePoint=L.circleMarker(event.latlng,{radius:8,color:'#fff',weight:3,fillColor:'#dc2626',fillOpacity:1}).addTo(map);
             renderFdfSimulation();
+            loadFdfEnvironment(event.latlng);
         }
         function enterFdfSimulation(){
             fdfActive=true; document.body.classList.add('fdf-mode');
             Object.values(layers).forEach(layer=>{if(map.hasLayer(layer))map.removeLayer(layer);});
             map.off('click',handleFdfMapClick).on('click',handleFdfMapClick);
+            map.off('dblclick',finishFdfDrawing).on('dblclick',finishFdfDrawing);
+            map.doubleClickZoom.disable();
             map.invalidateSize();
         }
         function leaveFdfSimulation(){
-            fdfActive=false; document.body.classList.remove('fdf-mode'); clearFdfSimulation(); updateMarkers(); map.invalidateSize();
+            fdfActive=false; document.body.classList.remove('fdf-mode'); clearFdfSimulation(); map.off('click',handleFdfMapClick).off('dblclick',finishFdfDrawing); map.doubleClickZoom.enable(); updateMarkers(); map.invalidateSize();
         }
         function resetFdfSimulation(){clearFdfSimulation();document.getElementById('fdf-status').textContent='Cliquez sur la carte pour placer le départ de feu.';}
         document.getElementById('fdf-terrain').addEventListener('change',()=>{if(fdfFirePoint)renderFdfSimulation();});
         document.getElementById('fdf-wind-speed').addEventListener('input',event=>{document.getElementById('fdf-wind-speed-value').textContent=event.target.value;if(fdfFirePoint)renderFdfSimulation();});
         document.getElementById('fdf-wind-direction').addEventListener('input',event=>{document.getElementById('fdf-wind-direction-value').textContent=`${fdfDirectionLabel(Number(event.target.value))} (${event.target.value}°)`;if(fdfFirePoint)renderFdfSimulation();});
         document.getElementById('fdf-time').addEventListener('input',event=>{document.getElementById('fdf-time-value').textContent=fdfTimeLabel(fdfTimes[Number(event.target.value)]);if(fdfFirePoint)renderFdfSimulation();});
+        document.getElementById('fdf-wind-mode').addEventListener('change',()=>{if(fdfFirePoint)renderFdfSimulation();});
+        document.getElementById('fdf-play').addEventListener('click',toggleFdfAnimation);
+        document.getElementById('fdf-weather').addEventListener('click',()=>{if(fdfFirePoint)loadFdfEnvironment(fdfFirePoint.getLatLng());});
+        document.getElementById('fdf-tactical-mode').addEventListener('click',()=>{fdfInteractionMode='tactical';document.getElementById('fdf-status').textContent='Cliquez sur la carte pour placer le point tactique.';});
+        document.getElementById('fdf-front-mode').addEventListener('click',()=>startFdfDrawing('front'));
+        document.getElementById('fdf-safe-mode').addEventListener('click',()=>startFdfDrawing('protected'));
 
         const OVERPASS_ENDPOINTS = [
             'https://overpass-api.de/api/interpreter',
@@ -444,7 +517,25 @@
             ${vehicleSummary(t.description)}
             ${t.phone?`<tr><td>Téléphone</td><td>${esc(t.phone)}</td></tr>`:''}
             ${t.website?`<tr><td>Site</td><td><a href="${esc(t.website)}" target="_blank" rel="noopener">Ouvrir</a></td></tr>`:''}
-            </table><div class="data-source">Source : ${esc(source)}</div></div>`;
+            </table><div class="station-actions"><button type="button" data-action="copy" data-station-id="${esc(item.id)}">Copier GPS</button><button type="button" data-action="csv" data-station-id="${esc(item.id)}">Export CSV</button><button type="button" data-action="pdf" data-station-id="${esc(item.id)}">Export PDF</button></div><div class="data-source">Source : ${esc(source)}</div></div>`;
+        }
+        function stationExportData(item){
+            const tags=item.tags||{};
+            return {Nom:searchItemName(item),Type:item.type,Organisme:inferSdis(tags)||'Non renseigné',Latitude:item.lat,Longitude:item.lng,Adresse:tags['addr:full']||'Non renseignée',Vehicules:vehicleSummary(tags.description).replace(/<[^>]+>/g,'')||'Non renseigné',Source:item.source||'OpenStreetMap'};
+        }
+        function exportStationCsv(item){
+            const data=stationExportData(item); const csv=Object.keys(data).map(key=>`"${key}"`).join(';')+'\n'+Object.values(data).map(value=>`"${String(value).replace(/"/g,'""')}"`).join(';');
+            const link=document.createElement('a'); link.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})); link.download=`${searchItemName(item).replace(/[^a-z0-9]+/gi,'-').toLowerCase()||'centre'}.csv`; link.click(); URL.revokeObjectURL(link.href);
+        }
+        function exportStationPdf(item){
+            const data=stationExportData(item); const rows=Object.entries(data).map(([key,value])=>`<tr><th>${esc(key)}</th><td>${esc(value)}</td></tr>`).join('');
+            const printWindow=window.open('','_blank'); if(!printWindow)return;
+            printWindow.document.write(`<html lang="fr"><head><title>${esc(data.Nom)}</title><style>body{font-family:Arial,sans-serif;padding:32px;color:#111827}h1{font-size:22px}table{border-collapse:collapse;width:100%;max-width:720px}th,td{border:1px solid #cbd5e1;padding:8px;text-align:left}th{background:#f1f5f9;width:30%}</style></head><body><h1>${esc(data.Nom)}</h1><table>${rows}</table><script>window.onload=()=>window.print()<\/script></body></html>`);
+            printWindow.document.close();
+        }
+        async function copyStationCoordinates(item){
+            const coordinates=`${item.lat}, ${item.lng}`;
+            try{await navigator.clipboard.writeText(coordinates);alert(`Coordonnées copiées : ${coordinates}`);}catch(error){window.prompt('Copiez les coordonnées :',coordinates);}
         }
         function hydrantPopup(item) {
             const t=item.tags||{};
@@ -920,6 +1011,14 @@
 
         function setMode(mode){map.removeLayer(currentLayer);currentLayer=mode==='sat'?satLayer:lightLayer;document.getElementById('mode-text').innerText=mode==='sat'?'SATELLITE':'CARTE CLAIRE';map.addLayer(currentLayer);}
         function toggleMapMode(){setMode(currentLayer===satLayer?'light':'sat');}
+        map.on('popupopen',event=>{
+            event.popup.getElement()?.querySelectorAll('[data-action="copy"],[data-action="csv"],[data-action="pdf"]').forEach(button=>button.addEventListener('click',()=>{
+                const item=byId.get(button.dataset.stationId); if(!item)return;
+                if(button.dataset.action==='copy')copyStationCoordinates(item);
+                else if(button.dataset.action==='csv')exportStationCsv(item);
+                else exportStationPdf(item);
+            }));
+        });
         const suggestionModal=document.getElementById('suggestionModal');
         const suggestionForm=document.getElementById('suggestionForm');
         const suggestionFields=document.getElementById('suggestionFields');
