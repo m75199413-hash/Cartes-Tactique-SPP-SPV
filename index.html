@@ -304,8 +304,6 @@
         let officialDiscoveryDone = false;
         let osmLoadedKeys = new Set();
         let officialResourceKeys = new Set();
-        let departmentFilter = null;
-        let departmentBoundaryLayer = null;
         // Marqueurs pour chargements nationaux évités en double
         let nationalLoaded = { CS: false, PI: false, BI: false };
         // Queue/throttling Overpass
@@ -829,10 +827,6 @@
 
         function updateMarkers(){
             let total=0;
-            for(const type in layers){
-                layers[type].clearLayers();
-                database.filter(item=>item.layerType===type && (!departmentFilter||item.departmentCode===departmentFilter.code)).forEach(item=>layers[type].addLayer(item.marker));
-            }
             for(const type in checkboxes){
                 if(checkboxes[type].checked){if(!map.hasLayer(layers[type]))map.addLayer(layers[type]);total+=layers[type].getLayers().length;}
                 else if(map.hasLayer(layers[type]))map.removeLayer(layers[type]);
@@ -933,14 +927,6 @@
             if(!searchInput || !searchSuggestions)return;
             const matches=getSearchMatches(searchInput.value);
             searchSuggestions.innerHTML=''; activeSuggestion=-1;
-            const departmentCode=parseDepartmentSearch(searchInput.value);
-            if(departmentCode){
-                const button=document.createElement('button'); button.type='button'; button.className='search-suggestion'; button.setAttribute('role','option');
-                const type=document.createElement('span'); type.className='search-suggestion-type'; type.textContent='SDIS'; type.style.background='#f59e0b';
-                const name=document.createElement('span'); name.className='search-suggestion-name'; name.textContent=`Afficher le département ${departmentCode}`;
-                button.append(type,name); button.addEventListener('mousedown',event=>{event.preventDefault();searchDepartment(departmentCode);}); searchSuggestions.appendChild(button);
-                searchSuggestions.classList.add('open'); searchInput.setAttribute('aria-expanded','true'); return;
-            }
             if(!searchInput.value.trim()||!matches.length){closeSearchSuggestions();return;}
             matches.forEach((item,index)=>{
                 const button=document.createElement('button'); button.type='button'; button.className='search-suggestion'; button.setAttribute('role','option'); button.dataset.id=item.id;
@@ -952,68 +938,8 @@
             searchSuggestions.classList.add('open'); searchInput.setAttribute('aria-expanded','true');
         }
         function selectSearchItem(item){
-            clearDepartmentFilter();
             searchInput.value=searchItemName(item); closeSearchSuggestions();
             map.setView([item.lat,item.lng],15); if(checkboxes[item.layerType||item.type])checkboxes[item.layerType||item.type].checked=true; updateMarkers(); item.marker?.openPopup();
-        }
-        function parseDepartmentSearch(value){
-            const match=String(value||'').trim().toUpperCase().match(/^(?:SDIS|SIS)\s*(\d{2}|2A|2B)$/);
-            return match?match[1]:null;
-        }
-        function departmentIsoCode(code){return code==='2A'||code==='2B'?`FR-${code}`:`FR-${code}`;}
-        function pointInPolygon(point,polygon){
-            let inside=false;
-            for(let i=0,j=polygon.length-1;i<polygon.length;j=i++){
-                const xi=polygon[i][0],yi=polygon[i][1],xj=polygon[j][0],yj=polygon[j][1];
-                const intersects=((yi>point[1])!==(yj>point[1]))&&(point[0]<(xj-xi)*(point[1]-yi)/(yj-yi)+xi);
-                if(intersects)inside=!inside;
-            }
-            return inside;
-        }
-        function pointInGeometry(point,geometry){
-            if(!geometry)return false;
-            if(geometry.type==='Polygon')return geometry.coordinates.some(ring=>pointInPolygon(point,ring));
-            if(geometry.type==='MultiPolygon')return geometry.coordinates.some(polygon=>polygon.some(ring=>pointInPolygon(point,ring)));
-            return false;
-        }
-        function clearDepartmentFilter(){
-            departmentFilter=null;
-            if(departmentBoundaryLayer){map.removeLayer(departmentBoundaryLayer);departmentBoundaryLayer=null;}
-        }
-        async function searchDepartment(code){
-            closeSearchSuggestions();
-            clearDepartmentFilter();
-            try{
-                setLoading(true);
-                setLoadingProgress(2,0,`Département ${code} : contour`);
-                const boundaryResponse=await fetchWithFallback('https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements.geojson');
-                const departments=await boundaryResponse.json();
-                const boundary=departments.features?.find(feature=>String(feature.properties?.code)===String(code));
-                if(!boundary)throw new Error(`Contour du département ${code} introuvable`);
-                departmentFilter={code,geometry:boundary.geometry};
-                departmentBoundaryLayer=L.geoJSON(boundary,{style:{color:'#f59e0b',weight:3,fillColor:'#f59e0b',fillOpacity:.08}}).addTo(map);
-                const bounds=departmentBoundaryLayer.getBounds();
-                const south=bounds.getSouth(); const west=bounds.getWest(); const north=bounds.getNorth(); const east=bounds.getEast();
-                setLoadingProgress(2,1,`Département ${code} : casernes`);
-                const query=`[out:json][timeout:45];nwr["amenity"="fire_station"](${south},${west},${north},${east});out center tags;`;
-                const data=await overpass(query,`Casernes du département ${code}`);
-                const stationElements=(data.elements||[]).filter(element=>{
-                    const ll=elementLatLng(element); return ll&&pointInGeometry([ll[1],ll[0]],boundary.geometry);
-                });
-                let added=0;
-                stationElements.forEach(element=>{
-                    const ll=elementLatLng(element); if(!ll)return;
-                    const tags=element.tags||{}; const type=normalizeType(tags);
-                    addItem({id:`osm-department-${element.type}-${element.id}`,type,lat:ll[0],lng:ll[1],tags,source:`OpenStreetMap - SDIS ${code}`,departmentCode:code}); added++;
-                });
-                Object.keys(checkboxes).filter(type=>['CSP','CS','CTA','ETAT_MAJOR'].includes(type)).forEach(type=>checkboxes[type].checked=true);
-                updateMarkers();
-                map.fitBounds(departmentBoundaryLayer.getBounds(),{padding:[20,20]});
-                searchInput.value=`SDIS ${code}`;
-                setLoadingProgress(2,2,`Département ${code} terminé`);
-                debugLog(`Département ${code} : ${added} centre(s) chargé(s)`,'ok');
-            }catch(error){clearDepartmentFilter();updateMarkers();debugLog(`Recherche département ${code} échouée : ${error.message}`,'err');alert(`Impossible de charger le département ${code}.`);}
-            finally{setLoading(false);}
         }
         function handleSearch(e){
             if(e.key==='ArrowDown'||e.key==='ArrowUp'){
@@ -1023,12 +949,9 @@
             }
             if(e.key==='Escape'){closeSearchSuggestions();return;}
             if(e.key!=='Enter')return;
-            const departmentCode=parseDepartmentSearch(searchInput.value);
-            if(departmentCode){e.preventDefault();searchDepartment(departmentCode);return;}
             const matches=getSearchMatches(searchInput.value);
             if(matches[activeSuggestion]||matches[0]){e.preventDefault();selectSearchItem(matches[activeSuggestion]||matches[0]);return;}
             const q=searchInput.value.trim(); if(!q)return;
-            clearDepartmentFilter();
             fetch('https://nominatim.openstreetmap.org/search?format=json&q='+encodeURIComponent(q),{headers:{'Accept-Language':'fr'}}).then(r=>r.json()).then(d=>{if(d[0])map.setView([+d[0].lat,+d[0].lon],14);else alert('Lieu ou caserne non trouvé.');}).catch(()=>alert('Recherche indisponible.'));
         }
         searchInput.addEventListener('input',updateSearchSuggestions);
