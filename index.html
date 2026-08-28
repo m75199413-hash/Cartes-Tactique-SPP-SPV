@@ -838,7 +838,7 @@
         const suggestionFields=document.getElementById('suggestionFields');
         let suggestionLocation=null;
         function organizationFields(){
-            return '<label>Organisme</label><div class="suggestion-types"><label class="suggestion-type"><input type="radio" name="organization" value="BSPP"> BSPP</label><label class="suggestion-type"><input type="radio" name="organization" value="BMPM"> BMPM</label><label class="suggestion-type"><input type="radio" name="organization" value="SDIS"> SDIS</label><label class="suggestion-type"><input type="radio" name="organization" value="SIS"> SIS</label></div><div id="organizationNumberField"></div>';
+            return '<label>Organisme</label><div class="suggestion-types"><label class="suggestion-type"><input type="radio" name="organization" value="BSPP"> BSPP</label><label class="suggestion-type"><input type="radio" name="organization" value="BMPM"> BMPM</label><label class="suggestion-type"><input type="radio" name="organization" value="SDMIS"> SDMIS</label><label class="suggestion-type"><input type="radio" name="organization" value="SDIS"> SDIS</label><label class="suggestion-type"><input type="radio" name="organization" value="SIS"> SIS</label></div><div id="organizationNumberField"></div>';
         }
         function updateOrganizationNumberField(){
             const organization=suggestionFields.querySelector('input[name="organization"]:checked')?.value||'';
