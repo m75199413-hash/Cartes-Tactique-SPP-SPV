@@ -806,7 +806,15 @@
         }
         function loadLocalData(){
             setLoading(true);
-            return Promise.all(LOCAL_DATASETS.map(loadLocalDataset)).finally(()=>{setLoading(false);updateMarkers();});
+            const stationDatasets=LOCAL_DATASETS.filter(dataset=>dataset.type!=='PEI');
+            return Promise.all(stationDatasets.map(loadLocalDataset)).finally(()=>{setLoading(false);updateMarkers();});
+        }
+        let localPEIDataLoaded=false;
+        function loadLocalPEIData(){
+            if(localPEIDataLoaded)return Promise.resolve();
+            localPEIDataLoaded=true;
+            setLoading(true);
+            return Promise.all(LOCAL_DATASETS.filter(dataset=>dataset.type==='PEI').map(loadLocalDataset)).finally(()=>{setLoading(false);updateMarkers();});
         }
 
         function toggleSidebar(){document.getElementById('sidebar').classList.toggle('mobile-open');}
@@ -832,7 +840,10 @@
             document.getElementById('visible-count').innerText=total;
             for(const type in layers){const el=document.getElementById('count-'+type);if(el)el.innerText=layers[type].getLayers().length;}
         }
-        for(const type in checkboxes) checkboxes[type].addEventListener('change', updateMarkers);
+        for(const type in checkboxes) checkboxes[type].addEventListener('change', ()=>{
+            if((type==='PI'||type==='BI')&&checkboxes[type].checked)loadLocalPEIData();
+            updateMarkers();
+        });
 
         // National load buttons removed — rely on official datasets and viewport loads instead.
 
@@ -974,6 +985,7 @@
             clearDepartmentFilter();
             try{
                 setLoading(true);
+                setLoadingProgress(2,0,`Département ${code} : contour`);
                 const boundaryResponse=await fetchWithFallback('https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements.geojson');
                 const departments=await boundaryResponse.json();
                 const boundary=departments.features?.find(feature=>String(feature.properties?.code)===String(code));
@@ -982,6 +994,7 @@
                 departmentBoundaryLayer=L.geoJSON(boundary,{style:{color:'#f59e0b',weight:3,fillColor:'#f59e0b',fillOpacity:.08}}).addTo(map);
                 const bounds=departmentBoundaryLayer.getBounds();
                 const south=bounds.getSouth(); const west=bounds.getWest(); const north=bounds.getNorth(); const east=bounds.getEast();
+                setLoadingProgress(2,1,`Département ${code} : casernes`);
                 const query=`[out:json][timeout:45];nwr["amenity"="fire_station"](${south},${west},${north},${east});out center tags;`;
                 const data=await overpass(query,`Casernes du département ${code}`);
                 const stationElements=(data.elements||[]).filter(element=>{
@@ -997,6 +1010,7 @@
                 updateMarkers();
                 map.fitBounds(departmentBoundaryLayer.getBounds(),{padding:[20,20]});
                 searchInput.value=`SDIS ${code}`;
+                setLoadingProgress(2,2,`Département ${code} terminé`);
                 debugLog(`Département ${code} : ${added} centre(s) chargé(s)`,'ok');
             }catch(error){clearDepartmentFilter();updateMarkers();debugLog(`Recherche département ${code} échouée : ${error.message}`,'err');alert(`Impossible de charger le département ${code}.`);}
             finally{setLoading(false);}
