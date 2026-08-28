@@ -838,9 +838,17 @@
         function locateUser(){map.locate({setView:true,maxZoom:17,watch:true,enableHighAccuracy:true,timeout:20000,maximumAge:0});}
         let userLocationMarker=null;
         let nearestStationLine=null;
+        let routeRequestId=0;
         const userLocationIcon=L.divIcon({className:'user-location-icon',html:'<div class="user-location-marker"></div>',iconSize:[14,14],iconAnchor:[7,7]});
+        function clearNearestStationRoute(){
+            routeRequestId++;
+            if(nearestStationLine){map.removeLayer(nearestStationLine);nearestStationLine=null;}
+            if(userLocationMarker){userLocationMarker.closeTooltip();userLocationMarker.closePopup();}
+        }
         async function showNearestStation(){
             if(!userLocationMarker)return;
+            if(nearestStationLine){clearNearestStationRoute();return;}
+            const requestId=++routeRequestId;
             const userLatLng=userLocationMarker.getLatLng();
             const stations=database.filter(item=>['CS','CSP','SIS','BMPM','BSPP'].includes(item.type));
             if(!stations.length){userLocationMarker.bindPopup('<b>Aucun CIS disponible</b><br>Les données des casernes ne sont pas encore chargées.').openPopup();return;}
@@ -861,9 +869,11 @@
                 if(!geometry?.coordinates?.length)throw new Error('Itinéraire introuvable');
                 const routeDistance=route.routes[0].distance;
                 const distanceText=routeDistance<1000?`${Math.round(routeDistance)} m`:`${(routeDistance/1000).toFixed(1)} km`;
+                if(requestId!==routeRequestId)return;
                 nearestStationLine=L.geoJSON(geometry,{style:{color:'#2563eb',weight:4,opacity:.9}}).addTo(map);
                 userLocationMarker.bindTooltip(`${searchItemName(nearest.item)} : ${distanceText} par la route`,{direction:'top',offset:[0,-8]}).openTooltip();
             }catch(error){
+                if(requestId!==routeRequestId)return;
                 nearestStationLine=L.polyline(fallbackLine,{color:'#2563eb',weight:3,dashArray:'6 6',opacity:.85}).addTo(map);
                 const distanceText=nearest.distance<1000?`${Math.round(nearest.distance)} m`:`${(nearest.distance/1000).toFixed(1)} km`;
                 userLocationMarker.bindTooltip(`${searchItemName(nearest.item)} : ${distanceText} (trajet routier indisponible)`,{direction:'top',offset:[0,-8]}).openTooltip();
@@ -877,6 +887,7 @@
             }
             else userLocationMarker.setLatLng(event.latlng);
         });
+        map.on('click',clearNearestStationRoute);
         map.on('locationerror',event=>debugLog(`Localisation indisponible : ${event.message}`,'warn'));
         map.locate({setView:false,watch:true,enableHighAccuracy:true,timeout:20000,maximumAge:0});
         const suggestionModal=document.getElementById('suggestionModal');
