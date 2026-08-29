@@ -38,6 +38,7 @@
         .dot-cta { background: #ec4899; }
         .dot-bmpm { background: #f59e0b; }
         .dot-bspp { background: #14b8a6; }
+        .dot-sdmis { background: #facc15; }
         .dot-sis { background: #8b5cf6; }
 
         .switch { position: relative; display: inline-block; width: 36px; height: 20px; }
@@ -177,6 +178,10 @@
             <div class="toggle-item">
                 <span class="toggle-label"><span class="dot dot-bspp"></span> BSPP <span class="layer-count" id="count-BSPP">0</span></span>
                 <label class="switch"><input type="checkbox" id="chk-bspp"><span class="slider"></span></label>
+            </div>
+            <div class="toggle-item">
+                <span class="toggle-label"><span class="dot dot-sdmis"></span> SDMIS <span class="layer-count" id="count-SDMIS">0</span></span>
+                <label class="switch"><input type="checkbox" id="chk-sdmis"><span class="slider"></span></label>
             </div>
             <div class="toggle-item">
                 <span class="toggle-label"><span class="dot dot-sis"></span> SIS <span class="layer-count" id="count-SIS">0</span></span>
@@ -455,7 +460,7 @@ Etat-major SDIS 30,SDIS,43.812770,4.316498"></textarea>
         const layers = {
             CSP: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:10,maxClusterRadius:42}),
             CS: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:11,maxClusterRadius:42}),
-            CTA: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:12,maxClusterRadius:38}), ETAT_MAJOR: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:12,maxClusterRadius:38}), BMPM: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:12,maxClusterRadius:38}), BSPP: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:12,maxClusterRadius:38}), SIS: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:12,maxClusterRadius:38})
+            CTA: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:12,maxClusterRadius:38}), ETAT_MAJOR: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:12,maxClusterRadius:38}), BMPM: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:12,maxClusterRadius:38}), BSPP: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:12,maxClusterRadius:38}), SDMIS: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:12,maxClusterRadius:38}), SIS: L.markerClusterGroup({showCoverageOnHover:false,disableClusteringAtZoom:12,maxClusterRadius:38})
         };
         const icons = {
             CSP: createCustomIcon('#ef4444','CSP',34),
@@ -464,12 +469,13 @@ Etat-major SDIS 30,SDIS,43.812770,4.316498"></textarea>
             ETAT_MAJOR: createCustomIcon('#a855f7','EM',30),
             BMPM: createCustomIcon('#f59e0b','BMPM',34),
             BSPP: createCustomIcon('#14b8a6','BSPP',34),
+            SDMIS: createCustomIcon('#facc15','SDMIS',34),
             SIS: createCustomIcon('#8b5cf6','SIS',30)
         };
         const checkboxes = {
             CSP: document.getElementById('chk-csp'), CS: document.getElementById('chk-cs'),
             CTA: document.getElementById('chk-cta'), ETAT_MAJOR: document.getElementById('chk-etat-major'),
-            BMPM: document.getElementById('chk-bmpm'), BSPP: document.getElementById('chk-bspp'),
+            BMPM: document.getElementById('chk-bmpm'), BSPP: document.getElementById('chk-bspp'), SDMIS: document.getElementById('chk-sdmis'),
             SIS: document.getElementById('chk-sis')
         };
         let loadingRequests = 0;
@@ -556,10 +562,10 @@ Etat-major SDIS 30,SDIS,43.812770,4.316498"></textarea>
             return {Nom:searchItemName(item),Type:item.type,Organisme:inferSdis(tags)||'Non renseigné',Latitude:item.lat,Longitude:item.lng,Adresse:tags['addr:full']||'Non renseignée',Vehicules:vehicleSummary(tags.description).replace(/<[^>]+>/g,'')||'Non renseigné',Source:item.source||'OpenStreetMap'};
         }
         function itemOrganization(item){
-            const organization=String([item.type,inferSdis(item.tags||{}),searchItemName(item)].join(' ')).toUpperCase();
+            const organization=String([item.type,item.layerType,inferSdis(item.tags||{}),searchItemName(item)].join(' ')).toUpperCase();
             if(/BMPM|MARINS[- ]?POMPIERS/.test(organization))return 'BMPM';
             if(/BSPP|SAPEURS[- ]?POMPIERS\s+DE\s+PARIS/.test(organization))return 'BSPP';
-            if(/SDMIS/.test(organization))return 'SDMIS';
+            if(item.type==='SDMIS'||item.layerType==='SDMIS'||/SDMIS/.test(organization))return 'SDMIS';
             if(item.type==='SIS'||/\bSIS\b/.test(organization))return 'SIS';
             if(/SDIS/.test(organization)||item.type==='CSP'||item.type==='CS'||item.type==='SDIS')return 'SDIS';
             return 'other';
@@ -597,12 +603,21 @@ Etat-major SDIS 30,SDIS,43.812770,4.316498"></textarea>
             return null;
         }
 
+        function isLyonDepartment(lat, lng){
+            return Number(lat) >= 45.55 && Number(lat) <= 45.90 && Number(lng) >= 4.60 && Number(lng) <= 5.20;
+        }
+
         function addItem(item) {
             if (!item || item.lat==null || item.lng==null) return;
             const specialType=(item.type==='CSP'||item.type==='CS')&&specialOrganizationType(item);
             if(specialType)item.type=specialType;
             if((item.type==='CSP'||item.type==='CS')&&isCorsica(Number(item.lat),Number(item.lng)))item.type='SIS';
-            if(item.type==='SDIS') item.layerType=item.subtype==='CTA'||/\bCTA\b|\bCODIS\b/i.test(searchItemName(item))?'CTA':'ETAT_MAJOR';
+            if (item.type==='SDIS' && /SDMIS/i.test(String(inferSdis(item.tags||{})||searchItemName(item)+' '+(item.tags&&item.tags.operator||'')))) item.type='SDMIS';
+            if (item.type==='SDMIS' || (item.type==='SDIS' && isLyonDepartment(Number(item.lat), Number(item.lng))) || (item.type==='CSP' && isLyonDepartment(Number(item.lat), Number(item.lng))) || (item.type==='CS' && isLyonDepartment(Number(item.lat), Number(item.lng)))) {
+                item.type='SDMIS';
+            }
+            if(item.type==='SDMIS') item.layerType='SDMIS';
+            else if(item.type==='SDIS') item.layerType=item.subtype==='CTA'||/\bCTA\b|\bCODIS\b/i.test(searchItemName(item))?'CTA':'ETAT_MAJOR';
             else if(item.type==='BMPM'||item.type==='BSPP'||item.type==='SIS') item.layerType=item.type;
             else item.layerType=item.type;
             const id=item.id || `${item.type}-${item.lat}-${item.lng}-${item.source||''}`;
@@ -1419,8 +1434,8 @@ Etat-major SDIS 30,SDIS,43.812770,4.316498"></textarea>
             subtype:'ETAT_MAJOR',
             lat:43.5932724,
             lng:1.357254,
-            tags:{name:"Service Départemental d'Incendie et de Secours (SDIS 31) - État-major",operator:'SDIS 31'},
-            source:'Google Maps - État-major SDIS 31'
+            tags:{name:"Service Départemental d'Incendie et de Secours (SDIS 31) - État-major",operator:"SDIS 31"},
+            source:"Google Maps - État-major SDIS 31"
         });
         addItem({
             id:'suggestion-cta-codis-sdis-31',
@@ -1437,8 +1452,8 @@ Etat-major SDIS 30,SDIS,43.812770,4.316498"></textarea>
             subtype:'ETAT_MAJOR',
             lat:44.8185609,
             lng:-0.6486636,
-            tags:{name:"Service Départemental d'Incendie et de Secours de la Gironde - État-major",operator:'SDIS 33'},
-            source:'Google Maps - État-major SDIS 33'
+            tags:{name:"Service Départemental d'Incendie et de Secours de la Gironde - État-major",operator:"SDIS 33"},
+            source:"Google Maps - État-major SDIS 33"
         });
         addItem({
             id:'suggestion-cta-codis-sdis-33',
@@ -1473,8 +1488,8 @@ Etat-major SDIS 30,SDIS,43.812770,4.316498"></textarea>
             subtype:'ETAT_MAJOR',
             lat:45.1871623,
             lng:5.6832795,
-            tags:{name:"État-major du Service Départemental d'Incendie et de Secours de l'Isère",operator:'SDIS 38'},
-            source:'Google Maps - État-major SDIS 38'
+            tags:{name:"État-major du Service Départemental d'Incendie et de Secours de l'Isère",operator:"SDIS 38"},
+            source:"Google Maps - État-major SDIS 38"
         });
         addItem({
             id:'suggestion-cta-codis-sdis-38',
@@ -1491,8 +1506,8 @@ Etat-major SDIS 30,SDIS,43.812770,4.316498"></textarea>
             subtype:'ETAT_MAJOR',
             lat:44.374592,
             lng:2.545832,
-            tags:{name:'État-major SDIS 12',operator:'SDIS 12'},
-            source:'Suggestion vérifiée par utilisateur'
+            tags:{name:"État-major SDIS 12",operator:"SDIS 12"},
+            source:"Suggestion vérifiée par utilisateur"
         });
         addItem({
             id:'suggestion-cta-codis-sdis-12',
@@ -1502,6 +1517,86 @@ Etat-major SDIS 30,SDIS,43.812770,4.316498"></textarea>
             lng:2.545234,
             tags:{name:'CTA / CODIS SDIS 12',operator:'SDIS 12'},
             source:'Suggestion vérifiée par utilisateur'
+        });
+        addItem({
+            id:'sdis-77-csp-melun',
+            type:'SDMIS',
+            lat:48.553745,
+            lng:2.633200,
+            tags:{name:'CSP Melun',operator:'SDMIS',sdis:'SDIS 77'},
+            source:'Google Maps / suggestion SDMIS'
+        });
+        addItem({
+            id:'sdis-77-etat-major',
+            type:'SDMIS',
+            subtype:'ETAT_MAJOR',
+            lat:48.553527,
+            lng:2.631057,
+            tags:{name:'État-major SDIS 77',operator:'SDMIS',sdis:'SDIS 77'},
+            source:'Google Maps / suggestion SDMIS'
+        });
+        addItem({
+            id:'sdis-77-cta-codis',
+            type:'SDMIS',
+            subtype:'CTA',
+            lat:48.553539,
+            lng:2.631593,
+            tags:{name:'CTA / CODIS SDIS 77',operator:'SDMIS',sdis:'SDIS 77'},
+            source:'Google Maps / suggestion SDMIS'
+        });
+        addItem({
+            id:'sdis-34-etat-major',
+            type:'SDMIS',
+            subtype:'ETAT_MAJOR',
+            lat:43.630973,
+            lng:3.823500,
+            tags:{name:'État-major SDIS 34',operator:'SDMIS',sdis:'SDIS 34'},
+            source:'Google Maps / suggestion SDMIS'
+        });
+        addItem({
+            id:'sdis-34-cta-codis',
+            type:'SDMIS',
+            subtype:'CTA',
+            lat:43.631440,
+            lng:3.823274,
+            tags:{name:'CTA / CODIS SDIS 34',operator:'SDMIS',sdis:'SDIS 34'},
+            source:'Google Maps / suggestion SDMIS'
+        });
+        addItem({
+            id:'sdmis-lyon-etat-major',
+            type:'SDMIS',
+            subtype:'ETAT_MAJOR',
+            lat:45.762733,
+            lng:4.844528,
+            tags:{name:'État-major SDMIS',operator:'SDMIS'},
+            source:'Google Maps / suggestion SDMIS'
+        });
+        addItem({
+            id:'sdmis-lyon-cta-codis',
+            type:'SDMIS',
+            subtype:'CTA',
+            lat:45.762873,
+            lng:4.844871,
+            tags:{name:'CTA / CODIS SDMIS',operator:'SDMIS'},
+            source:'Google Maps / suggestion SDMIS'
+        });
+        addItem({
+            id:'sdis-47-etat-major',
+            type:'SDMIS',
+            subtype:'ETAT_MAJOR',
+            lat:44.231155,
+            lng:0.643162,
+            tags:{name:'État-major SDIS 47',operator:'SDMIS',sdis:'SDIS 47'},
+            source:'Google Maps / suggestion SDMIS'
+        });
+        addItem({
+            id:'sdis-47-cta-codis',
+            type:'SDMIS',
+            subtype:'CTA',
+            lat:44.231051,
+            lng:0.642486,
+            tags:{name:'CTA / CODIS SDIS 47',operator:'SDMIS',sdis:'SDIS 47'},
+            source:'Google Maps / suggestion SDMIS'
         });
         addItem({
             id:'suggestion-cis-nice-nord-sdis-06',
