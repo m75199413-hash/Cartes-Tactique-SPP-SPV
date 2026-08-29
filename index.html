@@ -70,6 +70,14 @@
         .suggestion-types{display:grid;gap:8px;margin-bottom:14px}.suggestion-type{display:flex;align-items:center;gap:9px;padding:9px;border:1px solid #374151;border-radius:6px;color:#e5e7eb;cursor:pointer}.suggestion-type:has(input:checked){border-color:#ef4444;background:#1f2937}
         .suggestion-fields{display:grid;gap:6px;margin-bottom:16px}.suggestion-fields label{font-size:.75rem;color:#d1d5db}.suggestion-fields input{width:100%;padding:9px;background:#0f1724;border:1px solid #374151;border-radius:6px;color:#fff;font-size:.85rem}
         .suggestion-actions{display:flex;justify-content:flex-end;gap:8px}.suggestion-actions button{padding:8px 12px;border:1px solid #374151;border-radius:6px;background:#1f2937;color:#fff;cursor:pointer}.suggestion-actions button[type=submit]{background:#b91c1c;border-color:#ef4444}.suggestion-actions button:hover{filter:brightness(1.15)}
+        .gm-import-modal{position:absolute;inset:0;z-index:1600;display:none;align-items:center;justify-content:center;background:#0008;padding:20px}
+        .gm-import-modal.open{display:flex}
+        .gm-import-container{width:min(620px,100%);background:#111827;border:1px solid #374151;border-radius:10px;padding:18px;box-shadow:0 12px 35px #000b}
+        .gm-import-container h2{font-size:1rem;margin-bottom:6px}.gm-import-container p{color:#9ca3af;font-size:.78rem;margin-bottom:14px;line-height:1.5}
+        .gm-import-container textarea{width:100%;min-height:160px;padding:10px;background:#0f1724;border:1px solid #374151;border-radius:6px;color:#fff;font-size:.8rem;resize:vertical}
+        .gm-import-container .hint{font-size:.7rem;color:#cbd5e1;margin:8px 0 12px}
+        .gm-import-container .gm-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+        .gm-import-container button{padding:8px 12px;border:1px solid #374151;border-radius:6px;background:#1f2937;color:#fff;cursor:pointer}.gm-import-container button.primary{background:#b91c1c;border-color:#ef4444}
         .welcome-notification{position:absolute;bottom:60px;left:15px;z-index:1350;width:min(700px,calc(100% - 30px));display:flex;gap:10px;align-items:center;background:rgba(17,24,39,.97);border:1px solid #f59e0b;border-left:4px solid #f59e0b;border-radius:8px;padding:10px 12px 10px 14px;color:#fde68a;font-size:.78rem;line-height:1.4;box-shadow:0 8px 24px #0009;animation:notification-in .25s ease-out}
         .welcome-notification p{flex:1}.welcome-notification button{border:0;background:transparent;color:#fde68a;font-size:1.1rem;line-height:1;cursor:pointer;padding:0 2px}.welcome-notification button:hover{color:#fff}@keyframes notification-in{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
         @media(max-width:700px){.welcome-notification{bottom:58px;left:10px;width:calc(100% - 20px)}}
@@ -182,6 +190,7 @@
             CSP : fichiers locaux actualisés automatiquement par le dépôt avant chaque redéploiement Vercel.
         </div>
         <button class="import-btn" onclick="promptImportUmap()" title="Importer une carte uMap / Framacarte (GeoJSON)">Importer une carte uMap / Framacarte</button>
+        <button class="import-btn" onclick="openGoogleMapsImport()" title="Importer des bâtiments depuis Google Maps / CSV">Importer depuis Google Maps</button>
         <button class="import-btn" onclick="enterFdfSimulation()">Passer à la simulation FDF</button>
     </div>
 
@@ -221,6 +230,21 @@
                 <div id="suggestionFields" class="suggestion-fields"></div>
                 <div class="suggestion-actions"><button type="button" id="cancelSuggestion">Annuler</button><button type="submit">Ouvrir GitHub</button></div>
             </form>
+        </div>
+        <div id="googleMapsImportModal" class="gm-import-modal" role="dialog" aria-modal="true" aria-labelledby="googleMapsImportTitle">
+            <div class="gm-import-container">
+                <h2 id="googleMapsImportTitle">Importer depuis Google Maps</h2>
+                <p>Collez ici des liens Google Maps, des coordonnées GPS ou un CSV.<br>Formats acceptés : URL Google Maps, CSV <code>Nom,Type,Latitude,Longitude</code>, ou <code>Nom;Type;Lat;Lng</code>.</p>
+                <textarea id="googleMapsImportText" placeholder="Exemple :
+CIS Nîmes Centre,CS,43.836,4.360
+https://maps.google.com/?q=43.936355,4.315866
+Etat-major SDIS 30,SDIS,43.812770,4.316498"></textarea>
+                <div class="hint">Le type est détecté automatiquement si le nom contient : CIS, CTA, CODIS, État-major, CSP, CS.</div>
+                <div class="gm-actions">
+                    <button type="button" id="cancelGoogleMapsImport">Annuler</button>
+                    <button type="button" class="primary" id="confirmGoogleMapsImport">Importer</button>
+                </div>
+            </div>
         </div>
         <div id="welcomeNotification" class="welcome-notification" role="status" aria-live="polite">
             <p>Toutes les Casernes sont ajoutées manuellement donc si la votre n'y est pas faites un clic droit sur la l'emplacement de votre Caserne / Etat-Major/ CTA-CODIS et suivez les instructions</p>
@@ -1170,6 +1194,134 @@
             const url = prompt('URL uMap / Framacarte à importer (ex: https://framacarte.org/en/map/cis-de-france_78971#6/46.5/-1.1)');
             if(!url) return; importUmapMap(url).catch(e=>debugLog('Import uMap échoué: '+e.message,'err'));
         }
+
+        function openGoogleMapsImport(){
+            const modal = document.getElementById('googleMapsImportModal');
+            const text = document.getElementById('googleMapsImportText');
+            if (modal) modal.classList.add('open');
+            if (text) text.focus();
+        }
+
+        function closeGoogleMapsImport(){
+            const modal = document.getElementById('googleMapsImportModal');
+            if (modal) modal.classList.remove('open');
+            const text = document.getElementById('googleMapsImportText');
+            if (text) text.value = '';
+        }
+
+        function inferTypeFromName(name, forcedType){
+            if (forcedType) return forcedType;
+            const text = String(name || '').toLowerCase();
+            if (/etat[- ]?major|etat major|état-major|état major/.test(text)) return 'SDIS';
+            if (/cta|codis/.test(text)) return 'SDIS';
+            if (/csp|centre de secours principal/.test(text)) return 'CSP';
+            if (/cis|centre d'incendie|centre secours/.test(text)) return 'CS';
+            if (/bspp|bmpm/.test(text)) return 'BSPP';
+            if (/sdis/.test(text)) return 'SDIS';
+            return 'CS';
+        }
+
+        function parseGoogleMapsEntry(raw){
+            const entry = String(raw || '').trim();
+            if (!entry) return null;
+
+            let csvSeparator = null;
+            if (entry.includes(';') && !entry.includes(',')) csvSeparator = ';';
+            else if (entry.includes(',') && !entry.includes(';')) csvSeparator = ',';
+            else if (entry.includes(';') && entry.includes(',')) {
+                const firstSemi = entry.indexOf(';');
+                const firstComma = entry.indexOf(',');
+                csvSeparator = firstSemi < firstComma ? ';' : ',';
+            }
+
+            if (csvSeparator) {
+                const values = entry.split(csvSeparator).map(v => v.trim().replace(/^['\"]|['\"]$/g, ''));
+                if (values.length >= 4 && !isNaN(Number(values[2])) && !isNaN(Number(values[3]))) {
+                    const name = values[0] || 'Site importé';
+                    const type = inferTypeFromName(name, values[1] || '');
+                    return { name, type, lat: Number(values[2]), lng: Number(values[3]) };
+                }
+            }
+
+            const googleUrl = entry.match(/(?:https?:\/\/)?(?:www\.)?(?:maps\.google\.[a-z.]+|google\.[a-z.]+)\/(?:maps\/?|\?q=|\?api=1\&query=)[^\s]*/i);
+            if (googleUrl) {
+                const url = googleUrl[0];
+                const qMatch = url.match(/[?&](?:q|query)=([^&]+)/i);
+                if (qMatch) {
+                    const decoded = decodeURIComponent(qMatch[1]);
+                    const numbers = decoded.match(/-?\d+(?:[.,]\d+)?/g);
+                    if (numbers && numbers.length >= 2) {
+                        const lat = Number(numbers[0].replace(',', '.'));
+                        const lng = Number(numbers[1].replace(',', '.'));
+                        if (Number.isFinite(lat) && Number.isFinite(lng)) {
+                            const name = (decoded.split(/,|\|/)[0] || 'Site Google Maps').replace(/[+_]/g,' ').trim();
+                            return { name, type: inferTypeFromName(name), lat, lng };
+                        }
+                    }
+                }
+                const at = url.match(/@(-?\d+(?:[.,]\d+)?),(-?\d+(?:[.,]\d+)?)/);
+                if (at) {
+                    return { name: 'Site Google Maps', type: 'CS', lat: Number(at[1].replace(',', '.')), lng: Number(at[2].replace(',', '.')) };
+                }
+            }
+
+            const coords = entry.match(/(-?\d+(?:[.,]\d+)?)[\s,;]+(-?\d+(?:[.,]\d+)?)/);
+            if (coords) {
+                const lat = Number(coords[1].replace(',', '.'));
+                const lng = Number(coords[2].replace(',', '.'));
+                if (Number.isFinite(lat) && Number.isFinite(lng)) {
+                    return { name: 'Coordonnée GPS', type: 'CS', lat, lng };
+                }
+            }
+
+            return null;
+        }
+
+        function importGoogleMapsEntries(){
+            const text = document.getElementById('googleMapsImportText')?.value || '';
+            const lines = text.split(/\r?\n|\r|;/).map(line => line.trim()).filter(Boolean);
+            if (!lines.length) {
+                alert('Collez au moins une donnée Google Maps ou une coordonnée GPS.');
+                return;
+            }
+
+            let added = 0;
+            for (const line of lines) {
+                const parsed = parseGoogleMapsEntry(line);
+                if (!parsed) continue;
+
+                let type = parsed.type;
+                let subtype = null;
+                if (type === 'SDIS') {
+                    if (/cta|codis/.test(String(parsed.name || '').toLowerCase())) subtype = 'CTA';
+                    else if (/etat[- ]?major|état[- ]?major/.test(String(parsed.name || '').toLowerCase())) subtype = 'ETAT_MAJOR';
+                }
+
+                const item = {
+                    id: `gm-import-${Date.now()}-${added}-${Math.random().toString(16).slice(2,8)}`,
+                    type,
+                    subtype,
+                    lat: parsed.lat,
+                    lng: parsed.lng,
+                    tags: { name: parsed.name || 'Site importé', operator: 'Google Maps import', source: 'Google Maps' },
+                    source: 'Google Maps import'
+                };
+
+                addItem(item);
+                added++;
+            }
+
+            updateMarkers();
+            closeGoogleMapsImport();
+            alert(`${added} emplacement(s) importé(s) depuis Google Maps.`);
+            debugLog(`Import Google Maps : ${added} site(s) ajouté(s)`, 'ok');
+        }
+
+        document.getElementById('cancelGoogleMapsImport')?.addEventListener('click', closeGoogleMapsImport);
+        document.getElementById('confirmGoogleMapsImport')?.addEventListener('click', importGoogleMapsEntries);
+        document.getElementById('googleMapsImportModal')?.addEventListener('click', (event) => {
+            if (event.target && event.target.id === 'googleMapsImportModal') closeGoogleMapsImport();
+        });
 
         async function importUmapMap(mapUrl){
             debugLog('Import uMap demandé: '+mapUrl,'ok');
