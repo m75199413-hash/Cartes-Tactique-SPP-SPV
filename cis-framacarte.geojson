@@ -11194,25 +11194,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.84742,
-          48.525274
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Plerguer (SDIS 35 - Ille et Vilaine)",
-        "description": "42 SPV\n\n436 interventions en 2020\n\n1 VSAV\n1 FPT\n1 CCR\n1 VTUTP\n1 VSM\n1 VL"
-      },
-      "id": "k4Mzk"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           -1.883002,
           47.542161
         ]
@@ -32262,6 +32243,21 @@
     {
       "type": "Feature",
       "geometry": {
+        "coordinates": [
+          1.825833,
+          42.729314
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Ax les Thermes (SDIS 09 - Ariège)",
+        "description": "1 VSAV\n1 VSRL\n1 CCR\n1 CCF\n1 VTU\n1 VLHR\n1 ULTT\n1 VL"
+      },
+      "id": "Kaiph"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "type": "Point",
         "coordinates": [
           1.867611,
@@ -32357,16 +32353,16 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          1.825833,
-          42.729314
+          1.031824,
+          42.922693
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Ax les Thermes (SDIS 09 - Ariège)",
-        "description": "1 VSAV\n1 VSRL\n1 CCR\n1 CCF\n1 VTU\n1 VLHR\n1 ULTT\n1 VL"
+        "name": "CIS Castillon en Couserans (SDIS 09 - Ariège)",
+        "description": "21 SPV\n\n1 VSAV\n1 CCR\n1 CCF\n1 VLTT\n1 VL\n1 MPR"
       },
-      "id": "Kaiph"
+      "id": "foYQf"
     },
     {
       "type": "Feature",
@@ -43299,6 +43295,25 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          -1.518366,
+          48.301456
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Gahard (SDIS 35 - Ille et Vilaine)",
+        "description": "14 SPV\n\n81 interventions en 2025\n\n1 VTU\n1 CCF\n1 DA\n1 VL\n1 VPCE\n1 CEPMA\n1 MPR\n"
+      },
+      "id": "Q1NTQ"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           -1.726066,
           47.730289
         ]
@@ -43407,6 +43422,25 @@
         "description": "23 SP\n\n232 interventions en 2024\n\n1 VSAV\n1 CCF\n1 DA\n1 VTU\n1 VL\n1 MPR"
       },
       "id": "E2Mjc"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.679535,
+          48.304207
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Ille-et-Rance (SDIS 35 - Ille et Vilaine)",
+        "description": "32 SPV\n\n308 interventions en 2025\n\n1 VSAV\n1 CCR\n1 CCGC\n1 VTU\n2 VL\n1 BRSL"
+      },
+      "id": "Y5MTc"
     },
     {
       "type": "Feature",
@@ -43639,6 +43673,21 @@
     {
       "type": "Feature",
       "geometry": {
+        "coordinates": [
+          -2.059808,
+          48.586259
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Pleurtuit (SDIS 35 - Ile et Vilaine)",
+        "description": "38 SPV\n\n468 interventions en 2025\n\n1 VSAV\n1 CCR\n1 VTU\n1 VL"
+      },
+      "id": "wSdg4"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "type": "Point",
         "coordinates": [
           -2.069018,
@@ -43793,6 +43842,44 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          -1.619657,
+          48.260813
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Saint-Aubin d'Aubigné (SDIS 35 - Ille et Vilaine)",
+        "description": "36 SPV\n\n299 interventions en 2025\n\n1 VSAV\n1 FPT\n1 CCF\n1 VTU\n1 VL\n1 MPR"
+      },
+      "id": "QwMDM"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.239899,
+          48.505374
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Saint-Georges de Reintembault (SDIS 35 - Ille et Vilaine)",
+        "description": "18 SPV\n\n156 interventions en 2025\n\n1 VSAV\n1 FPT\n1 VTU\n1 VL"
+      },
+      "id": "M1NTE"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           -1.261561,
           48.401336
         ]
@@ -43812,6 +43899,25 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          -2.194165,
+          48.193456
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Saint-Méen le Grand (SDIS 35 - Ille et Vilaine)",
+        "description": "41 SPV\n\n592 interventions en 2025\n\n1 VSAV\n1 FPT\n1 EPS\n1 CCF\n1 CCGC\n1 VTU\n1 VLS\n1 VL\n1 BRS\n1 MPR"
+      },
+      "id": "E5NjY"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           -1.42848,
           48.329029
         ]
@@ -43825,6 +43931,25 @@
         "description": "23 SPV\n\n187 interventions en 2025\n\n1 VSAV\n1 FPT\n1 VTU"
       },
       "id": "c1NDg"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.528355,
+          48.329914
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Sens de Bretagne (SDIS 35 - Ille et Vilaine)",
+        "description": "28 SPV\n\n302 interventions en 2025\n\n1 VSAV\n1 FPTSR\n1 VTU\n1 VL"
+      },
+      "id": "kxMTE"
     },
     {
       "type": "Feature",
@@ -43901,6 +44026,25 @@
         "description": "39 SPV\n\n674 interventions en 2025\n\n2 VSAV\n1 FPT\n1 CCF\n1 VLHR\n1 VTU\n1 VL\n1 BLS"
       },
       "id": "E4NjE"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.755302,
+          48.416171
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CS Combourg (SDIS 35 - Ille et VIlaine)",
+        "description": "51 SPV\n\n804 interventions en 2025\n\n2 VSAV\n1 VSR\n1 FPT\n1 CCF\n1 CCGC\n1 VTU\n1 VLCG\n1 VLS\n1 VL\n1 MPR\n"
+      },
+      "id": "Q4MTQ"
     },
     {
       "type": "Feature",
@@ -44019,25 +44163,10 @@
     {
       "type": "Feature",
       "geometry": {
-        "coordinates": [
-          -2.059808,
-          48.586259
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS Pleurtuit (SDIS 35 - Ile et Vilaine)",
-        "description": "38 SPV\n\n468 interventions en 2025\n\n1 VSAV\n1 CCR\n1 VTU\n1 VL"
-      },
-      "id": "wSdg4"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
         "type": "Point",
         "coordinates": [
-          -2.194165,
-          48.193456
+          -1.84742,
+          48.525274
         ]
       },
       "properties": {
@@ -44045,124 +44174,10 @@
           "showLabel": null,
           "labelInteractive": true
         },
-        "name": "CIS Saint-Méen le Grand (SDIS 35 - Ille et Vilaine)",
-        "description": "41 SPV\n\n592 interventions en 2025\n\n1 VSAV\n1 FPT\n1 EPS\n1 CCF\n1 CCGC\n1 VTU\n1 VLS\n1 VL\n1 BRS\n1 MPR"
+        "name": "CIS Plerguer (SDIS 35 - Ille et Vilaine)",
+        "description": "36 SPV\n\n523 interventions en 2025\n\n1 VSAV\n1 CCR\n1 VTUBS\n1 PCM\n1 DA\n1 VSM\n1 VL"
       },
-      "id": "E5NjY"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.755302,
-          48.416171
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CS Combourg (SDIS 35 - Ille et VIlaine)",
-        "description": "51 SPV\n\n804 interventions en 2025\n\n2 VSAV\n1 VSR\n1 FPT\n1 CCF\n1 CCGC\n1 VTU\n1 VLCG\n1 VLS\n1 VL\n1 MPR\n"
-      },
-      "id": "Q4MTQ"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.239899,
-          48.505374
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Saint-Georges de Reintembault (SDIS 35 - Ille et Vilaine)",
-        "description": "18 SPV\n\n156 interventions en 2025\n\n1 VSAV\n1 FPT\n1 VTU\n1 VL"
-      },
-      "id": "M1NTE"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.528355,
-          48.329914
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Sens de Bretagne (SDIS 35 - Ille et Vilaine)",
-        "description": "28 SPV\n\n302 interventions en 2025\n\n1 VSAV\n1 FPTSR\n1 VTU\n1 VL"
-      },
-      "id": "kxMTE"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.518366,
-          48.301456
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Gahard (SDIS 35 - Ille et Vilaine)",
-        "description": "14 SPV\n\n81 interventions en 2025\n\n1 VTU\n1 CCF\n1 DA\n1 VL\n1 VPCE\n1 CEPMA\n1 MPR\n"
-      },
-      "id": "Q1NTQ"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.619657,
-          48.260813
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Saint-Aubin d'Aubigné (SDIS 35 - Ille et Vilaine)",
-        "description": "36 SPV\n\n299 interventions en 2025\n\n1 VSAV\n1 FPT\n1 CCF\n1 VTU\n1 VL\n1 MPR"
-      },
-      "id": "QwMDM"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.679535,
-          48.304207
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Ille-et-Rance (SDIS 35 - Ille et Vilaine)",
-        "description": "32 SPV\n\n308 interventions en 2025\n\n1 VSAV\n1 CCR\n1 CCGC\n1 VTU\n2 VL\n1 BRSL"
-      },
-      "id": "Y5MTc"
+      "id": "k4Mzk"
     },
     {
       "type": "Feature",
@@ -50177,6 +50192,21 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
+          2.632256,
+          47.706932
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CSP Gien (SDIS 45 - Loiret)",
+        "description": "34 SPP\n35 SPV\n\n1 950 interventions annuelles\n\n3 VSAV\n1 VSRS\n2 FPT (dont 1 RD)\n1 EPC32\n1 CCF4\n1 CCFS\n1 VTUPS\n1 VTU\n1 VTP\n1 VSN\n1 VPCE\n1 CEAR\n1 CECGC\n1 CEEM\n1 CEDA\n1 CEINOND\n1 CEBenne\n1 VLHR\n1 VLSM\n1 VLCG\n2 VLC\n2 VL\n1 RLM\n1 MPR"
+      },
+      "id": "8DuFC"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
           1.910071,
           47.907266
         ],
@@ -50241,16 +50271,16 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          2.632256,
-          47.706932
+          2.201632,
+          47.863177
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CSP Gien (SDIS 45 - Loiret)",
-        "description": "34 SPP\n35 SPV\n\n1 950 interventions annuelles\n\n3 VSAV\n1 VSRS\n2 FPT (dont 1 RD)\n1 EPC32\n1 CCF4\n1 CCFS\n1 VTUPS\n1 VTU\n1 VTP\n1 VSN\n1 VPCE\n1 CEAR\n1 CECGC\n1 CEEM\n1 CEDA\n1 CEINOND\n1 CEBenne\n1 VLHR\n1 VLSM\n1 VLCG\n2 VLC\n2 VL\n1 RLM\n1 MPR"
+        "name": "CIS Châteauneuf sur Loire (SDIS 45 - Loiret)",
+        "description": "5 SPP\n40 SPV\n\n1 000 interventions annuelles\n\n2 VSAV\n1 FPTSR\n1 EPC\n1 CCF4\n1 VTU\n1 VLHR\n2 VLC\n1 MPRGP\n1 BLS"
       },
-      "id": "8DuFC"
+      "id": "NEKLj"
     },
     {
       "type": "Feature",
@@ -59505,6 +59535,21 @@
     {
       "type": "Feature",
       "geometry": {
+        "coordinates": [
+          -0.022686,
+          43.182794
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Ossun (SDIS 65 - Hautes Pyrénées)",
+        "description": "1 VSAV\n1 CCR\n1 VTU\n1 VLHR\n1 VL\n1 MPR"
+      },
+      "id": "i3xIL"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "type": "Point",
         "coordinates": [
           0.10864,
@@ -59629,16 +59674,16 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          -0.022686,
-          43.182794
+          0.378631,
+          42.970154
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Ossun (SDIS 65 - Hautes Pyrénées)",
-        "description": "1 VSAV\n1 CCR\n1 VTU\n1 VLHR\n1 VL\n1 MPR"
+        "name": "CIS Sarrancolin (SDIS 65 - Hautes Pyrénées)",
+        "description": "18 SPV\n\n1 VSAV\n1 FPTSR\n1 CCRL\n1 VTU\n1 VLHR\n2 VL"
       },
-      "id": "i3xIL"
+      "id": "Vd1Jn"
     },
     {
       "type": "Feature",
