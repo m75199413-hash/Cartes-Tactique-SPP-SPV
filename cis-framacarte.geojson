@@ -29312,6 +29312,21 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
+          4.883831,
+          45.918938
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Civrieux (SDIS 01 - Ain)",
+        "description": "70 interventions annuelles\n\n1 VPIHR\n1 VL"
+      },
+      "id": "g0lPJ"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
           5.447878,
           46.205372
         ],
@@ -29643,16 +29658,16 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          4.883831,
-          45.918938
+          5.663012,
+          46.26806
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CPI Civrieux (SDIS 01 - Ain)",
-        "description": "70 interventions annuelles\n\n1 VPIHR\n1 VL"
+        "name": "CSP Oyonnax (SDIS 01 - Ain)",
+        "description": "27 SPP\n46 SPV\n\n 2 600 interventions annuelles\n\n3 VSAV\n1 VSRS\n1 FPT\n1 CCR\n1 BEA\n1 CCF\n1 CCEM\n1 VTU\n1 VPCE\n1 CEVAR\n1 CESD\n1 CEPlateau\n1 VIMP\n1 VLM\n2 VL\n2 VLHR\n1 VLC\n1 MPR\n1 BRS"
       },
-      "id": "g0lPJ"
+      "id": "VUJyi"
     },
     {
       "type": "Feature",
@@ -32869,6 +32884,25 @@
     {
       "type": "Feature",
       "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.104646,
+          43.114972
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Gruissan (SDIS 11 - Aude)",
+        "description": "4 SPP\n50 SPV\n\n1 200 interventions en 2025\n\n2 VSAV\n1 CCR\n2 CCF\n2 VPLHR\n1 VTP\n2 VL\n1 VLHR\n2 BLS\n1 BRS"
+      },
+      "id": "cyMDA"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "coordinates": [
           2.993796,
           42.97309
@@ -32899,40 +32933,6 @@
     {
       "type": "Feature",
       "geometry": {
-        "coordinates": [
-          2.976716,
-          43.021851
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS Sigean (SDIS 11 - Aude)",
-        "description": "830 interventions annuelles\n\n2 VSAV\n1 FSR\n1 FPT\n3 CCF\n1 CCGC\n1 VTU\n2 VLTT\n2 VL\n1 CSL"
-      },
-      "id": "jN8tc"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          3.104646,
-          43.114972
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Gruissan (SDIS 11 - Aude)",
-        "description": "4 SPP\n50 SPV\n\n1 200 interventions en 2025\n\n2 VSAV\n1 CCR\n2 CCF\n2 VPLHR\n1 VTP\n2 VL\n1 VLHR\n2 BLS\n1 BRS"
-      },
-      "id": "cyMDA"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
         "type": "Point",
         "coordinates": [
           2.191477,
@@ -32948,6 +32948,36 @@
         "description": "4 SPP\n46 SPV\n\n678 interventions en 2019\n\n2 VSAV\n1 VSRL\n1 CCR\n2 CCF\n1 DA\n1 VLHR\n1 VPCE\n1 VCDO\n1 CECGC\n1 CEPMA\n1 CEMO\n1 CEEAU\n1 MPR\n2 VL"
       },
       "id": "Y1MzY"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          2.976716,
+          43.021851
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Sigean (SDIS 11 - Aude)",
+        "description": "830 interventions annuelles\n\n2 VSAV\n1 FSR\n1 FPT\n3 CCF\n1 CCGC\n1 VTU\n2 VLTT\n2 VL\n1 CSL"
+      },
+      "id": "jN8tc"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          2.528894,
+          42.959092
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Monthoumet (SDIS 11 - Aude)",
+        "description": "130 interventions annuelles\n\n1 VSAV\n2 CCF\n1 VLHR\n1 VL"
+      },
+      "id": "ZM5aV"
     },
     {
       "type": "Feature",
@@ -33852,6 +33882,25 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          0.386437,
+          49.032501
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CS Orbec (SDIS 14 - Calvados)",
+        "description": "24 SPV \n\nEnviron 450/500 interventions par an\n\n2 VSAV\n1 FPTSR\n1 CCF \n1 CCGC\n1 VTU\n1 VLHR\n1 VL\n1 VLCG (Partagée)"
+      },
+      "id": "A3NjU"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           -0.267277,
           49.277437
         ]
@@ -33928,6 +33977,63 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          -0.857728,
+          49.010726
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CS Saint-Martin des Besaces (SDIS 14 - Calvados)",
+        "description": "31 SPV\n\n\nEnviron 240 interventions annuelles\n\n1 VSAV\n1 FPTSR\n1 VTU\n1 VL"
+      },
+      "id": "Y2MjY"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.038731,
+          49.01689
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CS Saint-Pierre en Auge (SDIS 14 - Calvados)",
+        "description": "Environ 40 SPV\n\n936 interventions en 2018\n(631 SUAP ; 80 AVP ; 83 INC ; 142 OD)\n\n2 VSAV\n1 FPTSR\n1 FPT RD\n1 CCF4\n1 CCGC\n1 VTU\n1 VLU\n1 RGE"
+      },
+      "id": "I4NjU"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.045863,
+          48.840921
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CS Saint-Sever Calvados (SDIS 14 - Calvados)",
+        "description": "21 SPV\n\n206 interventions en 2023\n\n1 VSAV\n1 CCR\n1 VTU\n1 VLU\n1 MPR"
+      },
+      "id": "QxMjI"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           -0.473839,
           48.976802
         ]
@@ -33938,7 +34044,7 @@
           "labelInteractive": true
         },
         "name": "CS Thury-Harcourt (SDIS 14 - Calvados)",
-        "description": "Environ 40 SPV\n\n498 interventions en 2020\n\n2 VSAV\n1 FPTSR\n1 CCF\n1 VTU\n1 VLU\n1 MPR\n1 BRS"
+        "description": "Environ 40 SPV\n\n498 interventions en 2020\n\n2 VSAV\n1 FPTSR\n1 CCF4\n1 VTU\n1 VLU\n1 VLHR\n1 MPR\n1 BRS"
       },
       "id": "c3MTU"
     },
@@ -34093,82 +34199,6 @@
         "description": "36 SPP\n67 SPV\n\n2 784 interventions en 2025\n\n3 VSAV\n1 VSRS\n2 FPT\n1 EPC33\n1 CCF4\n1 CCFS\n2 VTU\n1 VTP\n1 CCGC\n1 VLHR\n2 VLCG\n3 VL\n1 VLC\n2 VPCE\n1 CEPOL\n1 CEPMA\n1 CEDA\n1 BRS\n"
       },
       "id": "k2Mjc"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -0.857728,
-          49.010726
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CS Saint-Martin des Besaces (SDIS 14 - Calvados)",
-        "description": "31 SPV\n\n\nEnviron 240 interventions annuelles\n\n1 VSAV\n1 FPTSR\n1 VTU\n1 VL"
-      },
-      "id": "Y2MjY"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          0.386437,
-          49.032501
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CS Orbec (SDIS 14 - Calvados)",
-        "description": "24 SPV \n\nEnviron 450/500 interventions par an\n\n2 VSAV\n1 FPTSR\n1 CCF \n1 CCGC\n1 VTU\n1 VLHR\n1 VL\n1 VLCG (Partagée)"
-      },
-      "id": "A3NjU"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -0.038731,
-          49.01689
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CS Saint-Pierre en Auge (SDIS 14 - Calvados)",
-        "description": "Environ 40 SPV\n\n936 interventions en 2018\n(631 SUAP ; 80 AVP ; 83 INC ; 142 OD)\n\n2 VSAV\n1 FPTSR\n1 FPT RD\n1 CCF4\n1 CCGC\n1 VTU\n1 VLU\n1 RGE"
-      },
-      "id": "I4NjU"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.045863,
-          48.840921
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CS Saint-Sever Calvados (SDIS 14 - Calvados)",
-        "description": "21 SPV\n\n206 interventions en 2023\n\n1 VSAV\n1 CCR\n1 VTU\n1 VLU\n1 MPR"
-      },
-      "id": "QxMjI"
     },
     {
       "type": "Feature",
@@ -37176,6 +37206,21 @@
     {
       "type": "Feature",
       "geometry": {
+        "coordinates": [
+          1.906579,
+          46.326617
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Bonnat (SDIS 23 - Creuse)",
+        "description": "24 SPV dont 1 SSSM\n\n500 interventions en 2024\n\n1 VSAV\n1 CCR\n1 VTU\n1 VLI\n1 VL"
+      },
+      "id": "fTuqR"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "type": "Point",
         "coordinates": [
           1.757126,
@@ -37217,6 +37262,21 @@
         "description": "10 SPV\n\n270 interventions annuelles\n\n1 CCRL\n1 VLTU"
       },
       "id": "k0MTk"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          2.026248,
+          46.299027
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Châtelus-Malvaleix (SDIS 23 - Creuse)",
+        "description": "14 SPV\n\n210 interventions en 2024\n\n1 VSAV\n1 CCRL\n1 VTUL"
+      },
+      "id": "XT3J6"
     },
     {
       "type": "Feature",
@@ -37436,7 +37496,7 @@
       },
       "properties": {
         "name": "CIS Royere de Vassivière (SDIS 23 - Creuse)",
-        "description": "1 VSAV\n1 FPT\n1 CCF\n1 VTUL\n1 VLHR\n1 VL\n1 CSL\n1 MPR"
+        "description": "20 SPV dont 1 ISP\n\n155 interventions en 2025\n\n1 VSAV\n1 FPT\n1 CCF\n1 VTUL\n1 VLHR\n1 VL\n1 CSL"
       },
       "id": "Y4MzE"
     },
@@ -37458,6 +37518,21 @@
         "description": "18 SPV dont 1 SSSM\n\n190 interventions en 2024\n\n1 VSAV\n1 FPT\n1 CCF\n1 VTUL\n1 VL"
       },
       "id": "gyMjU"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          2.565855,
+          45.98174
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Dontreix (SDIS 23 - Creuse)",
+        "description": "14 SPV dont 1 ISP\n\n80 interventions en 2025\n\n1 CCRL\n1 VTUL"
+      },
+      "id": "4hgdk"
     },
     {
       "type": "Feature",
@@ -37511,36 +37586,6 @@
         "description": "23 SPP\n97 SPV\n\n3 000 interventions en 2024\n\n3 VSAV\n1 FSR\n1 FPTL\n1 FPT\n1 EPC\n1 VTUBAL\n1 VIRT\n1 CMIC\n1 CESD\n1 PCM\n1 CCF4\n1 CCF3\n1 VGE\n1 VTU\n3 VL\n1 BRS\n1 MPR\n1 RLC\n1 RBarrage"
       },
       "id": "M0OTM"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          1.906579,
-          46.326617
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS Bonnat (SDIS 23 - Creuse)",
-        "description": "24 SPV dont 1 SSSM\n\n500 interventions en 2024\n\n1 VSAV\n1 CCR\n1 VTU\n1 VLI\n1 VL"
-      },
-      "id": "fTuqR"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          2.026248,
-          46.299027
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS Châtelus-Malvaleix (SDIS 23 - Creuse)",
-        "description": "14 SPV\n\n210 interventions en 2024\n\n1 VSAV\n1 CCRL\n1 VTUL"
-      },
-      "id": "XT3J6"
     },
     {
       "type": "Feature",
@@ -41786,6 +41831,21 @@
     {
       "type": "Feature",
       "geometry": {
+        "coordinates": [
+          -0.219405,
+          44.434898
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Bazas (SDIS 33 - Gironde)",
+        "description": "22 SPP\n55 SPV\n\n1 181 interventions en 2024\n\n2 VSAV\n1 FPTSR\n2 CCF6\n1 CCFS\n1 VTU\n2 VLHR\n1 VL"
+      },
+      "id": "ggjk3"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "type": "Point",
         "coordinates": [
           -0.790527,
@@ -41873,6 +41933,21 @@
         "description": "76 SPV\n\n1 971 interventions en 2023\n\n2 VSAV \n1 FPTSR\n1 FPT\n1 EPS25\n1 DA\n2 VLHR\n2 CCF3\n1 CCF6\n1 VTHRA + MPRGP\n1 VT + 2 ERS dont 1 ERS à flots\n1 VTU\n1 VLS\n1 VLEM"
       },
       "id": "M1NjQ"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          -0.260968,
+          44.294981
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Captieux (SDIS 33 - Gironde)",
+        "description": "12 S99\n19 SPV\n\n362 interventions en 2024\n\n1 VSAV\n1 FPTSR\n3 CCF\n1 VTU\n1 VLHR"
+      },
+      "id": "47rz5"
     },
     {
       "type": "Feature",
@@ -42032,7 +42107,7 @@
       },
       "properties": {
         "name": "CIS Le Porge (SDIS 33 - Gironde)",
-        "description": "43 SPV\n\n375 interventions en 2023\n\n1 VSAV\n1 FPT\n1 CCFS\n1 VTU\n1 VLHR\n1 VLU"
+        "description": "38 SPV\n\n314 interventions en 2024\n\n1 VSAV\n1 FPT\n2 CCF6\n1 VTU\n1 VLHR\n1 VLU"
       },
       "id": "AzNTY"
     },
@@ -42214,31 +42289,16 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          -0.219405,
-          44.434898
+          -0.888809,
+          44.970649
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Bazas (SDIS 33 - Gironde)",
-        "description": "22 SPP\n55 SPV\n\n1 181 interventions en 2024\n\n2 VSAV\n1 FPTSR\n2 CCF6\n1 CCFS\n1 VTU\n2 VLHR\n1 VL"
+        "name": "CIS Sainte Hélène (SDIS 33 - Gironde)",
+        "description": "36 SPV\n\n400 interventions annuelles\n\n1 VSAV\n1 FPT\n2 CCF6\n1 VTHRA\n1 DAL\n1 VLHR\n1 VL\n1 MPR"
       },
-      "id": "ggjk3"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          -0.260968,
-          44.294981
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS Captieux (SDIS 33 - Gironde)",
-        "description": "12 S99\n19 SPV\n\n362 interventions en 2024\n\n1 VSAV\n1 FPTSR\n3 CCF\n1 VTU\n1 VLHR"
-      },
-      "id": "47rz5"
+      "id": "yOU5C"
     },
     {
       "type": "Feature",
@@ -42371,7 +42431,7 @@
       },
       "properties": {
         "name": "CIS La Grande Motte (SDIS 34 - Hérault)",
-        "description": "90 SP\n\n3 500 interventions annuelles\n\n3 VSAV\n1 VSR\n1 FPT\n1 EPA\n2 CCF\n1 VTU\n1 VLHR\n1 VL\n1 VTPL\n1 VNOVI\n1 VPL\n1 CSL"
+        "description": "90 SP\n\n3 500 interventions annuelles\n\n3 VSAV\n1 VSR\n1 FPT\n1 EPA\n2 CCF\n1 VTU\n1 VLHR\n1 VL\n1 VTPL\n1 VNOVI\n1 VCYNO\n1 VPL\n1 CSL"
       },
       "id": "I1OTk"
     },
@@ -50703,6 +50763,21 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
+          3.344854,
+          44.468305
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Chanac (SDIS 48 - Lozère)",
+        "description": "1 VSAV\n1 FSR\n1 CCFU\n1 DAHR\n1 VLU\n1 VLTT\n1 MPR"
+      },
+      "id": "HxiKF"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
           3.679411,
           44.638199
         ],
@@ -50713,6 +50788,21 @@
         "description": "1 VSAV\n1 FSR-HR\n1 FPTL\n1 CCF\n1 CCFS\n2 VLHR\n1 MPR"
       },
       "id": "zuMQ1"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          3.267488,
+          44.521298
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Chirac (SDIS 48 - Lozère)",
+        "description": "1 VSAV\n1 CCFU\n1 VLHR"
+      },
+      "id": "Hzrm0"
     },
     {
       "type": "Feature",
@@ -50856,6 +50946,25 @@
     {
       "type": "Feature",
       "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.169668,
+          44.475196
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Saint Germain du teil (SDIS 48 - Lozère)",
+        "description": "25 SPV\n\n100 interventions annuelles\n\n1 VSAV\n1 VLTTL /VLPS \n1 VLTT\n1 CCGC \n1 CCFU \n1 FGPD"
+      },
+      "id": "c0NzI"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "coordinates": [
           3.932945,
           44.432998
@@ -50890,51 +50999,17 @@
     {
       "type": "Feature",
       "geometry": {
-        "type": "Point",
         "coordinates": [
-          3.169668,
-          44.475196
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Saint Germain du teil (SDIS 48 - Lozère)",
-        "description": "25 SPV\n\n100 interventions annuelles\n\n1 VSAV\n1 VLTTL /VLPS \n1 VLTT\n1 CCGC \n1 CCFU \n1 FGPD"
-      },
-      "id": "c0NzI"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          3.267488,
-          44.521298
+          3.412682,
+          44.363969
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Chirac (SDIS 48 - Lozère)",
-        "description": "1 VSAV\n1 CCFU\n1 VLHR"
+        "name": "CIS Saint Enimie (SDIS 48 - Lozère)",
+        "description": "1 VSAV\n1 CCRL\n1 CCF\n1 VLHR"
       },
-      "id": "Hzrm0"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          3.344854,
-          44.468305
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS Chanac (SDIS 48 - Lozère)",
-        "description": "1 VSAV\n1 FSR\n1 CCFU\n1 DAHR\n1 VLU\n1 VLTT\n1 MPR"
-      },
-      "id": "HxiKF"
+      "id": "iM026"
     },
     {
       "type": "Feature",
@@ -50962,7 +51037,7 @@
       },
       "properties": {
         "name": "CIS Beaupréau (SDIS 49 - Maine et Loire)",
-        "description": "682 interventions en 2025\n\n1 VSAV\n1 VSRL\n1 FPT\n1 EPS\n1 CCF\n1 VTUBS\n1 DAHR\n1 VL\n1 MPR\n1 BRS"
+        "description": "46 SPV\n\n682 interventions en 2025\n\n1 VSAV\n1 VSRL\n1 FPT\n1 EPS\n1 CCF\n1 VTUBS\n1 DAHR\n1 VL\n1 MPR\n1 BRS"
       },
       "id": "I0NjM"
     },
@@ -51055,6 +51130,21 @@
         "description": "25 SPV\n\n1 VSAV\n1 FPTSR\n1 CCF4\n1 VTUBS\n1 VLHR\n1 VL\n1 BRS\n1 MPR"
       },
       "id": "A5NzM"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          -0.640844,
+          47.263752
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Chanzeaux (SDIS 49 - Maine et Loire)",
+        "description": "222 interventions en 2025\n\n1 VSAV\n1 CCF\n1 VTUB\n1 VTP\n1 VL"
+      },
+      "id": "4vWq1"
     },
     {
       "type": "Feature",
@@ -51649,21 +51739,6 @@
         "description": "42 SPP\n72 SPV\n\n4 000 interventions en 2023\n\n4 VSAV dont 1 réserve\n1 VSRM\n2 FPT\n1 EPA\n1 VPS\n1 VTU\n1 VTP\n1 VLHR\n1 VLCG\nPlusieurs VL\n2 CCF\n1 CCGC\n1 VIRT\n1 VPL\n2 BLS\n2 MPR\n1 RMO\n1 RPO\n3 VPCE\n1 CEPlateau\n1 CEDA\n1 CEAR\n1 CEEMUL\n1 CECMIC\n1 CEPOL\n1 CEMA"
       },
       "id": "c0MDI"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          -0.640844,
-          47.263752
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS Chanzeaux (SDIS 49 - Maine et Loire)",
-        "description": "222 interventions en 2025\n\n1 VSAV\n1 CCF\n1 VTUB\n1 VTP\n1 VL"
-      },
-      "id": "4vWq1"
     },
     {
       "type": "Feature",
@@ -53791,25 +53866,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          5.388075,
-          49.166307
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CSP Verdun (SDIS 55 - Meuse)",
-        "description": "25 SPP\n69 SPV\n\n\n3 000 interventions annuelles\n\n\n3 VSAV\n1 FSR\n1 FPT\n1 CCR\n1 EPA\n1 FMOGP\n1 CCF\n1 VIRT\n1 DAHR\n1 VPL\n1 VTP\n1 VTU\n1 VLTT\n2 VLU\n1 VLCG\n2 VLCC\n1 VLI\n1 RSD\n1 MPRGP\n1 MPR\n1 RGRIMP\n1 RPLAT\n1 RSRPL\n1 EMB"
-      },
-      "id": "cyNjg"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           5.451075,
           49.448012
         ]
@@ -53823,6 +53879,25 @@
         "description": "21 SPV\n\n215 interventions\n\n1 VSAV\n1 CCR\n1 VTULHR\n1 VTP\n1 MPR"
       },
       "id": "Q4NDY"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.388075,
+          49.166307
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CSP Verdun (SDIS 55 - Meuse)",
+        "description": "24 SPP\n73 SPV\n\n\n2 830 interventions en 2025\n\n\n3 VSAV\n1 FSR\n1 FPT\n1 CCR\n1 EPA\n1 FMOGP\n1 CCF\n1 VIRT\n1 DAHR\n1 VPL\n1 VTP\n1 VTU\n1 VLTT\n2 VLU\n1 VLCG\n2 VLCC\n1 VLI\n1 RSD\n1 MPRGP\n1 MPR\n1 RGRIMP\n1 RPLAT\n1 RSRPL\n1 EMB"
+      },
+      "id": "cyNjg"
     },
     {
       "type": "Feature",
@@ -62824,6 +62899,44 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
+          4.981956,
+          46.588066
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Loisy (SDIS 71 - Saône et Loire)",
+        "description": "38 SPV\n\n1 VSAV\n1 CCR\n1 VTU\n1 VL"
+      },
+      "id": "Y1NDc"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.206854,
+          46.645739
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Louhans (SDIS 71 - Saône et Loire)",
+        "description": "13 SPP\n36 SPV\n\n2 157 interventions en 2020\n\n3 VSAV dont 1 RD\n1 FPTSRS\n1 CCR\n1 EPA\n1 CCF\n1 VPL\n1 VTU\n1 VLHR\n3 VL\n1 VLCC\n1 BRS\n3 BRSL"
+      },
+      "id": "U1MTA"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
           4.136825,
           46.691694
         ],
@@ -62853,44 +62966,6 @@
         "description": "19 SPV\n\n400 interventions annuelles\n\n1 VPI INC/OD\n1 VPI SAP\n1 VL"
       },
       "id": "Y2MjA"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          5.206854,
-          46.645739
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Louhans (SDIS 71 - Saône et Loire)",
-        "description": "62 SP\n\n2 157 interventions en 2020\n\n3 VSAV dont 1 RD\n1 FPTSRS\n1 CCR\n1 EPA\n1 CCF\n1 VTU\n1 VLHR\n2 VL\n1 VLCC\n1 BRS"
-      },
-      "id": "U1MTA"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          4.981956,
-          46.588066
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Loisy (SDIS 71 - Saône et Loire)",
-        "description": "38 SPV\n\n1 VSAV\n1 CCR\n1 VTU\n1 VL"
-      },
-      "id": "Y1NDc"
     },
     {
       "type": "Feature",
@@ -66947,6 +67022,21 @@
     {
       "type": "Feature",
       "geometry": {
+        "coordinates": [
+          6.055623,
+          43.332514
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Garéoult (SDIS 83 - Var)",
+        "description": "1 VSAV\n1 VIP\n2 CCF\n1 CCFS\n1 VTU\n1 VLTT\n1 VL"
+      },
+      "id": "c6PTj"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "type": "Point",
         "coordinates": [
           6.295037,
@@ -67188,16 +67278,94 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          6.055623,
-          43.332514
+          6.456356,
+          43.644647
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Garéoult (SDIS 83 - Var)",
-        "description": "1 VSAV\n1 VIP\n2 CCF\n1 CCFS\n1 VTU\n1 VLTT\n1 VL"
+        "_umap_options": {
+          "color": "DarkBlue"
+        },
+        "name": "Pompiers Forces Terrestres Canjuers (83 - Var)",
+        "description": "2 VSAV\n1 FPTL\n10 CCF\n1 CCGC\n3 VLHR"
       },
-      "id": "c6PTj"
+      "id": "EtVo7"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.689867,
+          43.736437
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Beaumont de Pertuis (SDIS 84 - Vaucluse)",
+        "description": "1 VSAV\n1 CCRL\n1 CCF\n1 VTU\n1 VLHR"
+      },
+      "id": "frvJm"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.307502,
+          43.82527
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Bonnieux (SDIS 84 - Vaucluse)",
+        "description": "1 VSAV\n1 CCRL\n2 CCF\n1 VLHR\n1 VL"
+      },
+      "id": "E15zI"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.44394,
+          43.779739
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Cucuron (SDIS 84 - Vaucluse)",
+        "description": "1 VSAV\n1 CCRL\n1 CCF\n1 VTU\n1 VLHR"
+      },
+      "id": "hSiRJ"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.632006,
+          43.785494
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS La Bastide des Jourdans (SDIS 84 - Vaucluse)",
+        "description": "1 VSAV\n2 CCF\n1 CCGC\n1 VTU\n1 VL"
+      },
+      "id": "CuMiu"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.546572,
+          43.726375
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS La Tour d'Aigues (SDIS 84 - Vaucluse)",
+        "description": "34 SPV\n\n534 interventions en 2024\n\n1 VSAV\n1 CCRL\n1 CCF\n1 VTU\n1 VL"
+      },
+      "id": "I2XmJ"
     },
     {
       "type": "Feature",
@@ -67213,6 +67381,21 @@
         "description": "1 500 interventions annuelles\n\n2 VSAV\n1 FPTSR\n1 EPS\n2 CCF\n1 VTU\n1 VLHR\n1 VL\n1 VLCG\n1 BRS"
       },
       "id": "cwNDE"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.122966,
+          43.849523
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Robion (SDIS 84 - Vaucluse)",
+        "description": "22 SPV\n\n1 VSAV\n1 CCF\n1 VTU\n1 VLHR"
+      },
+      "id": "kOvhI"
     },
     {
       "type": "Feature",
@@ -67266,96 +67449,6 @@
         "description": "29 SPP\n54 SPV\n\n3 VSAV\n1 VSRM\n1 FPTL\n1 FPT\n1 EPS\n3 CCF\n1 CCGC22\n1 VTU\n1 VLHR\n1 VLCG\n2 VL\n1 BRS\n1 MPR"
       },
       "id": "3K4HU"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.546572,
-          43.726375
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS La Tour d'Aigues (SDIS 84 - Vaucluse)",
-        "description": "34 SPV\n\n534 interventions en 2024\n\n1 VSAV\n1 CCRL\n1 CCF\n1 VTU\n1 VL"
-      },
-      "id": "I2XmJ"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.632006,
-          43.785494
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS La Bastide des Jourdans (SDIS 84 - Vaucluse)",
-        "description": "1 VSAV\n2 CCF\n1 CCGC\n1 VTU\n1 VL"
-      },
-      "id": "CuMiu"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.689867,
-          43.736437
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS Beaumont de Pertuis (SDIS 84 - Vaucluse)",
-        "description": "1 VSAV\n1 CCRL\n1 CCF\n1 VTU\n1 VLHR"
-      },
-      "id": "frvJm"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.44394,
-          43.779739
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS Cucuron (SDIS 84 - Vaucluse)",
-        "description": "1 VSAV\n1 CCRL\n1 CCF\n1 VTU\n1 VLHR"
-      },
-      "id": "hSiRJ"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.307502,
-          43.82527
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS Bonnieux (SDIS 84 - Vaucluse)",
-        "description": "1 VSAV\n1 CCRL\n2 CCF\n1 VLHR\n1 VL"
-      },
-      "id": "E15zI"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.122966,
-          43.849523
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Robion (SDIS 84 - Vaucluse)",
-        "description": "22 SPV\n\n1 VSAV\n1 CCF\n1 VTU\n1 VLHR"
-      },
-      "id": "kOvhI"
     },
     {
       "type": "Feature",
