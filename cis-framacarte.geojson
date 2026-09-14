@@ -1272,7 +1272,7 @@
           "labelInteractive": true
         },
         "name": "CIS Baud (SDIS 56 - Morbihan)",
-        "description": "52 SPV\n\n887 interventions en 2022\n\n2 VSAV\n1 VTUBS\n1 FPTSR\n1 BEA\n1 CCF\n1 VLHR\n1 VLTU"
+        "description": "52 SPV\n\n887 interventions en 2022\n\n2 VSAV\n1 VTUBS\n1 FPTSR\n1 EPS24\n1 CCF\n1 VLHR\n1 VLTU"
       },
       "id": "k0MTM"
     },
@@ -27117,25 +27117,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -2.393466,
-          47.928676
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CSP Ploermel (SDIS 56 - Morbihan)",
-        "description": "9 SPP\n63 SPV\n\n1 770 interventions en 2022\n\n2 VSAV\n1 FSR\n1 FPTL\n1 FPT\n2 CCF\n1 EPS\n1 DAHR\n1 CRAC\n1 VTP\n1 VTU\n1 VLHR\n2 VL\n1 VLC\n1 RMO\n1 MPR\n1 BRS"
-      },
-      "id": "czNzI"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           6.062425,
           48.920483
         ]
@@ -34991,6 +34972,21 @@
     {
       "type": "Feature",
       "geometry": {
+        "coordinates": [
+          -0.768625,
+          45.819936
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Saint-Porchaire (SDIS 17 - Charente Maritime)",
+        "description": "40 SPV\n\n1 VSAV\n1 FPTHR\n1 CCF\n1 VTU\n1 VLHR\n1 VLCG\n1 MPR"
+      },
+      "id": "xCR0T"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "type": "Point",
         "coordinates": [
           -0.931478,
@@ -35071,16 +35067,31 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          -0.768625,
-          45.819936
+          -0.235562,
+          45.972573
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Saint-Porchaire (SDIS 17 - Charente Maritime)",
-        "description": "40 SPV\n\n1 VSAV\n1 FPTHR\n1 CCF\n1 VTU\n1 VLHR\n1 VLCG\n1 MPR"
+        "name": "CIS Néré (SDIS 17 - Charente Maritime)",
+        "description": "150 interventions annuelles\n\n1 VSAV\n1 CCR\n1 VTU\n1 VL"
       },
-      "id": "xCR0T"
+      "id": "7QH4L"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          -0.351112,
+          46.022007
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Aulnay de Saintonge (SDIS 17 - Charente Maritime)",
+        "description": "30 SPV dont 4 SSSM\n\n1 VSAV\n1 FPTSR\n1 CCF\n1 VTU\n1 VLSM\n1 VL"
+      },
+      "id": "UJncg"
     },
     {
       "type": "Feature",
@@ -48609,6 +48620,25 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          -1.787531,
+          47.415852
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Fay de Bretagne (SDIS 44 - Loire Atlantique)",
+        "description": "30 SPV\n\n160 interventions annuelles\n\n1 VSAV\n1 FPT\n1 VTU\n1 VL"
+      },
+      "id": "k0NjA"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           -1.836852,
           47.632675
         ]
@@ -48622,6 +48652,25 @@
         "description": "45 SPV\n\n451 interventions en 2025\n\n1 VSAV\n1 VSRM\n1 FPT\n1 CCF\n1 VTU\n1 VLHR\n1 VL\n1 CSL"
       },
       "id": "MwNDE"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.646672,
+          47.414992
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Héric (SDIS 44 - Loire Atlantique)",
+        "description": "47 SPV\n\n543 interventions en 2025\n\n1 VSAV\n1 VSRM\n1 FPT\n1 CCGC\n1 VTU\n1 VLC\n1 MPR"
+      },
+      "id": "cwODI"
     },
     {
       "type": "Feature",
@@ -48818,6 +48867,44 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          -1.375018,
+          47.410381
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Ligné (SDIS 44 - Loire Atlantique)",
+        "description": "30 SPV\n\n340 interventions annuelles\n\n1 VSAV\n1 VSRM\n1 CCR\n1 VTU\n1 VL"
+      },
+      "id": "AwMDU"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.815759,
+          46.995292
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Machecoul (SDIS 44 - Loire Atlantique)",
+        "description": "51 SPV\n\n681 interventions en 2025\n\n1 VSAV\n1 VSRM\n1 FPT\n1 EPC30\n1 CCF\n1 VTU\n1 VL\n1 CSL\n1 MPR"
+      },
+      "id": "c0MzA"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           -1.228237,
           47.438495
         ]
@@ -49002,6 +49089,25 @@
         "description": "34 SPV\n\n400 interventions annuelles\n\n1 VSAV\n1 CCR\n1 VTU\n1 VLHR\n1 VL\n1 MPR"
       },
       "id": "QxOTk"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.754626,
+          46.961873
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Paulx (SDIS 44 - Loire Atlantique)",
+        "description": "25 SPV\n\n160 interventions annuelles\n\n1 VSAV\n1 FPT\n1 VTU\n1 VL\n1 MPR"
+      },
+      "id": "YwOTk"
     },
     {
       "type": "Feature",
@@ -49236,6 +49342,25 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          -1.741365,
+          46.941887
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS St Etienne de Mer Morte (SDIS 44 - Loire Atlantique)",
+        "description": "20 SPV\n\n120 interventions annuelles\n\n1 VSAV\n1 FPTHR\n1 VPR\n1 VL"
+      },
+      "id": "Q5MzU"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           -2.19173,
           47.370178
         ]
@@ -49384,82 +49509,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -1.815759,
-          46.995292
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Machecoul (SDIS 44 - Loire Atlantique)",
-        "description": "51 SPV\n\n681 interventions en 2025\n\n1 VSAV\n1 VSRM\n1 FPT\n1 EPC30\n1 CCF\n1 VTU\n1 VL\n1 CSL\n1 MPR"
-      },
-      "id": "c0MzA"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.754626,
-          46.961873
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Paulx (SDIS 44 - Loire Atlantique)",
-        "description": "25 SPV\n\n160 interventions annuelles\n\n1 VSAV\n1 FPT\n1 VTU\n1 VL\n1 MPR"
-      },
-      "id": "YwOTk"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.741365,
-          46.941887
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS St Etienne de Mer Morte (SDIS 44 - Loire Atlantique)",
-        "description": "20 SPV\n\n120 interventions annuelles\n\n1 VSAV\n1 FPTHR\n1 VPR\n1 VL"
-      },
-      "id": "Q5MzU"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.646672,
-          47.414992
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Héric (SDIS 44 - Loire Atlantique)",
-        "description": "47 SPV\n\n543 interventions en 2025\n\n1 VSAV\n1 VSRM\n1 FPT\n1 FMOGC\n1 VTU\n1 VLC\n1 MPR"
-      },
-      "id": "cwODI"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           -1.503963,
           47.442359
         ]
@@ -49473,44 +49522,6 @@
         "description": "40 SPV\n\n400 interventions par an\n\n1 VSAV\n1 FPTSR\n1 CCF\n1 VPR\n1 VL\n1 VPCE\n1 CEDA\n1 CEACC\n1 CSL\n1 MPR"
       },
       "id": "IHJK2"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.787531,
-          47.415852
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Fay de Bretagne (SDIS 44 - Loire Atlantique)",
-        "description": "30 SPV\n\n160 interventions annuelles\n\n1 VSAV\n1 FPT\n1 VTU\n1 VL"
-      },
-      "id": "k0NjA"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.375018,
-          47.410381
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Ligné (SDIS 44 - Loire Atlantique)",
-        "description": "30 SPV\n\n340 interventions annuelles\n\n1 VSAV\n1 VSRM\n1 CCR\n1 VTU\n1 VL"
-      },
-      "id": "AwMDU"
     },
     {
       "type": "Feature",
@@ -54755,6 +54766,25 @@
         "description": "90 SPP\n65 SPV\n\n6 320 interventions en 2025\n\n4 VSAV\n1 FPTSR\n2 FPT\n1 FMOGP\n1 EPA30\n1 VTU\n1 VTUS\n1 VTULOG\n1 VTP\n1 VLHR\n1 VLI\n1 VLCG\n2 VPCE\n1 CERT\n1 CEMO\n1 CEDA\n1 CEIBN\n3 VL\n1 CRAC\n1 VGRIMP\n1 BLS\n1 Barge"
       },
       "id": "A1OTk"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.393466,
+          47.928676
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CSP Ploermel (SDIS 56 - Morbihan)",
+        "description": "9 SPP\n63 SPV\n\n1 770 interventions en 2022\n\n2 VSAV\n1 FSR\n1 FPTL\n1 FPT\n2 CCF\n1 EPS32\n1 DAHR\n1 CRAC\n1 VTP\n1 VTU\n1 VLHR\n2 VL\n1 VLC\n1 RMO\n1 MPR\n1 BRS"
+      },
+      "id": "czNzI"
     },
     {
       "type": "Feature",
@@ -61826,25 +61856,10 @@
     {
       "type": "Feature",
       "geometry": {
-        "coordinates": [
-          5.568341,
-          47.280889
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Pesmes (SDIS 70 - Haute Saône)",
-        "description": "1 FPT\n1 VTU\n1 VL"
-      },
-      "id": "iDH0S"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
         "type": "Point",
         "coordinates": [
-          5.590925,
-          47.429241
+          5.493464,
+          47.484656
         ]
       },
       "properties": {
@@ -61852,108 +61867,10 @@
           "showLabel": null,
           "labelInteractive": true
         },
-        "name": "CSP Gray (SDIS 70 - Haute Saône)",
-        "description": "7 SPP\n57 SPV\n\n1 460 interventions en 2023\n\n3 VSAV\n1 FPTSR\n1 CCR\n1 FMOGP\n1 EPS\n1 VTU\n1 VTP\n1 VLTT\n1 MPR\n1 BRS\n2 VL"
+        "name": "CIS Autray les Gray (SDIS 70 - Haute Saône)",
+        "description": "30 SPV\n\n193 interventions en 2021\n\n1 VSAV\n1 FPT\n1 VPI\n1 VPS\n1 VL"
       },
-      "id": "XUoAV"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          6.167257,
-          47.619457
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CSP Vesoul (SDIS 70 - Haute Saône)",
-        "description": "29 SPP\n95 SPV\n\n3 926 interventions en 2023\n\n5 VSAV\n1 FSR\n1 VLI\n1 FPTSR\n1 CCR\n1 CCI\n1 VPS\n2 EPS\n1 BEA\n2 VTU\n3 VLHR\n2 VTP\n2 VPCE\n6 Cellules diverses\n4 VL\n2 MPR\n3 BRS"
-      },
-      "id": "O1Wr6"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.759639,
-          47.569512
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CSP Héricourt (SDIS 70 - Haute Saône)",
-        "description": "10 SPP\n56 SPV\n\n1 380 interventions en 2024\n\n2 VSAV\n1 FPTSR\n1 CCR\n1 EPS\n1 CCFS\n1 VPCE\n1 CEAR\n1 VTP\n1 VTU\n1 VLHR\n1 VL\n1 BLS\n1 MPR\n"
-      },
-      "id": "HYuIV"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.734962,
-          47.721066
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Plancher Bas (SDIS 70 - Haute Saône)",
-        "description": "11 SPV\n\n109 interventions en 2024\n\n1 FPT\n1 VTU\n1 VLPS\n1 VLHR"
-      },
-      "id": "ZBFN3"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.716444,
-          47.64401
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Chenebier (SDIS 70 - Haute Saône)",
-        "description": "11 SPV\n\n1 VPI\n1 VTU\n1 VL"
-      },
-      "id": "eWhDp"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.626076,
-          47.671998
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Clairegoutte (SDIS 70 - Haute Saône)",
-        "description": "13 SPV\n\n1 VPI\n1 VL"
-      },
-      "id": "OMKUT"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          6.636536,
-          47.700794
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Ronchamp (SDIS 70 - Haute Saône)",
-        "description": "1 VSAV\n1 CCR\n1 VPI\n1 VLHR"
-      },
-      "id": "xw43V"
+      "id": "UxNjU"
     },
     {
       "type": "Feature",
@@ -61979,8 +61896,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          6.570843,
-          47.68703
+          5.883393,
+          47.715161
         ]
       },
       "properties": {
@@ -61988,378 +61905,10 @@
           "showLabel": null,
           "labelInteractive": true
         },
-        "name": "CPI La Côte (SDIS 70 - Haute Saône)",
-        "description": "13 SPV\n\n60 interventions annuelles\n\n1 VPI\n1 VL\n1 MPR"
+        "name": "CIS Combeaufontaine (SDIS 70 - Haute Saône)",
+        "description": "38 SPV\n\n302 interventions en 2021\n\n1 VSAV\n1 VSR\n1 FPT\n1 VPSU\n1 VL"
       },
-      "id": "I4OTE"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.58198,
-          47.64701
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Lyoffans (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL"
-      },
-      "id": "CwoAI"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.55077,
-          47.629841
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Moffans et Vacheresse (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VTU\n1 VL"
-      },
-      "id": "Q21d9"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.452816,
-          47.620816
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Aynans (SDIS 70 - Haute Saône)",
-        "description": "1 VTU\n1 VL\n1 MPR"
-      },
-      "id": "CXNcJ"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.356363,
-          47.593119
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Borey (SDIS 70 - Haute Saône)",
-        "description": "10 SPV\n\n1 VPI\n1 VL"
-      },
-      "id": "tAyzS"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.305299,
-          47.614394
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Les Grands Bois (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL"
-      },
-      "id": "fgV1I"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.279867,
-          47.69665
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Saulx (SDIS 70 - Haute Saône)",
-        "description": "13 SPV\n\n100 interventions annuelles\n\n1 VPI\n1 VTU"
-      },
-      "id": "CCFeg"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.408184,
-          47.741791
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI des Cinq Villages (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL"
-      },
-      "id": "7pwSN"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.467814,
-          47.841477
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Raddon et Chapendu (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VTU\n1 REP\n1 RGE"
-      },
-      "id": "4HKhk"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.334262,
-          47.856438
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Fontaine les Luxeuil (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VTU"
-      },
-      "id": "zvMKm"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.326709,
-          47.891586
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Corbenay (SDIS 70 - Haute saône)",
-        "description": "1 VTU\n1 VL"
-      },
-      "id": "MI9Lf"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.338875,
-          47.920627
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Aillevillers et Lyaumont (SDIS 70 - Haute saône)",
-        "description": "10 SPV\n\n98 interventions en 2025\n\n1 FPTHR\n1 VPI\n1 VL\n1 MPR"
-      },
-      "id": "9HFzK"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.207726,
-          47.815143
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Conflans sur Lanterne (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL"
-      },
-      "id": "Tp2x3"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.083786,
-          47.746336
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Fleurey les Faverney (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL"
-      },
-      "id": "Jj7hA"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.101323,
-          47.764635
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI La Lanterne (SDIS 70 - Haute Saône)",
-        "description": "1 FPT\n1 VTU\n1 VL"
-      },
-      "id": "ur1Vu"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.056428,
-          47.797907
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Amance (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL"
-      },
-      "id": "qkXXj"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.854683,
-          47.841563
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Cemboing (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL"
-      },
-      "id": "3urom"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.988343,
-          47.918334
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Corre (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL"
-      },
-      "id": "UlQhm"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          6.035008,
-          47.973487
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Passavant la Rochère (SDIS 70 - Haute Saône)",
-        "description": "26 SPV\n\n267 interventions en 2021\n\n1 VSAV\n1 CCR\n1 VPI\n1 VPS\n1 VL\n1 BRS\n1 MPR"
-      },
-      "id": "U4NjA"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.096725,
-          47.918427
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Vauvillers (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL"
-      },
-      "id": "bdmyq"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.981884,
-          47.889428
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Ormoy (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL"
-      },
-      "id": "7BpdJ"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.669771,
-          47.650566
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Fouvent Saint Andoche (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL"
-      },
-      "id": "pqP1q"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.584617,
-          47.576692
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Famont (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL"
-      },
-      "id": "MtwP1"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.532072,
-          47.534505
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Vars Ecuelle (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL"
-      },
-      "id": "kMwI0"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          5.493464,
-          47.484656
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Autray les Gray (SDIS 70 - Haute Saône)",
-        "description": "30 SPV\n\n193 interventions en 2021\n\n1 VSAV\n1 FPT\n1 VPI\n1 VPS\n1 VL"
-      },
-      "id": "UxNjU"
+      "id": "YwNzU"
     },
     {
       "type": "Feature",
@@ -62385,8 +61934,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          6.415651,
-          47.81948
+          6.035008,
+          47.973487
         ]
       },
       "properties": {
@@ -62394,100 +61943,97 @@
           "showLabel": null,
           "labelInteractive": true
         },
-        "name": "CPI Froideconche (SDIS 70 - Haute Saône)",
-        "description": "13 SPV\n\n194 interventions en 2025\n\n1 FPTL\n1 VL"
+        "name": "CIS Passavant la Rochère (SDIS 70 - Haute Saône)",
+        "description": "26 SPV\n\n267 interventions en 2021\n\n1 VSAV\n1 CCR\n1 VPI\n1 VPS\n1 VL\n1 BRS\n1 MPR"
       },
-      "id": "Y4Mzg"
+      "id": "U4NjA"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.060827,
+          47.687305
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Port sur Saône (SDIS 70 - Haute Saône)",
+        "description": "45 SPV\n\n554 interventions en 2021\n\n1 VSAV\n1 FPT\n1 VPSU\n1 VPI\n1 VL"
+      },
+      "id": "Q2MjA"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.636536,
+          47.700794
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Ronchamp (SDIS 70 - Haute Saône)",
+        "description": "1 VSAV\n1 CCR\n1 VPI\n1 VLHR"
+      },
+      "id": "xw43V"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.966316,
+          47.664715
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Scey sur Saône (SDIS 70 - Haute Saône)",
+        "description": "31 SPV\n\n206 interventions en 2021\n\n1 VSAV\n1 FPT\n1 VTU\n1 VL\n1 BRS"
+      },
+      "id": "AxODI"
     },
     {
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          6.009328,
-          47.582648
+          6.338875,
+          47.920627
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CPI Les Combes (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL\n1 MPR"
+        "name": "CPI Aillevillers et Lyaumont (SDIS 70 - Haute saône)",
+        "description": "10 SPV\n\n98 interventions en 2025\n\n1 FPTHR\n1 VPI\n1 VL\n1 MPR"
       },
-      "id": "0umif"
+      "id": "9HFzK"
     },
     {
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          5.84404,
-          47.419326
+          6.056428,
+          47.797907
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CPI Bucey les Gy (SDIS 70 - Haute Saône)",
-        "description": "1 FPT\n1 VL"
-      },
-      "id": "9odzn"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.893918,
-          47.462872
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Frasne le Château (SDIS 70 - Haute Saône)",
-        "description": "1 VTU\n1 VL"
-      },
-      "id": "rHNPp"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.668108,
-          47.512375
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Beaujeu (SDIS 70 - Haute Saône)",
+        "name": "CPI Amance (SDIS 70 - Haute Saône)",
         "description": "1 VPI\n1 VL"
       },
-      "id": "xUH2A"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.637875,
-          47.501721
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Montureux et Prantigny (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL"
-      },
-      "id": "jiy0l"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.702773,
-          47.424552
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Velesmes Echevanne",
-        "description": "10 SPV\n\n1 VPI"
-      },
-      "id": "AqSL2"
+      "id": "qkXXj"
     },
     {
       "type": "Feature",
@@ -62508,91 +62054,31 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          5.52725,
-          47.458926
+          6.452816,
+          47.620816
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CPI Nantilly (SDIS 70 - Haute Saône)",
-        "description": "1 VTU"
+        "name": "CPI Aynans (SDIS 70 - Haute Saône)",
+        "description": "1 VTU\n1 VL\n1 MPR"
       },
-      "id": "oYIlL"
+      "id": "CXNcJ"
     },
     {
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          5.948651,
-          47.347125
+          5.668108,
+          47.512375
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CPI Rive de l'Ognon (SDIS 70 - Haute saône)",
-        "description": "19 SPV\n\n1 VPI\n1 VTU\n1 VL\n1 MPR"
-      },
-      "id": "KsOsi"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.019285,
-          47.339055
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Vorey sur l'Ognon (SDIS 70 - Haute Saône)",
-        "description": "8 SPV\n\n1 VPI\n1 VL"
-      },
-      "id": "L25Ru"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.999651,
-          47.382239
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Le Chenalot (SDIS 70 - Haute Saône)",
+        "name": "CPI Beaujeu (SDIS 70 - Haute Saône)",
         "description": "1 VPI\n1 VL"
       },
-      "id": "wUctr"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.9317,
-          47.42068
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Oiselay et Grachaux (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL"
-      },
-      "id": "cwad0"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          6.132624,
-          47.395597
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Cirey Vandelans (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL\n"
-      },
-      "id": "hqB3I"
+      "id": "xUH2A"
     },
     {
       "type": "Feature",
@@ -62613,16 +62099,136 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          6.204711,
-          47.445874
+          6.356363,
+          47.593119
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CPI Loulans Verchamp (SDIS 70 - Haute Saône)",
+        "name": "CPI Borey (SDIS 70 - Haute Saône)",
+        "description": "10 SPV\n\n1 VPI\n1 VL"
+      },
+      "id": "tAyzS"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.84404,
+          47.419326
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Bucey les Gy (SDIS 70 - Haute Saône)",
+        "description": "1 FPT\n1 VL"
+      },
+      "id": "9odzn"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.854683,
+          47.841563
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Cemboing (SDIS 70 - Haute Saône)",
         "description": "1 VPI\n1 VL"
       },
-      "id": "JS4w6"
+      "id": "3urom"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.716444,
+          47.64401
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Chenebier (SDIS 70 - Haute Saône)",
+        "description": "11 SPV\n\n1 VPI\n1 VTU\n1 VL"
+      },
+      "id": "eWhDp"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.132624,
+          47.395597
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Cirey Vandelans (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL\n"
+      },
+      "id": "hqB3I"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.626076,
+          47.671998
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Clairegoutte (SDIS 70 - Haute Saône)",
+        "description": "13 SPV\n\n1 VPI\n1 VL"
+      },
+      "id": "OMKUT"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.207726,
+          47.815143
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Conflans sur Lanterne (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL"
+      },
+      "id": "Tp2x3"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.326709,
+          47.891586
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Corbenay (SDIS 70 - Haute saône)",
+        "description": "1 VTU\n1 VL"
+      },
+      "id": "MI9Lf"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.988343,
+          47.918334
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Corre (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL"
+      },
+      "id": "UlQhm"
     },
     {
       "type": "Feature",
@@ -62643,16 +62249,121 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          6.043296,
-          47.534646
+          6.408184,
+          47.741791
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CPI Mailley et Chazelot (SDIS 70 - Haute Saône)",
+        "name": "CPI des Cinq Villages (SDIS 70 - Haute Saône)",
         "description": "1 VPI\n1 VL"
       },
-      "id": "UDUXs"
+      "id": "7pwSN"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.385546,
+          47.537007
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Esprels (SDIS 70 - Haute Saône)",
+        "description": "15 SPV\n\n70 interventions annuelles\n\n1 VPI\n1 VTU\n1 VL"
+      },
+      "id": "59peo"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.478822,
+          47.507534
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Fallon (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL"
+      },
+      "id": "VHCN6"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.584617,
+          47.576692
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Famont (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL"
+      },
+      "id": "MtwP1"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.083786,
+          47.746336
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Fleurey les Faverney (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL"
+      },
+      "id": "Jj7hA"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.334262,
+          47.856438
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Fontaine les Luxeuil (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VTU"
+      },
+      "id": "zvMKm"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.669771,
+          47.650566
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Fouvent Saint Andoche (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL"
+      },
+      "id": "pqP1q"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.893918,
+          47.462872
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Frasne le Château (SDIS 70 - Haute Saône)",
+        "description": "1 VTU\n1 VL"
+      },
+      "id": "rHNPp"
     },
     {
       "type": "Feature",
@@ -62672,17 +62383,310 @@
     {
       "type": "Feature",
       "geometry": {
+        "type": "Point",
         "coordinates": [
-          5.807819,
-          47.563453
+          6.415651,
+          47.81948
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CPI Froideconche (SDIS 70 - Haute Saône)",
+        "description": "13 SPV\n\n194 interventions en 2025\n\n1 FPTL\n1 VL"
+      },
+      "id": "Y4Mzg"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.570843,
+          47.68703
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CPI La Côte (SDIS 70 - Haute Saône)",
+        "description": "13 SPV\n\n60 interventions annuelles\n\n1 VPI\n1 VL\n1 MPR"
+      },
+      "id": "I4OTE"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.101323,
+          47.764635
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CPI Vellexon Queutrey (SDIS 70 - Haute Saône)",
-        "description": "9 SPV\n\n1 VPI\n1 VL"
+        "name": "CPI La Lanterne (SDIS 70 - Haute Saône)",
+        "description": "1 FPT\n1 VTU\n1 VL"
       },
-      "id": "Qjlmk"
+      "id": "ur1Vu"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.999651,
+          47.382239
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Le Chenalot (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL"
+      },
+      "id": "wUctr"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.009328,
+          47.582648
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Les Combes (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL\n1 MPR"
+      },
+      "id": "0umif"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.305299,
+          47.614394
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Les Grands Bois (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL"
+      },
+      "id": "fgV1I"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.204711,
+          47.445874
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Loulans Verchamp (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL"
+      },
+      "id": "JS4w6"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.58198,
+          47.64701
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Lyoffans (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL"
+      },
+      "id": "CwoAI"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.043296,
+          47.534646
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Mailley et Chazelot (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL"
+      },
+      "id": "UDUXs"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.55077,
+          47.629841
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Moffans et Vacheresse (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VTU\n1 VL"
+      },
+      "id": "Q21d9"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.637875,
+          47.501721
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Montureux et Prantigny (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL"
+      },
+      "id": "jiy0l"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.52725,
+          47.458926
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Nantilly (SDIS 70 - Haute Saône)",
+        "description": "1 VTU"
+      },
+      "id": "oYIlL"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.9317,
+          47.42068
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Oiselay et Grachaux (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL"
+      },
+      "id": "cwad0"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.981884,
+          47.889428
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Ormoy (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL"
+      },
+      "id": "7BpdJ"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.568341,
+          47.280889
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Pesmes (SDIS 70 - Haute Saône)",
+        "description": "1 FPT\n1 VTU\n1 VL"
+      },
+      "id": "iDH0S"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.734962,
+          47.721066
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Plancher Bas (SDIS 70 - Haute Saône)",
+        "description": "11 SPV\n\n109 interventions en 2024\n\n1 FPT\n1 VTU\n1 VLPS\n1 VLHR"
+      },
+      "id": "ZBFN3"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.467814,
+          47.841477
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Raddon et Chapendu (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VTU\n1 REP\n1 RGE"
+      },
+      "id": "4HKhk"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.948651,
+          47.347125
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Rive de l'Ognon (SDIS 70 - Haute saône)",
+        "description": "19 SPV\n\n1 VPI\n1 VTU\n1 VL\n1 MPR"
+      },
+      "id": "KsOsi"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.62909,
+          47.561541
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Saulnot (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL"
+      },
+      "id": "ca58i"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.279867,
+          47.69665
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Saulx (SDIS 70 - Haute Saône)",
+        "description": "13 SPV\n\n100 interventions annuelles\n\n1 VPI\n1 VTU"
+      },
+      "id": "CCFeg"
     },
     {
       "type": "Feature",
@@ -62732,59 +62736,17 @@
     {
       "type": "Feature",
       "geometry": {
-        "type": "Point",
         "coordinates": [
-          5.966316,
-          47.664715
-        ]
+          5.532072,
+          47.534505
+        ],
+        "type": "Point"
       },
       "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Scey sur Saône (SDIS 70 - Haute Saône)",
-        "description": "31 SPV\n\n206 interventions en 2021\n\n1 VSAV\n1 FPT\n1 VTU\n1 VL\n1 BRS"
+        "name": "CPI Vars Ecuelle (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL"
       },
-      "id": "AxODI"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          6.060827,
-          47.687305
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Port sur Saône (SDIS 70 - Haute Saône)",
-        "description": "45 SPV\n\n554 interventions en 2021\n\n1 VSAV\n1 FPT\n1 VPSU\n1 VPI\n1 VL"
-      },
-      "id": "Q2MjA"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          5.883393,
-          47.715161
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Combeaufontaine (SDIS 70 - Haute Saône)",
-        "description": "38 SPV\n\n302 interventions en 2021\n\n1 VSAV\n1 VSR\n1 FPT\n1 VPSU\n1 VL"
-      },
-      "id": "YwNzU"
+      "id": "kMwI0"
     },
     {
       "type": "Feature",
@@ -62805,31 +62767,46 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          6.385546,
-          47.537007
+          6.096725,
+          47.918427
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CPI Esprels (SDIS 70 - Haute Saône)",
-        "description": "15 SPV\n\n70 interventions annuelles\n\n1 VPI\n1 VTU\n1 VL"
+        "name": "CPI Vauvillers (SDIS 70 - Haute Saône)",
+        "description": "1 VPI\n1 VL"
       },
-      "id": "59peo"
+      "id": "bdmyq"
     },
     {
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          6.62909,
-          47.561541
+          5.702773,
+          47.424552
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CPI Saulnot (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL"
+        "name": "CPI Velesmes Echevanne",
+        "description": "10 SPV\n\n1 VPI"
       },
-      "id": "ca58i"
+      "id": "AqSL2"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.807819,
+          47.563453
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Vellexon Queutrey (SDIS 70 - Haute Saône)",
+        "description": "9 SPV\n\n1 VPI\n1 VL"
+      },
+      "id": "Qjlmk"
     },
     {
       "type": "Feature",
@@ -62850,16 +62827,99 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          6.478822,
-          47.507534
+          6.019285,
+          47.339055
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CPI Fallon (SDIS 70 - Haute Saône)",
-        "description": "1 VPI\n1 VL"
+        "name": "CPI Vorey sur l'Ognon (SDIS 70 - Haute Saône)",
+        "description": "8 SPV\n\n1 VPI\n1 VL"
       },
-      "id": "VHCN6"
+      "id": "L25Ru"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.590925,
+          47.429241
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CSP Gray (SDIS 70 - Haute Saône)",
+        "description": "7 SPP\n57 SPV\n\n1 460 interventions en 2023\n\n3 VSAV\n1 FPTSR\n1 CCR\n1 FMOGP\n1 EPS\n1 VTU\n1 VTP\n1 VLTT\n1 MPR\n1 BRS\n2 VL"
+      },
+      "id": "XUoAV"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.759639,
+          47.569512
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CSP Héricourt (SDIS 70 - Haute Saône)",
+        "description": "10 SPP\n56 SPV\n\n1 380 interventions en 2024\n\n2 VSAV\n1 FPTSR\n1 CCR\n1 EPS\n1 CCFS\n1 VPCE\n1 CEAR\n1 VTP\n1 VTU\n1 VLHR\n1 VL\n1 BLS\n1 MPR\n"
+      },
+      "id": "HYuIV"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.167257,
+          47.619457
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CSP Vesoul (SDIS 70 - Haute Saône)",
+        "description": "29 SPP\n95 SPV\n\n3 926 interventions en 2023\n\n5 VSAV\n1 FSR\n1 VLI\n1 FPTSR\n1 CCR\n1 CCI\n1 VPS\n2 EPS\n1 BEA\n2 VTU\n3 VLHR\n2 VTP\n2 VPCE\n6 Cellules diverses\n4 VL\n2 MPR\n3 BRS"
+      },
+      "id": "O1Wr6"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.743824,
+          47.761916
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Plancher les Mines (SDIS 70 - Haute Saône)",
+        "description": "1 VSAV\n1 VPI\n1 VL\n1 MPR"
+      },
+      "id": "DmO56"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.58125,
+          47.755779
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Mélisey (SDIS 70 - Haute Saône)",
+        "description": "1 VSAV\n1 VPI\n1 VTU\n1 VLHR\n1 VL"
+      },
+      "id": "olJz9"
     },
     {
       "type": "Feature",
