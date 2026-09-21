@@ -3788,25 +3788,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          5.598838,
-          48.752772
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Commercy (SDIS 55 - Meuse)",
-        "description": "2 SPP\n67 SPV\n\n1 174 interventions en 2019\n\n2 VSAV\n1 FPTSR\n1 EPA\n1 CCR\n1 CCIGC\n1 VIRT\n2 VL\n1 VLTT\n1 VTU\n1 VLCG\n1 VLC\n1 VLI\n1 PMA\n1 MPR\n1 REM"
-      },
-      "id": "Y5MDE"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           0.938827,
           48.955037
         ]
@@ -29612,9 +29593,24 @@
           "labelInteractive": true
         },
         "name": "CS St Trivier sur Moignans (SDIS 01 - Ain)",
-        "description": "16 SPV\n\n370 interventions en 2022\n\n1 VSAV\n1 CCR\n1 VTU\n1 VL"
+        "description": "4 SPV\n\n370 interventions en 2022\n\n1 VSAV\n1 CCR\n1 VTU\n1 VL"
       },
       "id": "c1Mzc"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.663012,
+          46.26806
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CSP Oyonnax (SDIS 01 - Ain)",
+        "description": "27 SPP\n46 SPV\n\n 2 600 interventions annuelles\n\n3 VSAV\n1 VSRS\n1 FPT\n1 CCR\n1 BEA\n1 CCF\n1 CCEM\n1 VTU\n1 VPCE\n1 CEVAR\n1 CESD\n1 CEPlateau\n1 VIMP\n1 VLM\n2 VL\n2 VLHR\n1 VLC\n1 MPR\n1 BRS"
+      },
+      "id": "VUJyi"
     },
     {
       "type": "Feature",
@@ -29639,16 +29635,16 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          5.663012,
-          46.26806
+          5.050836,
+          45.837533
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CSP Oyonnax (SDIS 01 - Ain)",
-        "description": "27 SPP\n46 SPV\n\n 2 600 interventions annuelles\n\n3 VSAV\n1 VSRS\n1 FPT\n1 CCR\n1 BEA\n1 CCF\n1 CCEM\n1 VTU\n1 VPCE\n1 CEVAR\n1 CESD\n1 CEPlateau\n1 VIMP\n1 VLM\n2 VL\n2 VLHR\n1 VLC\n1 MPR\n1 BRS"
+        "name": "CIS Montluel (SDIS 01 - Ain)",
+        "description": "3 VSAV\n1 FSR\n1 FPT\n1 CCR\n1 BEA\n1 CCF4\n1 VPI\n1 VTU\n1 VLHR\n1 VLCG\n2 VL\n1 MPR"
       },
-      "id": "VUJyi"
+      "id": "mlo6g"
     },
     {
       "type": "Feature",
@@ -48744,7 +48740,7 @@
           "labelInteractive": true
         },
         "name": "CIS La La Turballe (SDIS 44 - Loire Atlantique)",
-        "description": "30 SPV\n\n430 interventions annuelles\n\n1 VSAV\n1 FPTHR\n1 VTU\n1 VLHR-N\n1 VL\n1 CSL\n1 Moto marine"
+        "description": "30 SPV\n\n430 interventions annuelles\n\n1 VSAV\n1 CCR\n1 VTU\n1 VLHR-N\n1 VL\n1 CSL\n1 Moto marine"
       },
       "id": "U5Mjk"
     },
@@ -49295,7 +49291,7 @@
           "labelInteractive": true
         },
         "name": "CIS Savenay (SDIS 44 - Loire Atlantique)",
-        "description": "1 SPP\n70 SPV\n\n1 100 interventions en 2025\n\n2 VSAV\n1 VSRM\n1 FPT\n1 EPC30\n1 CCF\n1 VTU\n2 VL\n1 CSL"
+        "description": "1 SPP\n70 SPV\n\n1 100 interventions en 2025\n\n2 VSAV\n1 VSRM\n1 FPT\n1 EPC30\n1 CCF4\n1 VTU\n1 VLHR\n2 VL\n1 CSL"
       },
       "id": "nIWwq"
     },
@@ -51813,6 +51809,25 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          -1.16417,
+          48.724484
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Brecey (SDIS 50 - Manche)",
+        "description": "22 SPV\n\n400 interventions en 2022\n\n1 VSAV\n1 VPS\n1 FPT\n1 VTU\n1 VL"
+      },
+      "id": "M5MzE"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           -1.506125,
           48.896814
         ]
@@ -51861,7 +51876,7 @@
           "labelInteractive": true
         },
         "name": "CIS Canisy (SDIS 50 - Manche)",
-        "description": "33 SPV\n\n577 interventions en 2023\n\n1 VSAV\n1 FPT\n1 VTU\n1 VL\n1 PCS\n1 MPR\n"
+        "description": "33 SPV\n\n577 interventions en 2023\n\n1 VSAV\n1 FPT\n1 VTU\n1 PCS\n1 VL\n1 MPR\n"
       },
       "id": "IyNTk"
     },
@@ -51974,6 +51989,25 @@
         "description": "21 SPP\n33 SPV dont 4 SSSM\n\n1 600 interventions en 2025\n\n3 VSAV\n1 VSRM\n1 VLI\n1 VPS (Balisage)\n2 FPT\n1 EPS\n1 FMOGP\n1 CCF\n1 VTU\n1 VTP\n1 VLTT\n2 VL\n1 CSL"
       },
       "id": "k3MDU"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.285787,
+          48.617867
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Ducey (SDIS 50 - Manche)",
+        "description": "34 SPV\n\n543 interventions en 2024\n\n    1 VSAV\n    1 VPS\n    1 FPT\n    1 VTU\n    1 VL\n    1 RPO\n    1 MPR "
+      },
+      "id": "k2NjE"
     },
     {
       "type": "Feature",
@@ -52271,7 +52305,7 @@
           "labelInteractive": true
         },
         "name": "CIS Percy (SDIS 50 - Manche)",
-        "description": "25 SPV\n\n500 interventions en 2023\n\n1 VSAV\n1 FPT\n1 FDGP\n1 VTU\n1 VPS\n1 VL\n"
+        "description": "25 SPV\n\n500 interventions en 2023\n\n1 VSAV\n1 VBS\n1 FPT\n1 FDGP\n1 VTU\n1 VL"
       },
       "id": "E2Mzk"
     },
@@ -52293,11 +52327,11 @@
     {
       "type": "Feature",
       "geometry": {
-        "type": "Point",
         "coordinates": [
-          -1.418202,
-          49.380061
-        ]
+          -1.417902,
+          49.380361
+        ],
+        "type": "Point"
       },
       "properties": {
         "_umap_options": {
@@ -52371,6 +52405,25 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          -1.465602,
+          48.969548
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Quetreville sur Sienne (SDIS 50 - Manche)",
+        "description": "33 SPV\n\n622 interventions en 2022\n\n1 VSAV\n1 FPT\n1 VID\n1 VLTT\n1 VL"
+      },
+      "id": "U5Njc"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           -1.287069,
           49.595343
         ]
@@ -52434,7 +52487,7 @@
           "labelInteractive": true
         },
         "name": "CIS Saint-Lô (SDIS 50 - Manche)",
-        "description": "28 SPP\n79 SPV\n\n3 800 interventions en 2025\n\n4 VSAV (dont 1 RD)\n1 VSRM\n1 VLI\n1 VPS (Balisage)\n2 FPT\n1 EPS\n1 CCF\n1 VTU\n1 VID\n1 VASIRT (VIRT + PEV + VAR...)\n1 VTP\n1 PMA \n4 VL\n1 VLTT\n1 BRL\n1 MPR\n1 RMO \n1 CeUMD"
+        "description": "28 SPP\n79 SPV\n\n3 800 interventions en 2025\n\n4 VSAV (dont 1 RD)\n1 VSRM\n1 VLI\n1 VPS (Balisage)\n2 FPT\n1 EPS\n1 CCF\n1 VTU\n1 VID\n1 VASIRT (VIRT + PEV + VAR...)\n1 VTP\n1 PMA \n1 VPCE\n1 CEUMD\n4 VL\n1 VLTT\n1 BRL\n1 MPR\n1 RMO "
       },
       "id": "EwNjA"
     },
@@ -52456,6 +52509,25 @@
         "description": "35 SPV\n\n590 interventions en 2025\n\n1 VSAV\n1 FPT\n1 VID\n1 CCGC\n1 VL\n1 VLTT"
       },
       "id": "I5NTU"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.067948,
+          48.748662
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Saint-Pois (SDIS 50 - Manche)",
+        "description": "150 interventions en 2022\n\n1 VSAV\n1 FPT\n1 VTU"
+      },
+      "id": "UzNDk"
     },
     {
       "type": "Feature",
@@ -52684,82 +52756,6 @@
         "description": "36 SPV\n\n573 interventions en 2025\n\n1 VSAV\n1 FPT\n1 EPS32\n1 CCGC\n1 VTU\n1 VLTT\n1 VL\n1 MPR"
       },
       "id": "M2NDE"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.16417,
-          48.724484
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Brecey (SDIS 50 - Manche)",
-        "description": "22 SPV\n\n400 interventions en 2022\n\n1 VSAV\n1 VPS\n1 FPT\n1 VTU\n1 VL"
-      },
-      "id": "M5MzE"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.067948,
-          48.748662
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Saint-Pois (SDIS 50 - Manche)",
-        "description": "150 interventions en 2022\n\n1 VSAV\n1 FPT\n1 VTU"
-      },
-      "id": "UzNDk"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.285787,
-          48.617867
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Ducey (SDIS 50 - Manche)",
-        "description": "34 SPV\n\n543 interventions en 2024\n\n    1 VSAV\n    1 VPS\n    1 FPT\n    1 VTU\n    1 VL\n    1 RPO\n    1 MPR "
-      },
-      "id": "k2NjE"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -1.465602,
-          48.969548
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Quetreville sur Sienne (SDIS 50 - Manche)",
-        "description": "33 SPV\n\n622 interventions en 2022\n\n1 VSAV\n1 FPT\n1 VID\n1 VLTT\n1 VL"
-      },
-      "id": "U5Njc"
     },
     {
       "type": "Feature",
@@ -53909,6 +53905,25 @@
         "description": "24 SPP\n73 SPV\n\n\n2 830 interventions en 2025\n\n\n3 VSAV\n1 FSR\n1 FPT\n1 CCR\n1 EPA\n1 FMOGP\n1 CCF\n1 VIRT\n1 DAHR\n1 VPL\n1 VTP\n1 VTU\n1 VLTT\n2 VLU\n1 VLCG\n2 VLCC\n1 VLI\n1 RSD\n1 MPRGP\n1 MPR\n1 RGRIMP\n1 RPLAT\n1 RSRPL\n1 EMB"
       },
       "id": "cyNjg"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.598838,
+          48.752772
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Commercy (SDIS 55 - Meuse)",
+        "description": "1 SPP\n43 SPV\n\n1 314 interventions en 2025\n\n2 VSAV\n1 FPTSR\n1 EPA\n1 CCR\n1 CCIGC\n1 VIRT\n2 VL\n1 VLTT\n1 VTU\n1 VLCG\n1 VLC\n1 VLI\n1 PMA\n1 MPR\n1 REM"
+      },
+      "id": "Y5MDE"
     },
     {
       "type": "Feature",
@@ -58394,7 +58409,7 @@
       },
       "properties": {
         "name": "CSP Lens (SDIS 62 - Pas de Calais)",
-        "description": "60 SPP\n83 SPV\n\n8 500 interventions annuelles\n\n3 VSAV\n1 VSR\n2 FPT\n1 EPC30\n1 DA + MPR\n1 VTU\n1 VTU-LOG\n1 VL-CYNO\n1 VLCG\n1 VLCC\n2 VL\n1 RPO\n1 BRS"
+        "description": "60 SPP\n83 SPV\n\n8 500 interventions annuelles\n\n3 VSAV\n1 VSR\n2 FPT\n1 EPC30\n1 DA + MPR\n1 VPCE\n1 CEPGP\n1 VTU\n1 VTU-LOG\n1 VL-CYNO\n1 VLCG\n1 VLCC\n2 VL\n1 RPO\n1 BRS"
       },
       "id": "M4OTQ"
     },
@@ -62917,7 +62932,7 @@
       },
       "properties": {
         "name": "CPI Mélisey (SDIS 70 - Haute Saône)",
-        "description": "1 VSAV\n1 VPI\n1 VTU\n1 VLHR\n1 VL"
+        "description": "250 interventions annuelles\n\n1 VSAV\n1 VPI\n1 VPS\n1 VTU\n1 VLHR\n1 VL"
       },
       "id": "olJz9"
     },
