@@ -4451,11 +4451,11 @@
     {
       "type": "Feature",
       "geometry": {
-        "type": "Point",
         "coordinates": [
-          1.371413,
-          47.287031
-        ]
+          1.370695,
+          47.287628
+        ],
+        "type": "Point"
       },
       "properties": {
         "_umap_options": {
@@ -5365,25 +5365,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          2.785619,
-          48.082924
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Ferrières en Gâtinais (SDIS 45 - Loiret)",
-        "description": "3 SPP\n20 SPV\n\n850 interventions annuelles\n\n1 VSAV\n1 FPT\n1 CCF\n1 VTUPS\n1 VLCG\n1 VLC"
-      },
-      "id": "c2MDg"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           2.038769,
           44.609271
         ]
@@ -5530,25 +5511,6 @@
         "description": "1 VSAV\n1 VPSI\n1 CCF\n1 VLTU\n1 VLTT\n1 VLU"
       },
       "id": "E5MTk"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          1.547994,
-          49.611179
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Forges les Eaux (SDIS 76 - Seine Maritime)",
-        "description": "40 SPV (dont 2 ISP)\n\n1 200 interventions annuelles.\n\n2 VSAV\n1 VTUBS\n1 FPTSR\n1 EPS30\n1 VLI\n1 VLHR\n1 VL\n1 Kit CRM\n1 Kit CAM\n1 MPR\n1 REP120"
-      },
-      "id": "k2NDM"
     },
     {
       "type": "Feature",
@@ -38503,7 +38465,7 @@
       },
       "properties": {
         "name": "CSR Audinval (SDIS 25 - Doubs)",
-        "description": "3 VSAV\n1 FPT\n2 EPA30 dont 1 RD\n1 CCR RD\n2 VTU dont 1 RD\n1 VLHR\n2 VLU\n1 VLCG\n1 BRS\n1 MPR"
+        "description": "10 SPP\n110 SPV\n\n2 000 interventions annuelles\n\n3 VSAV\n1 FPT\n2 EPA30 dont 1 RD\n1 CCR RD\n2 VTU dont 1 RD\n1 VLHR\n2 VLU\n1 VLCG\n1 BRS\n1 MPR"
       },
       "id": "AwMzQ"
     },
@@ -38574,6 +38536,21 @@
         "description": "40 SPV\n\n1 043 interventions en 2021\n\n2 VSAV\n1 FSR\n1 FPT\n1 CCGC\n1 VTU\n1 PMA\n1 VLCG\n2 VL\n1 BRS"
       },
       "id": "A5NjU"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.461291,
+          47.31029
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Servin (SDUS 25 - Doubs)",
+        "description": "1 VPI\n1 VTU\n1 VL"
+      },
+      "id": "OPYtC"
     },
     {
       "type": "Feature",
@@ -42223,6 +42200,21 @@
     {
       "type": "Feature",
       "geometry": {
+        "coordinates": [
+          -0.888809,
+          44.970649
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Sainte Hélène (SDIS 33 - Gironde)",
+        "description": "36 SPV\n\n400 interventions annuelles\n\n1 VSAV\n1 FPT\n2 CCF6\n1 VTHRA\n1 DAL\n1 VLHR\n1 VL\n1 MPR"
+      },
+      "id": "yOU5C"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "type": "Point",
         "coordinates": [
           -0.879979,
@@ -42296,16 +42288,16 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          -0.888809,
-          44.970649
+          -0.510478,
+          44.688488
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Sainte Hélène (SDIS 33 - Gironde)",
-        "description": "36 SPV\n\n400 interventions annuelles\n\n1 VSAV\n1 FPT\n2 CCF6\n1 VTHRA\n1 DAL\n1 VLHR\n1 VL\n1 MPR"
+        "name": "CIS La Brède (SDIS 33 - Gironde)",
+        "description": "14 SPP\n92 SPV\n\n1 686 interventions en 2024\n\n2 VSAV\n1 FPTSR\n2 CCF6\n1 VTU\n2 VLHR\n1 MPR"
       },
-      "id": "yOU5C"
+      "id": "Lr54Q"
     },
     {
       "type": "Feature",
@@ -44257,7 +44249,7 @@
       },
       "properties": {
         "name": "CIS Aigurande (SDIS 36 - Indre)",
-        "description": "17 SPV\n\n380 interventions annuelles\n\n1 VSAV\n1 VSRL\n2 CCF\n1 VTU\n1 VL"
+        "description": "23 SPV\n\n429 interventions en 2025\n\n1 VSAV\n1 VSRL\n1 CCFU\n1 VTU\n1 VL"
       },
       "id": "M0NTA"
     },
@@ -44275,6 +44267,21 @@
         "description": "31 SPV\n\n350 interventions en 2023\n\n1 VSAV\n1 VSRL\n1 CCR\n1 DA\n1 PMA\n1 VTU\n1 VL"
       },
       "id": "k4MDg"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          1.638706,
+          47.249897
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Chabris (SDIS 36 - Indre)",
+        "description": "1 VSAV\n1 VTUBS\n1 CCR\n1 VLHR\n1 VL\n1 BRS"
+      },
+      "id": "B1ozm"
     },
     {
       "type": "Feature",
@@ -44332,7 +44339,7 @@
       },
       "properties": {
         "name": "CIS Sainte Sevère sur Indre (SDIS 36 - Indre)",
-        "description": "260 interventions annuelles\n\n1 VSAV\n1 CCR\n1 VTU\n1 VLHR\n1 VL"
+        "description": "19 SPV\n\n315 interventions en 2025\n\n1 VSAV\n1 CCR\n1 VTUB\n1 VL"
       },
       "id": "GVL9q"
     },
@@ -44464,16 +44471,31 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          1.638706,
-          47.249897
+          1.745796,
+          46.544089
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Chabris (SDIS 36 - Indre)",
-        "description": "1 VSAV\n1 VTUBS\n1 CCR\n1 VLHR\n1 VL\n1 BRS"
+        "name": "CPI Cluis (SDIS 36 - Indre)",
+        "description": "1 CCRL\n1 VL"
       },
-      "id": "B1ozm"
+      "id": "FygqG"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          1.045997,
+          46.810149
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Martizay (SDIS 36 - Indre)",
+        "description": "1 VSAV\n1 CCR\n1 CCF\n1 CCFL\n1 VTUB\n1 VLHR\n1 VL\n1 MPR"
+      },
+      "id": "pLoJN"
     },
     {
       "type": "Feature",
@@ -44628,6 +44650,25 @@
         "description": "6 SPP\n40 SPV\n\n750 interventions annuelles\n\n1 VSAV\n1 CCR-SR\n1 VTU\n1 VLCG\n1 CSL\n1 MPR"
       },
       "id": "UzNjk"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.235581,
+          47.208979
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Orbigny (SDIS 37 - Indre et Loire)",
+        "description": "22 SPV\n\n250 interventions annuelles\n\n1 VSAV\n1 FPTSR\n1 CCF\n1 VTU\n1 VLCG"
+      },
+      "id": "kyMTY"
     },
     {
       "type": "Feature",
@@ -44876,21 +44917,32 @@
     {
       "type": "Feature",
       "geometry": {
-        "type": "Point",
         "coordinates": [
-          1.235581,
-          47.208979
-        ]
+          1.302856,
+          47.135702
+        ],
+        "type": "Point"
       },
       "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Orbigny (SDIS 37 - Indre et Loire)",
-        "description": "22 SPV\n\n250 interventions annuelles\n\n1 VSAV\n1 FPTSR\n1 CCF\n1 VTU\n1 VLCG"
+        "name": "CPI Nouans les Fontaines (SDIS 37 - Indre et Loire)",
+        "description": "14 SPV\n\n1 CCR\n1 VL\n1 MPR"
       },
-      "id": "kyMTY"
+      "id": "HgW59"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          1.204108,
+          47.156907
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Montrésor (SDIS 37 - Indre et Loire)",
+        "description": "1 VSAV\n1 CCR\n1 VTU\n1 VLHR\n1 BRS\n1 MPR"
+      },
+      "id": "7P3Pg"
     },
     {
       "type": "Feature",
@@ -47124,21 +47176,6 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          1.770258,
-          47.535283
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS Villemorant (SDIS 41 - Loir et Cher)",
-        "description": "32 SPV\n\n300 interventions annuelles\n\n1 VSAV\n1 FPTSR\n1 CCF\n1 VTUL\n1 VL\n1 MPR"
-      },
-      "id": "8DmNz"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
           1.301987,
           47.823269
         ],
@@ -47164,6 +47201,21 @@
         "description": "1 VSAV\n1 CCR\n1 VTUL\n1 VL"
       },
       "id": "kxOTQ"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          1.123867,
+          47.325727
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Saint Georges sur Cher (SDIS 41 - Loire et Cher)",
+        "description": "24 SPV\n\n1 VSAV\n1 CCRL\n1 CCF\n1 VLTU"
+      },
+      "id": "qXnlK"
     },
     {
       "type": "Feature",
@@ -47198,6 +47250,21 @@
         "description": "18 SPV\n\n300 interventions annuelles\n\n1 VSAV\n1 CCR\n1 VTU\n1 VL"
       },
       "id": "qTT8W"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          1.770258,
+          47.535283
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Villemorant (SDIS 41 - Loir et Cher)",
+        "description": "32 SPV\n\n300 interventions annuelles\n\n1 VSAV\n1 FPTSR\n1 CCF\n1 VTUL\n1 VL\n1 MPR"
+      },
+      "id": "8DmNz"
     },
     {
       "type": "Feature",
@@ -47361,6 +47428,21 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
+          1.943936,
+          47.527284
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Saint Viâtre (SDIS 41 - Loire et Cher)",
+        "description": "1 CCF\n1 VTUL"
+      },
+      "id": "pz6IF"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
           1.206436,
           47.759187
         ],
@@ -47406,16 +47488,49 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          1.943936,
-          47.527284
+          1.357391,
+          47.259573
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CPI Saint Viâtre (SDIS 41 - Loire et Cher)",
-        "description": "1 CCF\n1 VTUL"
+        "name": "PA Les Trois Provinces (SDIS 41 - Loire et Cher)",
+        "description": "1 VSAV\n1 VPIL",
+        "_umap_options": {
+          "color": "Fuchsia"
+        }
       },
-      "id": "pz6IF"
+      "id": "tXgGu"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          1.553771,
+          47.27872
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Selles sur Cher (SDIS 41 - Loire et Cher)",
+        "description": "1 VSAV\n1 FPTSR\n1 CCF4\n1 VTU\n1 VLHR\n2 VL\n1 BRS"
+      },
+      "id": "cN6Or"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          1.667197,
+          47.27488
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Gièvres (SDIS 41 - Loire et Cher)",
+        "description": "1 VSAV\n1 CCR\n1 VTUL"
+      },
+      "id": "4LZer"
     },
     {
       "type": "Feature",
@@ -49620,6 +49735,21 @@
     {
       "type": "Feature",
       "geometry": {
+        "coordinates": [
+          2.201632,
+          47.863177
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Châteauneuf sur Loire (SDIS 45 - Loiret)",
+        "description": "5 SPP\n40 SPV\n\n1 000 interventions annuelles\n\n2 VSAV\n1 FPTSR\n1 EPC\n1 CCF4\n1 VTU\n1 VLHR\n2 VLC\n1 MPRGP\n1 BLS"
+      },
+      "id": "NEKLj"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "type": "Point",
         "coordinates": [
           2.836887,
@@ -50338,16 +50468,50 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          2.201632,
-          47.863177
+          2.835283,
+          47.567289
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Châteauneuf sur Loire (SDIS 45 - Loiret)",
-        "description": "5 SPP\n40 SPV\n\n1 000 interventions annuelles\n\n2 VSAV\n1 FPTSR\n1 EPC\n1 CCF4\n1 VTU\n1 VLHR\n2 VLC\n1 MPRGP\n1 BLS"
+        "name": "CIS Bonny-sur-Loire (SDIS 45 - Loiret)",
+        "description": "1 VSAV\n1 FPTSR\n1 CCF2\n1 VIP\n1 VTU\n1 VL"
       },
-      "id": "NEKLj"
+      "id": "oxqi6"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.785619,
+          48.082924
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Ferrières en Gâtinais (SDIS 45 - Loiret)",
+        "description": "3 SPP\n20 SPV\n\n850 interventions annuelles\n\n1 VSAV\n1 FPT\n1 CCF4\n1 VTUPS\n2 VL\n1 MPRGP"
+      },
+      "id": "c2MDg"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          2.962457,
+          48.004712
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Chuelles (SDIS 45 - Loiret)",
+        "description": "11 SPV\n\n1 VIP\n1 VL"
+      },
+      "id": "6gSBY"
     },
     {
       "type": "Feature",
@@ -65337,6 +65501,25 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          1.547994,
+          49.611179
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Forges les Eaux (SDIS 76 - Seine Maritime)",
+        "description": "40 SPV (dont 2 ISP)\n\n1 200 interventions annuelles.\n\n2 VSAV\n1 VTUBS\n1 FPTSR\n1 EPS30\n1 CCF\n1 VLHR\n1 VL\n1 MPR\n1 REP"
+      },
+      "id": "k2NDM"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           2.707572,
           48.342074
         ]
@@ -65399,6 +65582,21 @@
         "description": "5 000 interventions annuelles\n\n3 VSAV\n1 VSRM\n1 FPT\n1 EPA\n2 VPCE\n1 CEDA\n1 CEPGP\n1 VPL\n1 VTP\n2 VTU\n1 VLCG\n1 VLCI\n1 VLI\n1 VLCC"
       },
       "id": "F2YuS"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          2.669898,
+          48.948809
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Claye-Souilly (SDIS 77 - Seine et Marne)",
+        "description": "2 800 interventions annuelles\n\n2 VSAV\n1 FSR\n1 FPT\n1 EPA\n1 CCF\n1 PCC\n1 VTU\n1 VLCG\n1 VL\n1 BRS"
+      },
+      "id": "tJSey"
     },
     {
       "type": "Feature",
@@ -65494,6 +65692,21 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
+          2.629482,
+          48.976831
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Mitry-Mory (SDIS 77 - Seine et Marne)",
+        "description": "22 SPP\n48 SPV\n\n2 VSAV\n1 VSRM\n1 FPT\n1 EPA\n1 CMIC\n2 VTU\n1 VTP\n2 VL"
+      },
+      "id": "jbyyW"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
           2.950923,
           48.384277
         ],
@@ -65519,6 +65732,21 @@
         "description": "13 SPP\n30 SPV\n\n1 100 interventions annuelles\n\n1 VSAV\n1 VSRM\n1 FPT\n1 CCF\n1 VTU\n1 PMA\n1 VL"
       },
       "id": "Y0NjI"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          2.798762,
+          49.039812
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Saint Soupplets (SDIS 77 - Seine et Marne)",
+        "description": "1 VSAV\n1 CCR\n1 DA\n1 VTU\n1 VLCG\n1 MPRGP"
+      },
+      "id": "HcGyH"
     },
     {
       "type": "Feature",
@@ -65599,46 +65827,16 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          2.669898,
-          48.948809
+          2.877645,
+          48.176644
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Claye-Souilly (SDIS 77 - Seine et Marne)",
-        "description": "2 800 interventions annuelles\n\n2 VSAV\n1 FSR\n1 FPT\n1 EPA\n1 CCF\n1 PCC\n1 VTU\n1 VLCG\n1 VL\n1 BRS"
+        "name": "CIS Egreville (SDIS 77 - Seine et Marne)",
+        "description": "1 VSAV\n1 CCRL\n1 VTU\n1 VL\n1 MPR"
       },
-      "id": "tJSey"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          2.629482,
-          48.976831
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS Mitry-Mory (SDIS 77 - Seine et Marne)",
-        "description": "22 SPP\n48 SPV\n\n2 VSAV\n1 VSRM\n1 FPT\n1 EPA\n1 CMIC\n2 VTU\n1 VTP\n2 VL"
-      },
-      "id": "jbyyW"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          2.798762,
-          49.039812
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS Saint Soupplets (SDIS 77 - Seine et Marne)",
-        "description": "1 VSAV\n1 CCR\n1 DA\n1 VTU\n1 VLCG\n1 MPRGP"
-      },
-      "id": "HcGyH"
+      "id": "SG9C2"
     },
     {
       "type": "Feature",
@@ -69448,6 +69646,21 @@
         "description": "1 VPI\n1 VL"
       },
       "id": "tQUPC"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          3.181497,
+          48.121326
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Egriselles le Bocage (SDIS 89 - Yonne)",
+        "description": "11 SPV\n\n80 interventions annuelles\n\n1 VPI\n1 VL SAP"
+      },
+      "id": "7z3yr"
     },
     {
       "type": "Feature",
