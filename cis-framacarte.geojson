@@ -49535,7 +49535,7 @@
       },
       "properties": {
         "name": "CIS Varades (SDIS 44 - Loire Atlantique)",
-        "description": "28 SPV\n\n400 interventions annuelles\n\n1 VSAV\n1 VSRM\n1 CCR\n1 FMOGC\n1 VTU\n1 VLHR"
+        "description": "28 SPV\n\n400 interventions annuelles\n\n1 VSAV\n1 VSRM\n1 CCR\n1 CCGC\n1 VTU\n1 VLHR"
       },
       "id": "W8PLS"
     },
@@ -49702,6 +49702,21 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
+          2.835283,
+          47.567289
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Bonny-sur-Loire (SDIS 45 - Loiret)",
+        "description": "1 VSAV\n1 FPTSR\n1 CCF2\n1 VIP\n1 VTU\n1 VL"
+      },
+      "id": "oxqi6"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
           2.746931,
           47.632986
         ],
@@ -49791,6 +49806,25 @@
         "description": "1 VSAV\n1 VPI\n1 VTU\n1 VL"
       },
       "id": "OTVMi"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.785619,
+          48.082924
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Ferrières en Gâtinais (SDIS 45 - Loiret)",
+        "description": "3 SPP\n20 SPV\n\n850 interventions annuelles\n\n1 VSAV\n1 FPT\n1 CCF4\n1 VTUPS\n2 VL\n1 MPRGP"
+      },
+      "id": "c2MDg"
     },
     {
       "type": "Feature",
@@ -50076,6 +50110,21 @@
         "description": "1 VSAV\n1 CCR\n1 VTU\n1 VL"
       },
       "id": "cwNTc"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          2.962457,
+          48.004712
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Chuelles (SDIS 45 - Loiret)",
+        "description": "11 SPV\n\n1 VIP\n1 VL"
+      },
+      "id": "6gSBY"
     },
     {
       "type": "Feature",
@@ -50468,50 +50517,16 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          2.835283,
-          47.567289
+          2.402669,
+          47.818623
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Bonny-sur-Loire (SDIS 45 - Loiret)",
-        "description": "1 VSAV\n1 FPTSR\n1 CCF2\n1 VIP\n1 VTU\n1 VL"
+        "name": "CPI Les Bordes (SDIS 45 - Loiret)",
+        "description": "19 SPV\n\n250 interventions annuelles\n\n1 CCRL\n1 VTUPS\n1 VL"
       },
-      "id": "oxqi6"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          2.785619,
-          48.082924
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Ferrières en Gâtinais (SDIS 45 - Loiret)",
-        "description": "3 SPP\n20 SPV\n\n850 interventions annuelles\n\n1 VSAV\n1 FPT\n1 CCF4\n1 VTUPS\n2 VL\n1 MPRGP"
-      },
-      "id": "c2MDg"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          2.962457,
-          48.004712
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Chuelles (SDIS 45 - Loiret)",
-        "description": "11 SPV\n\n1 VIP\n1 VL"
-      },
-      "id": "6gSBY"
+      "id": "9S9Yt"
     },
     {
       "type": "Feature",
@@ -51098,6 +51113,21 @@
     {
       "type": "Feature",
       "geometry": {
+        "coordinates": [
+          3.412682,
+          44.363969
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Saint Enimie (SDIS 48 - Lozère)",
+        "description": "1 VSAV\n1 CCRL\n1 CCF\n1 VLHR"
+      },
+      "id": "iM026"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "type": "Point",
         "coordinates": [
           3.562746,
@@ -51110,7 +51140,7 @@
           "labelInteractive": true
         },
         "name": "CIS Saint Étienne du Valdonnez (SDIS 48 - Lozère)",
-        "description": "28 SPV\n\n200 interventions par an\n\n1 VSAV\n1 CCFU\n1 CCF2\n1 CCGC\n1 PCS\n2 VLTT"
+        "description": "28 SPV\n\n200 interventions par an\n\n1 VSAV\n1 CCFU\n1 CCF2\n1 CCGC\n1 PCS\n1 VAT SIC\n2 VLTT"
       },
       "id": "c2MDI"
     },
@@ -51166,21 +51196,6 @@
         "description": "35 SPV\n\n303 interventions en 2019\n\n1 VSAV\n1 FPTSR\n1 VTPU \n1 VLHR\n1 CCGC\n1 CCF\n1 VA GRIMP \n1 VL\n1 RGE\n1 BRS"
       },
       "id": "AxMjM"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          3.412682,
-          44.363969
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS Saint Enimie (SDIS 48 - Lozère)",
-        "description": "1 VSAV\n1 CCRL\n1 CCF\n1 VLHR"
-      },
-      "id": "iM026"
     },
     {
       "type": "Feature",
