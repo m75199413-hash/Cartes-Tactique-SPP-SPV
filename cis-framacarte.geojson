@@ -23288,25 +23288,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          6.106156,
-          46.03134
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CS Cruseilles (SDIS 74 - Haute Savoie)",
-        "description": "4 SPP\n51 SPV\n\n708 interventions en 2019\n\n2 VSAV\n1 VPR\n1 FPTTu\n1 CCF\n1 CCGC\n1 VLHR\n1 VL"
-      },
-      "id": "YwMzU"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           5.384706,
           46.496476
         ]
@@ -27193,25 +27174,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          4.387617,
-          45.467802
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CSP Saint-Etienne La Terrasse (SDIS 42 - Loire)",
-        "description": "100 SP\n\n5 514 interventions en 2021\n\n3 VSAV\n1 FPTSR\n1 FPTL\n1 EPC32\n1 CCF\n1 VTPMSI\n3 VLTU\n1 VLHR\n1 VPR\n1 FNRBC\n1 VIA\n1 UPC"
-      },
-      "id": "gxMjU"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           2.262272,
           50.736754
         ]
@@ -28862,6 +28824,21 @@
     {
       "type": "Feature",
       "geometry": {
+        "coordinates": [
+          5.050836,
+          45.837533
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Montluel (SDIS 01 - Ain)",
+        "description": "3 VSAV\n1 FSR\n1 FPT\n1 CCR\n1 BEA\n1 CCF4\n1 VPI\n1 VTU\n1 VLHR\n1 VLCG\n2 VL\n1 MPR"
+      },
+      "id": "mlo6g"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "type": "Point",
         "coordinates": [
           4.763989,
@@ -29221,6 +29198,21 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
+          5.779946,
+          46.255177
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Belleydoux (SDIS 01 - Ain)",
+        "description": "1 FPTL\n1 VL"
+      },
+      "id": "IdvT9"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
           5.322511,
           46.178658
         ],
@@ -29231,6 +29223,21 @@
         "description": "150 interventions annuelles\n\n1 FPT\n1 VTU"
       },
       "id": "c2NjI"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.817277,
+          46.193238
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Champfromier (SDIS 01 - Ain)",
+        "description": "15 SPV\n\n1 CCF\n1 VTU\n1 VL\n1 MPR"
+      },
+      "id": "moX90"
     },
     {
       "type": "Feature",
@@ -29385,21 +29392,6 @@
         "description": "11 SPV\n\n1 VPI\n1 VTU"
       },
       "id": "gwMDY"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          5.53764,
-          46.231866
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CPI Matafelon (SDIS 01 - Ain)",
-        "description": "1 CCF\n1 VTU"
-      },
-      "id": "EzNzg"
     },
     {
       "type": "Feature",
@@ -29597,16 +29589,76 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          5.050836,
-          45.837533
+          5.554093,
+          46.139482
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Montluel (SDIS 01 - Ain)",
-        "description": "3 VSAV\n1 FSR\n1 FPT\n1 CCR\n1 BEA\n1 CCF4\n1 VPI\n1 VTU\n1 VLHR\n1 VLCG\n2 VL\n1 MPR"
+        "name": "CPI Saint Martin du Frêne (SDIS 01 - Ain)",
+        "description": "1 VPI\n1 VL"
       },
-      "id": "mlo6g"
+      "id": "bHD2h"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.552119,
+          46.217629
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Izernore (SDIS 01 - Ain)",
+        "description": "1 VSAV\n1 FPTSR\n1 CCF4\n1 VTU\n1 VLHR\n1 VL"
+      },
+      "id": "Yb2aY"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.352032,
+          45.982053
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CSP Ambérieu en Bugey (SDIS 01 - Ain)",
+        "description": "25 SPP\n70 SPV\n\n3 000 interventions annuelles\n\n3 VSAV\n1 VLI\n1 FPTSR\n1 FPT\n2 BEA\n2 CCF\n1 CCEM\n1 VTP\n1 VTU\n1 VLHR\n3 VL\n1 VLC"
+      },
+      "id": "MmbW4"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.704114,
+          45.756909
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CSP Belley (SDIS 01 - Ain)",
+        "description": "1 900 interventions en 2025\n\n2 VSAV\n1 VSRM\n1 FPT\n1 CCR\n1 EPC\n1 CCF4\n1 CDHR\n1 VSMP\n1 VTU\n1 VLHR\n2 VL\n1 VLC\n1 CSL\n1 MPR"
+      },
+      "id": "wQyXh"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.808506,
+          46.114122
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CSP Bellegarde sur Valserine (SDIS 01 - Ain)",
+        "description": "3 VSAV\n1 VSRM\n1 FPTSR-RR\n1 CCR\n1 EPS\n1 CCF\n1 CCGC\n1 VTP\n1 PCM\n1 VTU\n1 VLHR\n2 VLCG\n2 VLOG\n2 VL\n1 VL\n1 MPR\n1 CSL\n1 RPO\n1 RLC\n1 RMV\n"
+      },
+      "id": "ghg5l"
     },
     {
       "type": "Feature",
@@ -38557,8 +38609,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          5.090747,
-          45.00601
+          4.929299,
+          44.788224
         ]
       },
       "properties": {
@@ -38566,18 +38618,18 @@
           "showLabel": null,
           "labelInteractive": true
         },
-        "name": "CIS Chatuzange le Goubet (SDIS 26 - Drôme)",
-        "description": "36 SPV\n\n300 interventions annuelles\n\n1 VSAV\n1 FPT\n1 CCF\n1 VLHRP\n1 FDGP"
+        "name": "CIS Allex-Montoison-Ambonil (SDIS 26 - Drôme)",
+        "description": "29 SPV\n\n350 interventions annuelles\n\n1 VSAV\n1 FPT\n1 CCF\n1 VTUSEC\n1 FGPD\n1 VL"
       },
-      "id": "I0NzQ"
+      "id": "AwMDY"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          4.821163,
-          45.164081
+          5.071843,
+          44.967774
         ]
       },
       "properties": {
@@ -38585,196 +38637,10 @@
           "showLabel": null,
           "labelInteractive": true
         },
-        "name": "CIS Saint Vallier (SDIS 26 - Drôme)",
-        "description": "40 SPV\n\n930 interventions en 2025\n\n2 VSAV\n1 VSRM\n1 VSEC\n1 FPT\n1 EPA\n1 CCF\n1 VTU\n1 VLHR\n2 VL\n1 CSL"
+        "name": "CIS Barberolle (SDIS 26 - Drôme)",
+        "description": "40 SPV\n\n400 interventions annuelles\n\n1 VSAV\n1 CCF\n1 VLHR\n1 VTDISFFF"
       },
-      "id": "ExMjA"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          4.710335,
-          44.430938
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CS du Val de Berre (SDIS 26 - Drôme)",
-        "description": "40 SPV\n\n650/700 interventions par an\n\n1 VSAV\n1 VSEC\n1 FPT\n1 CCF\n1 VLCG\n1 VLHR\n1 BRS"
-      },
-      "id": "AxNzg"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          4.907863,
-          44.421873
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Grignan (SDIS 26 - Drôme)",
-        "description": "300 interventions annuelles\n\n1 VSAV\n1 FPTL\n1 DALHR\n1 CCF\n1 CCGC\n1 VTUSEC\n1 VLHR\n1 VL"
-      },
-      "id": "M5Mjg"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          4.979349,
-          44.445615
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Taulignan (SDIS 26 - Drôme)",
-        "description": "200 interventions annuelles\n\n1 VSAV\n1 FPTL\n1 VPI\n1 CCF\n1 VLHR"
-      },
-      "id": "M3MDQ"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          5.061479,
-          44.527414
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Dieulefit (SDIS 26 - Drôme)",
-        "description": "1 VSAV\n1 VSRL\n1 FPT\n1 EPA\n1 VLM\n1 CCF\n1 VLHR\n1 VL\n1 RBAL"
-      },
-      "id": "c1NjI"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          4.935018,
-          44.542679
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS La Bégude de Mazenc (SDIS 26 - Drôme)",
-        "description": "1 VSAV\n1 CCFMA\n1 VSEC\n1 VLHR"
-      },
-      "id": "k2NTc"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          5.001075,
-          44.598275
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Vallée du Roubion (SDIS 26 - Drôme)",
-        "description": "1 VSAV\n1 CCFMA\n1 VLHRp"
-      },
-      "id": "tuS8k"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          5.060416,
-          44.645979
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Saou (SDIS 26 - Drôme)",
-        "description": "200 interventions annuelles\n\n1 VSAV\n1 CCF\n1 VLHRBAL"
-      },
-      "id": "gV0o6"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          5.19258,
-          44.695806
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Saillans (SDIS 26 - Drôme)",
-        "description": "150 interventions annuelles\n\n1 VSAV\n1 CCFMA\n1 CCGC\n1 VLHRBAL"
-      },
-      "id": "A4NTM"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          4.875365,
-          44.642907
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Marsanne (SDIS 26 - Drôme)",
-        "description": "23 SPV\n\n1 VSAV\n1 CCFMA\n1 CCFS\n1 VTUSEC\n1 VLHR"
-      },
-      "id": "QzNzI"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          5.024679,
-          44.721826
-        ]
-      },
-      "properties": {
-        "name": "CIS Vallée de la Drôme (SDIS 26 - Drôme)",
-        "description": "60 SPV\n\n2 VSAV\n1 VSRM\n1 VSEC\n1 FPT\n1 EPS\n1 CCF\n1 VTU\n1 VLHR\n1 VL"
-      },
-      "id": "E3MDY"
+      "id": "IwNDI"
     },
     {
       "type": "Feature",
@@ -38800,8 +38666,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          4.929299,
-          44.788224
+          4.941831,
+          44.861367
         ]
       },
       "properties": {
@@ -38809,18 +38675,18 @@
           "showLabel": null,
           "labelInteractive": true
         },
-        "name": "CIS Allex-Montoison-Ambonil (SDIS 26 - Drôme)",
-        "description": "29 SPV\n\n350 interventions annuelles\n\n1 VSAV\n1 FPT\n1 CCF\n1 VTUSEC\n1 FGPD\n1 VL"
+        "name": "CIS Beaumont les Valence (SDIS 26 - Drôme)",
+        "description": "1 VSAV\n1 FPTL\n1 CCF\n1 VLHR\n1 VL"
       },
-      "id": "AwMDY"
+      "id": "Q1OTg"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          4.977171,
-          44.820911
+          5.004852,
+          44.902084
         ]
       },
       "properties": {
@@ -38828,10 +38694,67 @@
           "showLabel": null,
           "labelInteractive": true
         },
-        "name": "CIS La Raye (SDIS 26 - Drôme)",
-        "description": "300 interventions annuelles\n\n1 VSAV\n1 CCFMA\n1 CCFS\n1 VLHR"
+        "name": "CIS Chabeuil (SDIS 26 - Drôme)",
+        "description": "48 SPV\n\n1 VSAV\n1 FPTSR\n1 VSEC\n1 VLPC\n1 CCF\n1 VLHRp"
       },
-      "id": "EzMTY"
+      "id": "AyMjg"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.961143,
+          45.229372
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Chateauneuf de Galaure (SDIS 26 - Drôme)",
+        "description": "31 SPV\n\n500 interventions annuelles\n\n1 VSAV\n1 VSRL\n1 FPT\n1 CCF\n1 VLHR\n1 VL"
+      },
+      "id": "E0OTc"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.090747,
+          45.00601
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Chatuzange le Goubet (SDIS 26 - Drôme)",
+        "description": "36 SPV\n\n300 interventions annuelles\n\n1 VSAV\n1 FPT\n1 CCF\n1 VTU\n1 FDGP\n1 VLHRP\n1 VL"
+      },
+      "id": "I0NzQ"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.061479,
+          44.527414
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Dieulefit (SDIS 26 - Drôme)",
+        "description": "1 VSAV\n1 VSRL\n1 FPT\n1 EPA\n1 VLM\n1 CCF\n1 VLHR\n1 VL\n1 RBAL"
+      },
+      "id": "c1NjI"
     },
     {
       "type": "Feature",
@@ -38857,8 +38780,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          4.941831,
-          44.861367
+          4.907863,
+          44.421873
         ]
       },
       "properties": {
@@ -38866,10 +38789,142 @@
           "showLabel": null,
           "labelInteractive": true
         },
-        "name": "CIS Beaumont les Valence (SDIS 26 - Drôme)",
-        "description": "1 VSAV\n1 FPTL\n1 CCF\n1 VLHR\n1 VL"
+        "name": "CIS Grignan (SDIS 26 - Drôme)",
+        "description": "300 interventions annuelles\n\n1 VSAV\n1 FPTL\n1 DALHR\n1 CCF\n1 CCGC\n1 VTUSEC\n1 VLHR\n1 VL"
       },
-      "id": "Q1OTg"
+      "id": "M5Mjg"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.03059,
+          45.257874
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Hauterives (SDIS 26 - Drôme)",
+        "description": "30 SPV\n\n580 interventions annuelles\n\n1 VSAV\n1 FPT\n1 CCFMA\n1 VTUSEC\n1 CCGC\n1 VLHR\n1 VLP\n1 VLCG"
+      },
+      "id": "QzMjc"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.935018,
+          44.542679
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS La Bégude de Mazenc (SDIS 26 - Drôme)",
+        "description": "1 VSAV\n1 CCFMA\n1 VSEC\n1 VLHR"
+      },
+      "id": "k2NTc"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.977171,
+          44.820911
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS La Raye (SDIS 26 - Drôme)",
+        "description": "300 interventions annuelles\n\n1 VSAV\n1 CCFMA\n1 CCFS\n1 VLHR"
+      },
+      "id": "EzMTY"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.934776,
+          45.019962
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Le Châtelard (SDIS 26 - Drôme)",
+        "description": "47 SPV dont 2 ISP\n\n450 interventions annuelles\n\n1 VSAV\n1 FPTSR\n1 CCF\n1 VTU\n1 VL"
+      },
+      "id": "Y1MTA"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.112838,
+          45.269122
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Le Grand Serre (SDIS 26 - Drôme)",
+        "description": "1 VSAV\n1 CCFMA\n1 VLHR\n1 VL"
+      },
+      "id": "M2ODI"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.875365,
+          44.642907
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Marsanne (SDIS 26 - Drôme)",
+        "description": "23 SPV\n\n1 VSAV\n1 CCFMA\n1 CCFS\n1 VTUSEC\n1 VLHR"
+      },
+      "id": "QzNzI"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.0275,
+          44.938952
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null
+        },
+        "name": "CIS Montelier (SDIS 26 - Drôme)",
+        "description": "120 interventions annuelles\n\n1 VTU\n1 CCFMA\n1 VLHR"
+      },
+      "id": "A1OTU"
     },
     {
       "type": "Feature",
@@ -38914,8 +38969,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          5.004852,
-          44.902084
+          5.19258,
+          44.695806
         ]
       },
       "properties": {
@@ -38923,256 +38978,10 @@
           "showLabel": null,
           "labelInteractive": true
         },
-        "name": "CIS Chabeuil (SDIS 26 - Drôme)",
-        "description": "48 SPV\n\n1 VSAV\n1 FPTSR\n1 VSEC\n1 VLPC\n1 CCF\n1 VLHRp"
+        "name": "CIS Saillans (SDIS 26 - Drôme)",
+        "description": "150 interventions annuelles\n\n1 VSAV\n1 CCFMA\n1 CCGC\n1 VLHRBAL"
       },
-      "id": "AyMjg"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          5.0275,
-          44.938952
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null
-        },
-        "name": "CIS Montelier (SDIS 26 - Drôme)",
-        "description": "120 interventions annuelles\n\n1 VTU\n1 CCFMA\n1 VLHR"
-      },
-      "id": "A1OTU"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          4.880086,
-          44.902137
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CSP Valence (SDIS 26 - Drôme)",
-        "description": "56 SPP\n52 SPV\n\n5 000 interventions annuelles\n\n3 VSAV\n1 VSRM\n1 VSEC\n1 FPTL\n1 FPT\n1 EPS32\n1 CCF\n1 VIRT\n1 VPL\n1 CSL\n1 VPCE\n1 CEDA\n1 CECGC\n1 CEPSSP\n1 VTU\n1 VLHRp\n1 VLHRC\n1 VLCG\n1 VL"
-      },
-      "id": "AxMTI"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          4.927154,
-          44.955718
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CSP Saint Marcel les Valence (SDIS 26 - Drôme)",
-        "description": "3 VSAV\n1 VSRM\n1 VSEC\n1 FPTL\n1 FPT\n1 BEA32\n1 VTU\n1 CCF\n2 VPCE\n1 CESD\n1 CEDA\n1 CEEM\n1 CENRBC\n1 VLCG\n2 VL\n2 VLC\n1 BRS"
-      },
-      "id": "E1MDg"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          5.071843,
-          44.967774
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Barberolle (SDIS 26 - Drôme)",
-        "description": "40 SPV\n\n400 interventions annuelles\n\n1 VSAV\n1 CCF\n1 VLHR\n1 VTDISFFF"
-      },
-      "id": "IwNDI"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          4.934776,
-          45.019962
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Le Châtelard (SDIS 26 - Drôme)",
-        "description": "47 SPV dont 2 ISP\n\n450 interventions annuelles\n\n1 VSAV\n1 FPTSR\n1 CCF\n1 VTU\n1 VL"
-      },
-      "id": "Y1MTA"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          5.067294,
-          45.05478
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CSP Roman sur Isère (SDIS 26 - Drôme)",
-        "description": "50 SPP\n70 SPV\n\n4 000 interventions annuelles\n\n3 VSAV\n1 VSRM\n1 FPTL\n1 FPTSR\n1 EPA32\n2 CCFMA\n1 CCGP\n1 VSM\n2 VTU\n1 VTUSEC\n2 VLHR\n1 VSMTT\n2 VL\n3 VLC\n1 VPCE\n1 CERT\n1 CEMF\n1 BRS"
-      },
-      "id": "AwMjQ"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          5.291097,
-          45.018503
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Saint-Jean en Royans (SDIS 26 - Drôme)",
-        "description": "36 SPV\n\n500 interventions annuelles\n\n2 VSAV\n1 VSEC\n1 FPT\n1 EPS\n1 CCF\n1 VTUTP\n1 VL\n1 VLHRp\n1 BLS"
-      },
-      "id": "U1OTI"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          5.413127,
-          44.965496
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CPI La Chapelle en Vercors (SDIS 26 - Drôme)",
-        "description": "25 SPV\n\n170 interventions par an\n\n1 VSAV\n1 FPTSR\n1 CCGC\n1 VLHR\n1 VLCG\n1 VTU Scooter des neiges"
-      },
-      "id": "E1MjI"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          5.371778,
-          44.895351
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Vassieux en Vercors (SDIS 26 - Drôme)",
-        "description": "1 VSAV\n1 CCFMA\n1 VTU\n1 VLHR\n1 Chenillette\n1 Scooter des neiges"
-      },
-      "id": "UxNTE"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          5.373709,
-          44.750574
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CSR Die (SDIS 26 - Drôme)",
-        "description": "40 SPV\n\n600 interventions par an\n\n2 VSAV\n1 FPTSR\n1 EPS25\n1 CCFMA\n1 CCF\n1 VTUp\n1 VTP\n1 VLHRp\n2 VL\n1 VTULOG"
-      },
-      "id": "QyODY"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          4.958637,
-          45.073922
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CPI Clérieux (SDIS 26 - Drôme)",
-        "description": "12 SPV\n\n65 interventions annuelles\n\n1 CCF4\n1 VLHR"
-      },
-      "id": "A5MDQ"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          4.974715,
-          45.120787
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Saint Donat sur l'Herbasse (SDIS 26 - Drôme)",
-        "description": "700 interventions annuelles\n\n2 VSAV\n1 FPT\n1 CCF\n1 VTUSEC\n1 VLHR\n1 VL\n1 RBAL"
-      },
-      "id": "gyOTA"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          4.848366,
-          45.071679
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Tain l'Hermitage (SDIS 26 - Drôme)",
-        "description": "6 SPP\n59 SPV dont 2 ISP\n\n1 200 interventions annuelles\n\n2 VSAV\n1 VSRM\n1 VTUSEC\n1 FPT\n2 CCF\n1 VTU\n1 VLHR\n1 VLOGRT\n2 VLP\n1 VLOGSUB\n1 BRS"
-      },
-      "id": "YyMzk"
+      "id": "A4NTM"
     },
     {
       "type": "Feature",
@@ -39198,6 +39007,25 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
+          4.974715,
+          45.120787
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Saint Donat sur l'Herbasse (SDIS 26 - Drôme)",
+        "description": "700 interventions annuelles\n\n2 VSAV\n1 FPT\n1 CCF\n1 VTUSEC\n1 VLHR\n1 VL\n1 RBAL"
+      },
+      "id": "gyOTA"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
           4.859594,
           45.18454
         ]
@@ -39217,8 +39045,8 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          4.961143,
-          45.229372
+          4.821163,
+          45.164081
         ]
       },
       "properties": {
@@ -39226,18 +39054,18 @@
           "showLabel": null,
           "labelInteractive": true
         },
-        "name": "CIS Chateauneuf de Galaure (SDIS 26 - Drôme)",
-        "description": "31 SPV\n\n500 interventions annuelles\n\n1 VSAV\n1 VSRL\n1 FPT\n1 CCF\n1 VLHR\n1 VL"
+        "name": "CIS Saint Vallier (SDIS 26 - Drôme)",
+        "description": "40 SPV\n\n930 interventions en 2025\n\n2 VSAV\n1 VSRM\n1 VSEC\n1 FPT\n1 EPA\n1 CCF\n1 VTU\n1 VLHR\n2 VL\n1 CSL"
       },
-      "id": "E0OTc"
+      "id": "ExMjA"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          5.03059,
-          45.257874
+          5.291097,
+          45.018503
         ]
       },
       "properties": {
@@ -39245,18 +39073,18 @@
           "showLabel": null,
           "labelInteractive": true
         },
-        "name": "CIS Hauterives (SDIS 26 - Drôme)",
-        "description": "30 SPV\n\n580 interventions annuelles\n\n1 VSAV\n1 FPT\n1 CCFMA\n1 VTUSEC\n1 CCGC\n1 VLHR\n1 VLP\n1 VLCG"
+        "name": "CIS Saint-Jean en Royans (SDIS 26 - Drôme)",
+        "description": "36 SPV\n\n500 interventions annuelles\n\n2 VSAV\n1 VSEC\n1 FPT\n1 EPS\n1 CCF\n1 VTUTP\n1 VL\n1 VLHRp\n1 BLS"
       },
-      "id": "QzMjc"
+      "id": "U1OTI"
     },
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
         "coordinates": [
-          5.112838,
-          45.269122
+          5.060416,
+          44.645979
         ]
       },
       "properties": {
@@ -39264,10 +39092,234 @@
           "showLabel": null,
           "labelInteractive": true
         },
-        "name": "CIS Le Grand Serre (SDIS 26 - Drôme)",
-        "description": "1 VSAV\n1 CCFMA\n1 VLHR\n1 VL"
+        "name": "CIS Saou (SDIS 26 - Drôme)",
+        "description": "200 interventions annuelles\n\n1 VSAV\n1 CCF\n1 VLHRBAL"
       },
-      "id": "M2ODI"
+      "id": "gV0o6"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.848366,
+          45.071679
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Tain l'Hermitage (SDIS 26 - Drôme)",
+        "description": "6 SPP\n59 SPV dont 2 ISP\n\n1 200 interventions annuelles\n\n2 VSAV\n1 VSRM\n1 VTUSEC\n1 FPT\n2 CCF\n1 VTU\n1 VLHR\n1 VLOGRT\n2 VLP\n1 VLOGSUB\n1 BRS"
+      },
+      "id": "YyMzk"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.979349,
+          44.445615
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Taulignan (SDIS 26 - Drôme)",
+        "description": "200 interventions annuelles\n\n1 VSAV\n1 FPTL\n1 VPI\n1 CCF\n1 VLHR"
+      },
+      "id": "M3MDQ"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.024679,
+          44.721826
+        ]
+      },
+      "properties": {
+        "name": "CIS Vallée de la Drôme (SDIS 26 - Drôme)",
+        "description": "60 SPV\n\n2 VSAV\n1 VSRM\n1 VSEC\n1 FPT\n1 EPS\n1 CCF\n1 VTU\n1 VLHR\n1 VL"
+      },
+      "id": "E3MDY"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.001075,
+          44.598275
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Vallée du Roubion (SDIS 26 - Drôme)",
+        "description": "1 VSAV\n1 CCFMA\n1 VLHRp"
+      },
+      "id": "tuS8k"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.371778,
+          44.895351
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Vassieux en Vercors (SDIS 26 - Drôme)",
+        "description": "1 VSAV\n1 CCFMA\n1 VTU\n1 VLHR\n1 Chenillette\n1 Scooter des neiges"
+      },
+      "id": "UxNTE"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.958637,
+          45.073922
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CPI Clérieux (SDIS 26 - Drôme)",
+        "description": "12 SPV\n\n65 interventions annuelles\n\n1 CCF4\n1 VLHR"
+      },
+      "id": "A5MDQ"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.413127,
+          44.965496
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CPI La Chapelle en Vercors (SDIS 26 - Drôme)",
+        "description": "25 SPV\n\n170 interventions par an\n\n1 VSAV\n1 FPTSR\n1 CCGC\n1 VLHR\n1 VLCG\n1 VTU Scooter des neiges"
+      },
+      "id": "E1MjI"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.710335,
+          44.430938
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CS du Val de Berre (SDIS 26 - Drôme)",
+        "description": "40 SPV\n\n650/700 interventions par an\n\n1 VSAV\n1 VSEC\n1 FPT\n1 CCF\n1 VLCG\n1 VLHR\n1 BRS"
+      },
+      "id": "AxNzg"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.067294,
+          45.05478
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CSP Roman sur Isère (SDIS 26 - Drôme)",
+        "description": "50 SPP\n70 SPV\n\n4 000 interventions annuelles\n\n3 VSAV\n1 VSRM\n1 FPTL\n1 FPTSR\n1 EPA32\n2 CCFMA\n1 CCGP\n1 VSM\n2 VTU\n1 VTUSEC\n2 VLHR\n1 VSMTT\n2 VL\n3 VLC\n1 VPCE\n1 CERT\n1 CEMF\n1 BRS"
+      },
+      "id": "AwMjQ"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.927154,
+          44.955718
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CSP Saint Marcel les Valence (SDIS 26 - Drôme)",
+        "description": "3 VSAV\n1 VSRM\n1 VSEC\n1 FPTL\n1 FPT\n1 BEA32\n1 VTU\n1 CCF\n2 VPCE\n1 CESD\n1 CEDA\n1 CEEM\n1 CENRBC\n1 VLCG\n2 VL\n2 VLC\n1 BRS"
+      },
+      "id": "E1MDg"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.880086,
+          44.902137
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CSP Valence (SDIS 26 - Drôme)",
+        "description": "56 SPP\n52 SPV\n\n5 000 interventions annuelles\n\n3 VSAV\n1 VSRM\n1 VSEC\n1 FPTL\n1 FPT\n1 EPS32\n1 CCF\n1 VIRT\n1 VPL\n1 CSL\n1 VPCE\n1 CEDA\n1 CECGC\n1 CEPSSP\n1 VTU\n1 VLHRp\n1 VLHRC\n1 VLCG\n1 VL"
+      },
+      "id": "AxMTI"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.373709,
+          44.750574
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CSR Die (SDIS 26 - Drôme)",
+        "description": "40 SPV\n\n600 interventions par an\n\n2 VSAV\n1 FPTSR\n1 EPS25\n1 CCFMA\n1 CCF\n1 VTUp\n1 VTP\n1 VLHRp\n2 VL\n1 VTULOG"
+      },
+      "id": "QyODY"
     },
     {
       "type": "Feature",
@@ -47101,6 +47153,21 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
+          1.667197,
+          47.27488
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Gièvres (SDIS 41 - Loire et Cher)",
+        "description": "1 VSAV\n1 CCR\n1 VTUL"
+      },
+      "id": "4LZer"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
           1.57568,
           47.676158
         ],
@@ -47235,6 +47302,21 @@
         "description": "5 SPP\n40 SPV\n\n1 050 interventions annuelles\n\n2 VSAV\n1 FPTSR\n1 EPS32\n2 CCF4\n1 CCFS10\n2 VLU\n1 VLTT\n1 BLS\n1 VLTU"
       },
       "id": "c1ODc"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          1.553771,
+          47.27872
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Selles sur Cher (SDIS 41 - Loire et Cher)",
+        "description": "1 VSAV\n1 FPTSR\n1 CCF4\n1 VTU\n1 VLHR\n2 VL\n1 BRS"
+      },
+      "id": "cN6Or"
     },
     {
       "type": "Feature",
@@ -47506,31 +47588,31 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          1.553771,
-          47.27872
+          0.896335,
+          47.979531
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Selles sur Cher (SDIS 41 - Loire et Cher)",
-        "description": "1 VSAV\n1 FPTSR\n1 CCF4\n1 VTU\n1 VLHR\n2 VL\n1 BRS"
+        "name": "CIS Mondoubleau (SDIS 41 - Loir et Cher)",
+        "description": "19 SPV\n\n500 interventions annuelles\n\n1 VSAV\n1 FPT\n1 CCF\n1 VTU\n1 VL\n1 MPR"
       },
-      "id": "cN6Or"
+      "id": "3uJ6k"
     },
     {
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          1.667197,
-          47.27488
+          0.806251,
+          47.878593
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Gièvres (SDIS 41 - Loire et Cher)",
-        "description": "1 VSAV\n1 CCR\n1 VTUL"
+        "name": "CIS Savigny sur Braye (SDIS 41 - Loir et Cher)",
+        "description": "1 VSAV\n1 FPTSR\n1 CCF\n1 VTU\n1 VLHR\n1 MPR"
       },
-      "id": "4LZer"
+      "id": "flsJQ"
     },
     {
       "type": "Feature",
@@ -47591,6 +47673,21 @@
         "description": "1 VSAV\n1 FPTHR\n1 VTU\n1 VL"
       },
       "id": "kOlko"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          4.172444,
+          46.166051
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Charlieu (SDIS 42 - Loire)",
+        "description": "680 interventions en 2024\n\n1 VSAV\n1 FPTSR\n1 EPS\n1 CCF\n1 VTU\n1 VLHR\n1 MPR"
+      },
+      "id": "vXKta"
     },
     {
       "type": "Feature",
@@ -47975,17 +48072,66 @@
     {
       "type": "Feature",
       "geometry": {
+        "type": "Point",
         "coordinates": [
-          4.172444,
-          46.166051
+          4.387617,
+          45.467802
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CSP Saint-Etienne La Terrasse (SDIS 42 - Loire)",
+        "description": "100 SP\n\n5 487 interventions en 2025\n\n3 VSAV\n1 FPTSR\n1 FPTL\n1 EPC32\n1 CCF\n1 VTPMSI\n3 VLTU\n1 VLHR\n1 VPR\n1 FNRBC\n1 VIA\n1 UPC"
+      },
+      "id": "gxMjU"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          4.67222,
+          45.424393
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Charlieu (SDIS 42 - Loire)",
-        "description": "680 interventions en 2024\n\n1 VSAV\n1 FPTSR\n1 EPS\n1 CCF\n1 VTU\n1 VLHR\n1 MPR"
+        "name": "CIS Pélussin (SDIS 42 - Loire)",
+        "description": "445 interventions en 2025\n\n1 VSAV\n1 CCRSR\n1 BEA\n1 CCF\n1 VTU\n1 VLHR"
       },
-      "id": "vXKta"
+      "id": "gDKMb"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          4.418049,
+          45.34097
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Saint Genest Malifaux (SDIS 42 - Loire)",
+        "description": "1 VSAV\n1 CCRSR\n1 CCF\n1 VTU\n1 VLHR"
+      },
+      "id": "G6xPp"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          4.492722,
+          45.265629
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Saint Sauveur en Rue (SDIS 42 - Loire)",
+        "description": "15 SPV\n\n118 interventions en 2025\n\n1 VSAV\n1 CCR\n1 VTU\n1 VLHR"
+      },
+      "id": "Q7BQ5"
     },
     {
       "type": "Feature",
@@ -64121,6 +64267,21 @@
     {
       "type": "Feature",
       "geometry": {
+        "coordinates": [
+          6.639937,
+          45.553571
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Aime (SDIS 73 - Savoie)",
+        "description": "1 VSAV-HR\n1 CCR\n1 VTU\n1 VLHR"
+      },
+      "id": "htijo"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "type": "Point",
         "coordinates": [
           6.645538,
@@ -64257,6 +64418,21 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
+          6.884576,
+          45.58808
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Sainte Foy Tarentaise (SDIS 73 - Savoie)",
+        "description": "1 VPI\n1 VPIHR\n1 VTU"
+      },
+      "id": "PjNFr"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
           6.113377,
           45.457527
         ],
@@ -64387,6 +64563,21 @@
         "description": "2 VSAV dont 1 HR\n1 CCR\n1 VTU\n1 VLTTU\n1 VLHR\n1 VL"
       },
       "id": "Dshw5"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.677644,
+          45.507847
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CSM La Plagne (SDIS 73 - Savoie)",
+        "description": "2 VSAV HR\n1 CCRSR\n1 VTU\n1 VLHR"
+      },
+      "id": "fKdN9"
     },
     {
       "type": "Feature",
@@ -64588,46 +64779,69 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          6.639937,
-          45.553571
+          5.753102,
+          45.704396
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Aime (SDIS 73 - Savoie)",
-        "description": "1 VSAV-HR\n1 CCR\n1 VTU\n1 VLHR"
+        "name": "CIS Yenne (SDIS 73 - Savoie)",
+        "description": "1 VSAV\n1 VSRL\n1 FPT\n1 VTU\n1 VTP\n1 VLHR\n1 VLCG\n1 RGE"
       },
-      "id": "htijo"
+      "id": "5E6uq"
     },
     {
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          6.677644,
-          45.507847
+          5.849683,
+          45.814219
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CSM La Plagne (SDIS 73 - Savoie)",
-        "description": "2 VSAV HR\n1 CCRSR\n1 VTU\n1 VLHR"
+        "name": "CIS Chautagne (SDIS 73 - Savoie)",
+        "description": "500 interventions annuelles\n\n1 VSAV\n1 CCR\n1 VTU\n1 VLHR"
       },
-      "id": "fKdN9"
+      "id": "Ku3RZ"
     },
     {
       "type": "Feature",
       "geometry": {
+        "type": "Point",
         "coordinates": [
-          6.884576,
-          45.58808
-        ],
-        "type": "Point"
+          6.403806,
+          46.207666
+        ]
       },
       "properties": {
-        "name": "CIS Sainte Foy Tarentaise (SDIS 73 - Savoie)",
-        "description": "1 VPI\n1 VPIHR\n1 VTU"
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Boëge (SDIS 74 - Haute Savoie)",
+        "description": "35 SPV\n\n284 interventions en 2019\n\n1 VSAV\n1 FPT\n1 CCF\n1 VPR\n1 VLTT\n1 VL"
       },
-      "id": "PjNFr"
+      "id": "U4NzQ"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.383196,
+          46.330928
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CPI Sciez (SDIS 74 - Haute Savoie)",
+        "description": "35 SPV\n\n500 interventions par an\n\n2 VSAV dont 1 RD\n1 FPTL\n1 FPT RD\n1 CDHR\n1 VTU\n1 VLHR\n1 BRS\n1 MPR"
+      },
+      "id": "M4NTQ"
     },
     {
       "type": "Feature",
@@ -64670,40 +64884,21 @@
     {
       "type": "Feature",
       "geometry": {
-        "type": "Point",
         "coordinates": [
-          6.383196,
-          46.330928
-        ]
+          6.11608,
+          46.036195
+        ],
+        "type": "Point"
       },
       "properties": {
         "_umap_options": {
           "showLabel": null,
           "labelInteractive": true
         },
-        "name": "CPI Sciez (SDIS 74 - Haute Savoie)",
-        "description": "35 SPV\n\n500 interventions par an\n\n2 VSAV dont 1 RD\n1 FPTL\n1 FPT RD\n1 CDHR\n1 VTU\n1 VLHR\n1 BRS\n1 MPR"
+        "name": "CS Cruseilles (SDIS 74 - Haute Savoie)",
+        "description": "4 SPP\n51 SPV\n\n1 000 interventions annuelles\n\n2 VSAV\n1 VPR\n1 FPTTu\n1 CCF\n1 CCGC\n1 VLHR\n1 VL"
       },
-      "id": "M4NTQ"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          6.403806,
-          46.207666
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Boëge (SDIS 74 - Haute Savoie)",
-        "description": "35 SPV\n\n284 interventions en 2019\n\n1 VSAV\n1 FPT\n1 CCF\n1 VPR\n1 VLTT\n1 VL"
-      },
-      "id": "U4NzQ"
+      "id": "YwMzU"
     },
     {
       "type": "Feature",
