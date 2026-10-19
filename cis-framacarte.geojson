@@ -3028,25 +3028,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          5.519578,
-          47.609244
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Champlitte (SDIS 70 - Haute Saône)",
-        "description": "19 SPV\n\n157 interventions en 2021\n\n1 VSAV\n1 CCR\n1 VPSU\n1 VPI\n1 VL\n1 MPR"
-      },
-      "id": "U5MDA"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           2.036215,
           48.970787
         ]
@@ -15744,25 +15725,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          5.638272,
-          47.334766
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CIS Valay (SDIS 70 - Haute Saône)",
-        "description": "37 SPV\n\n329 interventions en 2021\n\n1 VSAV\n1 CCR\n1 VPI\n1 VPS\n1 VL\n1 BRS\n1 MPR"
-      },
-      "id": "Q2NzI"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           4.123387,
           44.588683
         ]
@@ -26640,25 +26602,6 @@
         "description": "33 SPP\n53 SPV\n\n2 910 interventions\n\n- CCFS : 1\n- CID : 1\n- EPA : 1\n- FPTSR : 2\n- LBARIA : 1\n- PORBER : 2\n- VES : 1\n- VLCDC : 1\n- VLCDG : 1\n- VLCYNO : 1\n- VLTT : 1\n- VLTU : 1\n- VPMA : 1\n- VPR : 1\n- VSAV : 4\n- VTP : 1\n- MPR : 1"
       },
       "id": "U5NjU"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          6.490989,
-          47.6856
-        ]
-      },
-      "properties": {
-        "_umap_options": {
-          "showLabel": null,
-          "labelInteractive": true
-        },
-        "name": "CSP Lure (SDIS 70 - Haute Saône)",
-        "description": "12 SPP\n61 SPV\n\n2 442 interventions en 2021\n\n3 VSAV\n1 VLM\n1 FPTSR\n1 CCR\n1 EPS\n1 CCI\n1 VTU\n1 VLHR\n1 VTP\n3 VL\n1 MPR\n1 BRS"
-      },
-      "id": "5xMp1"
     },
     {
       "type": "Feature",
@@ -37611,6 +37554,21 @@
     {
       "type": "Feature",
       "geometry": {
+        "coordinates": [
+          1.002781,
+          44.77687
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Belves (SDIS 24 - Dordogne)",
+        "description": "25 SPV\n\n1 VSAV\n1 FPT\n2 CCF\n1 VTU\n1 VLHR\n1 VRM\n1 VL"
+      },
+      "id": "LVpDA"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "type": "Point",
         "coordinates": [
           1.05075,
@@ -37883,16 +37841,16 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          1.002781,
-          44.77687
+          0.721305,
+          45.177968
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Belves (SDIS 24 - Dordogne)",
-        "description": "25 SPV\n\n1 VSAV\n1 FPT\n2 CCF\n1 VTU\n1 VLHR\n1 VRM\n1 VL"
+        "name": "CSP Périgeux (SDIS 24 - Dordogne)",
+        "description": "3 VSAV\n1 VSRM\n1 VBS\n1 VLM\n1 FPTL\n1 FPT\n1 EPS24\n1 EPA30\n2 CCF\n1 VTU\n2 VPCE\n1 CEUSAR\n1 CEPMA\n1 CEPOL\n1 VIRT\n1 VPL\n1 VIMP\n1 PCC\n1 VLCG\n3 VL\n1 VLC\n1 CSL\n1 MPR"
       },
-      "id": "LVpDA"
+      "id": "JtEDe"
     },
     {
       "type": "Feature",
@@ -39882,6 +39840,21 @@
     {
       "type": "Feature",
       "geometry": {
+        "coordinates": [
+          1.250017,
+          48.759766
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Saint Rémy sur Avre (SDIS 28 - Eure et Loire)",
+        "description": "37 SPV\n\n600 interventions annuelles\n\n1 VSAV\n1 VSRL\n1 FPT\n1 CCF4\n1 VTU\n1 VLHR"
+      },
+      "id": "3FKA7"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "type": "Point",
         "coordinates": [
           0.967934,
@@ -40060,16 +40033,16 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          1.250017,
-          48.759766
+          1.570712,
+          48.576942
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Saint Rémy sur Avre (SDIS 28 - Eure et Loire)",
-        "description": "37 SPV\n\n600 interventions annuelles\n\n1 VSAV\n1 VSRL\n1 FPT\n1 CCF4\n1 VTU\n1 VLHR"
+        "name": "CIS Maintenon (SDIS 28 - Eure et Loire)",
+        "description": "1 VSAV\n1 VSRL\n1 FPT\n1 EPS\n1 CCF\n1 VTU\n1 VL\n1 BRS\n1 MPR"
       },
-      "id": "3FKA7"
+      "id": "75GO1"
     },
     {
       "type": "Feature",
@@ -50737,6 +50710,21 @@
     {
       "type": "Feature",
       "geometry": {
+        "coordinates": [
+          1.222744,
+          44.643055
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Cazals (SDIS 46 - Lot)",
+        "description": "20 SPV\n\n250 interventions annuelles\n\n1 VSAV\n1 CCR\n1 VTUTP\n1 VLHR\n1 VL"
+      },
+      "id": "jfs4L"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "type": "Point",
         "coordinates": [
           1.392485,
@@ -50821,6 +50809,21 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
+          1.302631,
+          44.477356
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Luzech (SDIS 46 - Lot)",
+        "description": "1 VSAV\n1 FPTL\n1 CCF\n1 CDHR\n1 VTU\n1 VLHR\n1 VL\n1 MPR"
+      },
+      "id": "JUgm0"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
           1.603296,
           44.935671
         ],
@@ -50831,6 +50834,21 @@
         "description": "515 interventions en 2025\n\n1 VAV\n1 FPTL\n1 CCGC\n1 VLHR\n1 VL\n1 BRS"
       },
       "id": "ASTD4"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          1.205192,
+          44.339887
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Montcuq (SDIS 46 - Lot)",
+        "description": "22 SPV\n\n200 interventions annuelles\n\n1 VSAV\n1 CCR\n1 VTUTP\n1 VL\n1 MPR"
+      },
+      "id": "bYMv3"
     },
     {
       "type": "Feature",
@@ -50896,46 +50914,16 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          1.302631,
-          44.477356
+          1.768091,
+          44.402453
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Luzech (SDIS 46 - Lot)",
-        "description": "1 VSAV\n1 FPTL\n1 CCF\n1 CDHR\n1 VTU\n1 VLHR\n1 VL\n1 MPR"
+        "name": "CIS Limogne en Quercy (SDIS 46 - Lot)",
+        "description": "22 SPV dont 2 ISP\n\n1 VSAV\n1 CCR\n1 CCGC\n1 VTU\n1 VLHR\n1 VL"
       },
-      "id": "JUgm0"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          1.205192,
-          44.339887
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS Montcuq (SDIS 46 - Lot)",
-        "description": "22 SPV\n\n200 interventions annuelles\n\n1 VSAV\n1 CCR\n1 VTUTP\n1 VL\n1 MPR"
-      },
-      "id": "bYMv3"
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "coordinates": [
-          1.222744,
-          44.643055
-        ],
-        "type": "Point"
-      },
-      "properties": {
-        "name": "CIS Cazals (SDIS 46 - Lot)",
-        "description": "20 SPV\n\n250 interventions annuelles\n\n1 VSAV\n1 CCR\n1 VTUTP\n1 VLHR\n1 VL"
-      },
-      "id": "jfs4L"
+      "id": "92TQq"
     },
     {
       "type": "Feature",
@@ -51342,6 +51330,21 @@
         "description": "35 SPV\n\n303 interventions en 2019\n\n1 VSAV\n1 FPTSR\n1 VTPU \n1 VLHR\n1 CCGC\n1 CCF\n1 VA GRIMP \n1 VL\n1 RGE\n1 BRS"
       },
       "id": "AxMjM"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          3.897067,
+          44.333204
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Vialas (SDIS 48 - Lozère)",
+        "description": "1 VLPS HR\n1 CIM\n1 CCF\n1 VLTT"
+      },
+      "id": "08iZv"
     },
     {
       "type": "Feature",
@@ -52292,7 +52295,7 @@
       },
       "properties": {
         "name": "CIS Cherbourg Ouest (SDIS 50 - Manche)",
-        "description": "65 SPP\n75 SPV\n\n6 550 interventions en 2022\n\n4 VSAV\n1 VSRM\n1 VBS\n1 FPTL\n2 FPT\n1 BEA\n1 CCF\n1 VTU\n1 VLTT\n1 VPL\n1 CSL\n1 CMIR\n1 VIC\n2 VTP\n1 VPCE\n1 CEPOL\n1 CEPOU\n1 VGD\n1 RPO\n1 MPR\n1 Bateau à quai\nPlusieurs VL"
+        "description": "59 SPP\n60 SPV\n\n6 300 interventions en 2023\n\n4 VSAV\n1 VSRM\n1 VBS\n1 FPTL\n2 FPT\n1 BEA\n1 CCF\n1 VTU\n1 VLTT\n1 VPL\n1 CSL\n1 CMIR\n1 VIC\n2 VTP\n1 VPCE\n1 CEPOL\n1 CEPOU\n1 VGD\n1 RPO\n1 MPR\n1 Bateau à quai\nPlusieurs VL"
       },
       "id": "A4MzM"
     },
@@ -62634,8 +62637,8 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          5.584617,
-          47.576692
+          5.578083,
+          47.578487
         ],
         "type": "Point"
       },
@@ -62867,6 +62870,21 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
+          6.58125,
+          47.755779
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Mélisey (SDIS 70 - Haute Saône)",
+        "description": "250 interventions annuelles\n\n1 VSAV\n1 VPI\n1 VPS\n1 VTU\n1 VLHR\n1 VL"
+      },
+      "id": "olJz9"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
           6.55077,
           47.629841
         ],
@@ -62967,6 +62985,21 @@
         "description": "11 SPV\n\n109 interventions en 2024\n\n1 FPT\n1 VTU\n1 VLPS\n1 VLHR"
       },
       "id": "ZBFN3"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.743824,
+          47.761916
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CPI Plancher les Mines (SDIS 70 - Haute Saône)",
+        "description": "1 VSAV\n1 VPI\n1 VL\n1 MPR"
+      },
+      "id": "DmO56"
     },
     {
       "type": "Feature",
@@ -63208,9 +63241,28 @@
       },
       "properties": {
         "name": "CSP Héricourt (SDIS 70 - Haute Saône)",
-        "description": "10 SPP\n56 SPV\n\n1 380 interventions en 2024\n\n2 VSAV\n1 FPTSR\n1 CCR\n1 EPS\n1 CCFS\n1 VPCE\n1 CEAR\n1 VTP\n1 VTU\n1 VLHR\n1 VL\n1 BLS\n1 MPR\n"
+        "description": "10 SPP\n56 SPV\n\n1 380 interventions en 2024\n\n2 VSAV\n1 VLI\n1 FPTSR\n1 CCR\n1 EPS\n1 CCFS\n1 VPCE\n1 CEEM\n1 CESRF\n1 VTP\n1 VTU\n1 VLHR\n1 VL\n1 BLS\n1 MPR\n"
       },
       "id": "HYuIV"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.490989,
+          47.6856
+        ]
+      },
+      "properties": {
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CSP Lure (SDIS 70 - Haute Saône)",
+        "description": "12 SPP\n61 SPV\n\n2 442 interventions en 2021\n\n3 VSAV\n1 VLM\n1 FPTSR\n1 CCR\n1 EPS\n1 CCI\n1 VTU\n1 VLHR\n1 VTP\n3 VL\n1 MPR\n1 BRS\n1 ULS"
+      },
+      "id": "5xMp1"
     },
     {
       "type": "Feature",
@@ -63234,32 +63286,40 @@
     {
       "type": "Feature",
       "geometry": {
+        "type": "Point",
         "coordinates": [
-          6.743824,
-          47.761916
-        ],
-        "type": "Point"
+          5.519578,
+          47.609244
+        ]
       },
       "properties": {
-        "name": "CPI Plancher les Mines (SDIS 70 - Haute Saône)",
-        "description": "1 VSAV\n1 VPI\n1 VL\n1 MPR"
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Champlitte (SDIS 70 - Haute Saône)",
+        "description": "19 SPV\n\n157 interventions en 2021\n\n1 VSAV\n1 CCR\n1 VLI\n1 VPI\n1 VL\n1 MPR"
       },
-      "id": "DmO56"
+      "id": "U5MDA"
     },
     {
       "type": "Feature",
       "geometry": {
+        "type": "Point",
         "coordinates": [
-          6.58125,
-          47.755779
-        ],
-        "type": "Point"
+          5.638272,
+          47.334766
+        ]
       },
       "properties": {
-        "name": "CPI Mélisey (SDIS 70 - Haute Saône)",
-        "description": "250 interventions annuelles\n\n1 VSAV\n1 VPI\n1 VPS\n1 VTU\n1 VLHR\n1 VL"
+        "_umap_options": {
+          "showLabel": null,
+          "labelInteractive": true
+        },
+        "name": "CIS Valay (SDIS 70 - Haute Saône)",
+        "description": "37 SPV\n\n329 interventions en 2021\n\n1 VSAV\n1 CCR\n1 DATT\n1 VPI\n1 VPS\n1 VL\n1 VLI\n1 VAT\n1 BRS\n1 MPR"
       },
-      "id": "olJz9"
+      "id": "Q2NzI"
     },
     {
       "type": "Feature",
@@ -64312,6 +64372,21 @@
     {
       "type": "Feature",
       "geometry": {
+        "coordinates": [
+          5.849683,
+          45.814219
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Chautagne (SDIS 73 - Savoie)",
+        "description": "500 interventions annuelles\n\n1 VSAV\n1 CCR\n1 VTU\n1 VLHR"
+      },
+      "id": "Ku3RZ"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
         "type": "Point",
         "coordinates": [
           6.473785,
@@ -64443,6 +64518,21 @@
         "description": "700 interventions en 2025\n\n1 VSAV\n1 CCR\n1 DAL\n1 VTU\n1 VTP\n1 VL\n1 VLHR\n1 MPR"
       },
       "id": "eaNjl"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          5.753102,
+          45.704396
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Yenne (SDIS 73 - Savoie)",
+        "description": "1 VSAV\n1 VSRL\n1 FPT\n1 VTU\n1 VTP\n1 VLHR\n1 VLCG\n1 RGE"
+      },
+      "id": "5E6uq"
     },
     {
       "type": "Feature",
@@ -64779,31 +64869,46 @@
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          5.753102,
-          45.704396
+          6.566069,
+          45.719922
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Yenne (SDIS 73 - Savoie)",
-        "description": "1 VSAV\n1 VSRL\n1 FPT\n1 VTU\n1 VTP\n1 VLHR\n1 VLCG\n1 RGE"
+        "name": "CIS Beaufort (SDIS 73 - Savoie)",
+        "description": "30 SPV\n\n700 interventions annuelles\n\n1 VSAV\n1 VSRL\n1 CCR\n1 VPIHR\n1 VTP\n1 VTU\n1 VLHR\n2 VL"
       },
-      "id": "5E6uq"
+      "id": "J4ley"
     },
     {
       "type": "Feature",
       "geometry": {
         "coordinates": [
-          5.849683,
-          45.814219
+          6.422206,
+          45.753081
         ],
         "type": "Point"
       },
       "properties": {
-        "name": "CIS Chautagne (SDIS 73 - Savoie)",
-        "description": "500 interventions annuelles\n\n1 VSAV\n1 CCR\n1 VTU\n1 VLHR"
+        "name": "CIS Ugine (SDIS 73 - Savoie)",
+        "description": "44 SPV\n\n700 interventions annuelles\n\n1 VSAV\n1 FPTSR\n1 CCF\n1 VTU\n1 VLHR\n1 VL\n1 MPR"
       },
-      "id": "Ku3RZ"
+      "id": "wMcUy"
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "coordinates": [
+          6.129416,
+          45.687204
+        ],
+        "type": "Point"
+      },
+      "properties": {
+        "name": "CIS Le Châtelard (SDIS 73 - Savoie)",
+        "description": "1 VSAV\n1 FPTSR\n1 CCF\n1 VTU\n1 VLHR\n1 VL"
+      },
+      "id": "AeaMg"
     },
     {
       "type": "Feature",
